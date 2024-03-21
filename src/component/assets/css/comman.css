@@ -1,0 +1,131 @@
+select {
+  height: 50px;
+  overflow-y: scroll;
+}
+
+.Data-div {
+  overflow-y: scroll;
+  height: 150px;
+}
+.Data-div1 {
+  text-align: center;
+  padding-top: 75px;
+  height: 150px;
+}
+
+.inner-data-Div {
+  height: 50px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #cfdbe3;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  /* margin-top: 230px; */
+  border-radius: 20px;
+  padding: 0;
+}
+
+.dropdown-content a {
+  color: #0d4876;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+#myDropdown a:hover {
+  background-color: #2269a0;
+  color: white;
+}
+
+.show {
+  display: block;
+}
+
+.chart-btn {
+  margin-left: 20px;
+  background: none;
+  color: black;
+  border-radius: 7px;
+  font-size: 10px;
+  height: 20px;
+  box-shadow: #0d4876 10;
+}
+#hourly {
+  background-color: #1799fb;
+}
+
+.custom-hr {
+  margin: 0;
+}
+
+#scrollbar {
+  background-color: rgb(224, 224, 224);
+  border-radius: 10px;
+  padding: 20px;
+  height: 400px;
+  overflow-y: scroll;
+  /* box-shadow: 20px 20px 50px rgb(204, 204, 204); */
+
+}
+
+.style-2::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+
+.style-2::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.style-2::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #a3a1a1;
+}
+.inner-div-check {
+  background-color: rgb(247, 247, 247);
+  /* border-bottom: 1px solid; */
+  height: 50px;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.selected-item {
+  border: 1px solid;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgb(224, 224, 224);
+}
+.selected-label {
+  border: 1px solid;
+  padding: 10px;
+  margin: 2px;
+  background-color: rgb(247, 247, 247);
+
+  border-radius: 10px;
+}
+
+.cancel-button {
+  margin-left: 10px;
+  background-color: rgb(255, 73, 73);
+  height: 20px;
+  color: white;
+  font-size: 10px;
+  border-radius: 5px;
+}
+
+.cancel-button:hover {
+  background-color: rgb(255, 0, 0);
+}
