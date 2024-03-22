@@ -1,8 +1,8 @@
 From node:18.12.1
-RUN mkdir '/Reactjs'
-WORKDIR '/Reactjs'
+RUN mkdir '/WebReportGsoft'
+WORKDIR '/WebReportGsoft'
 
-COPY . /Reactjs
+COPY . /WebReportGsoft
 COPY package.json .
 RUN npm install
 COPY . .
