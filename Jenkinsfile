@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-               checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'python207', url: 'https://github.com/demesne2001/WebReportFrontG.git']])
+               checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'demesne2001', url: 'https://github.com/demesne2001/WebReportFrontG.git']])
                 echo 'checkout done'
             }
         }
