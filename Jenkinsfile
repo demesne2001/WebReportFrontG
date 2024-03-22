@@ -17,12 +17,12 @@ pipeline {
                 
                 script{
                     def a=0
-                    bat 'docker build . -f dockerfile.txt -t  GSoftfront'
+                    bat 'docker build . -f dockerfile.txt -t  gsoftfront'
                     a=1
                     if(a>0)
                     {
-                         bat 'docker stop GSoftfront'
-                         bat 'docker rm GSoftfront'
+                         bat 'docker stop gsoftfront'
+                         bat 'docker rm gsoftfront'
                     }
                 }
                 echo 'Docker Image done'
@@ -31,7 +31,7 @@ pipeline {
         stage('Docker Run') {
             steps {
                 script{
-                    bat 'docker run -p 3000:3000 -d --name GSoftfront GSoftfront'
+                    bat 'docker run -p 3000:3000 -d --name gsoftfront gsoftfront'
                 }
                 echo 'Docker Running'
             }
