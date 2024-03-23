@@ -1,6 +1,7 @@
 import crowded from './assets/font/svg/crowded.svg'
 import trend from './assets/font/svg/trend.svg'
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react';
+import shopping from './assets/font/svg/shopping-cart.svg'
 import CreatContext from './Context/CreateContext';
 import API from './Utility/API';
 import post from './Utility/APIHandle';
@@ -40,6 +41,21 @@ export default function ProfitCard() {
 
 		})
 	}
+	function format(val) {
+		if (filter.Thousand === 'k') {
+			return ((((val / 1000).toFixed(1)).toString()) + "K");
+		} else if (filter.Thousand === 'l') {
+			return ((((val / 100000).toFixed(1)).toString()) + "L");
+		} else if (filter.Thousand === 'm') {
+			return ((((val / 1000000).toFixed(1)).toString()) + "M");
+		} else if (filter.Thousand === 'c') {
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		}else if (filter.Thousand === 'b') {
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+		} else {
+			return Math.floor(val);;
+		}
+	}
     return (
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
 
@@ -50,13 +66,24 @@ export default function ProfitCard() {
                             <img src={crowded} />
                         </div>
 						<p class="card-top-main-title">Profit % : <span class="card-top-main-amount1">{ProfitPrc}%</span></p>
-                        <p class="card-top-main-title">Profit Amt : <span class="card-top-main-amount1">₹{ProfitAmount}</span></p>
+                        <p class="card-top-main-title">Profit Amt : <span class="card-top-main-amount1">₹{format(ProfitAmount)}</span></p>
 						{/* <p>ProfitPrc : <span class="right-part-numericdata">{ProfitPrc}%</span></p> */}
                     </div>
                     <div class="line middle-color-cardline"></div>
-                    <div class="right-part">
-                        <p>Receivable : <span class="right-part-numericdata">{Receivable}</span></p>
-                        <p>Payable : <span class="right-part-numericdata">{Payable}</span></p>
+                    <div class="right-part1">
+					<div class="main-icon">
+                            <img src={shopping} />
+                        </div>
+						<div>
+                            <p class="card-top-main-title">Receivable : <span
+                                class="card-top-main-amount1">{Receivable}</span> </p>
+                        </div>
+                        <div>
+                            <p class="card-top-main-title">Payable : <span
+                                class="card-top-main-amount1">₹{format(Payable)}</span> </p>
+                        </div>
+                        {/* <p>Receivable : <span class="right-part-numericdata">{Receivable}</span></p>
+                        <p>Payable : <span class="right-part-numericdata">{Payable}</span></p> */}
                     </div>
                 </div>
             </div>

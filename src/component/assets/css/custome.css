@@ -135,7 +135,7 @@ li.geex-content__header__quickaction__item {
 } */
 
 .card-top-main-amount {
-  font-size: 27px;
+  font-size: 25px;
   font-weight: bold;
   color: #fff;
 }
@@ -215,6 +215,7 @@ a.geex-content__header__quickaction__link img {
   }
   .right-part1 {
     display: flex;
+    color: #fff;
     flex-direction: column;
     align-items: flex-start !important;
   }

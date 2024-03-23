@@ -13,6 +13,7 @@ import brand from './assets/font/svg/brand.svg'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import './assets/css/comman.css';
+
 import fit from './assets/font/svg/tape.svg'
 // import measuring from './assets/font/svg/measuring-tape.svg'
 import product from './assets/font/svg/product.svg'
@@ -127,7 +128,28 @@ export default function Header() {
 		['strSeasonID']: FilterContext.TempCommanFilter['strSeasonID'].slice(0, -1),
 		['strSalesmanID']: FilterContext.TempCommanFilter['strSalesmanID'],
 		['strDesignID']: FilterContext.TempCommanFilter['strDesignID'].slice(0, -1),
-		['strColorID']: FilterContext.TempCommanFilter['strColorID']
+		['strColorID']: FilterContext.TempCommanFilter['strColorID'],
+		['strLotNo']:FilterContext.TempCommanFilter['strLotNo'],
+		['ChartValueOption']:FilterContext.TempCommanFilter['ChartValueOption'],
+	}
+	let FilterNameData = {
+		...FilterContext.TempCommanNameFilter,
+		['strLotNo']:FilterContext.TempCommanFilter['strLotNo'],
+		['ChartValueOption']:FilterContext.TempCommanFilter['ChartValueOption'],
+		['ToDate']: FilterContext.TempCommanFilter['ToDate'],
+		['FromDate']: FilterContext.TempCommanFilter['FromDate'],
+		['strSubCategory1ID']: FilterContext.TempCommanNameFilter['strSubCategory1ID'],
+		['strSubCategory2ID']: FilterContext.TempCommanNameFilter['strSubCategory2ID'],
+		['strSubCategory3ID']: FilterContext.TempCommanNameFilter['strSubCategory3ID'],
+		['strDepartmentID']: FilterContext.TempCommanNameFilter['strDepartmentID'],
+		['strBrandID']: FilterContext.TempCommanNameFilter['strBrandID'],
+		['strProductID']: FilterContext.TempCommanNameFilter['strProductID'],
+		['strItemGroupID']: FilterContext.TempCommanNameFilter['strItemGroupID'],
+		['strItemID']: FilterContext.TempCommanNameFilter['strItemID'],
+		['strSeasonID']: FilterContext.TempCommanNameFilter['strSeasonID'],
+		['strSalesmanID']: FilterContext.TempCommanNameFilter['strSalesmanID'],
+		['strDesignID']: FilterContext.TempCommanNameFilter['strDesignID'],
+		['strColorID']: FilterContext.TempCommanNameFilter['strColorID']
 	}
 	const [FilterTempData, setFilterTempData] = useState(FilterContext.CommanFilter)
 	const [Department, setDepartment] = useState([]);
@@ -256,6 +278,7 @@ export default function Header() {
 	function handleApply() {
 		if (JSON.stringify(FilterData) !== JSON.stringify(FilterContext.CommanFilter)) {
 			FilterContext.SetCommanFilter(FilterData);
+			FilterContext.SetCommanNameFilter(FilterNameData);
 			// console.log(FilterContext.CommanFilter, "after set comman filter");
 			handleClose()
 		} else {
@@ -271,8 +294,10 @@ export default function Header() {
 	}
 	function handleReset() {
 		FilterContext.TempCommanFilter = comman
+		FilterContext.TempCommanNameFilter = comman
 		// FilterContext.SetCommanFilter(comman)
 		FilterData = FilterContext.TempCommanFilter
+		FilterNameData = FilterContext.TempCommanFilter
 		ChartRef.current.clearValue();
 		DepartmentRef.current.clearValue();
 		ColorRef.current.clearValue();
@@ -299,18 +324,22 @@ export default function Header() {
 	function handleSelect(e, key, setMethod) {
 		setMethod(e)
 		let inputString = ""
+		let inputstringName = ""
 
 		if (e.length > 0) {
 			for (let i = 0; i < e.length; i++) {
 				if (i === e.length - 1) {
-					inputString = inputString + e[i].value
+					inputString = inputString + e[i].value;
+					inputstringName = inputstringName + e[i].label;
 				} else {
 					inputString = inputString + e[i].value + ','
+					inputstringName = inputstringName + e[i].label + ',';
 				}
 			}
 		}
 		// console.log(inputString)
 		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [key]: inputString })
+		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, [key]: inputstringName })
 	}
 
 	function handleChartValueOption(e) {
@@ -329,7 +358,7 @@ export default function Header() {
 		document.getElementById("myDropdown").style.display === "block" ? document.getElementById("myDropdown").style.display = "none" : document.getElementById("myDropdown").style.display = "block";
 	}
 	window.onclick = function (event) {
-		if (!event.target.matches('.dropbtn') && !event.target.matches('#default') && !event.target.matches('#lakh') && !event.target.matches('#million') && !event.target.matches('#thousand')) {
+		if (!event.target.matches('.dropbtn') && !event.target.matches('#default') && !event.target.matches('#lakh') && !event.target.matches('#million') && !event.target.matches('#thousand') && !event.target.matches('#crore') && !event.target.matches('#billion')) {
 			// console.log("hii");
 			if (document.getElementsByClassName("dropdown-content")[0] !== undefined) {
 				document.getElementsByClassName("dropdown-content")[0].style.display = "none";
@@ -364,43 +393,43 @@ export default function Header() {
 
 	function setColorOfDropDown() {
 		// console.log(localStorage.getItem('value'), "n")
-		if (localStorage.getItem('value') === "k") {
-			document.getElementById("thousand").style.color = "white"
-			document.getElementById("thousand").style.backgroundColor = "#2269a0"
-			document.getElementById("lakh").style.color = "#0d4876"
-			document.getElementById("lakh").style.backgroundColor = "#cfdbe3"
-			document.getElementById("million").style.color = "#0d4876"
-			document.getElementById("million").style.backgroundColor = "#cfdbe3"
-			document.getElementById("default").style.color = "#0d4876"
-			document.getElementById("default").style.backgroundColor = "#cfdbe3"
-		} else if (localStorage.getItem('value') === "l") {
-			document.getElementById("lakh").style.color = "white"
-			document.getElementById("lakh").style.backgroundColor = "#2269a0"
-			document.getElementById("million").style.color = "#0d4876"
-			document.getElementById("million").style.backgroundColor = "#cfdbe3"
-			document.getElementById("default").style.color = "#0d4876"
-			document.getElementById("default").style.backgroundColor = "#cfdbe3"
-			document.getElementById("thousand").style.color = "#0d4876"
-			document.getElementById("thousand").style.backgroundColor = "#cfdbe3"
-		} else if (localStorage.getItem('value') === "m") {
-			document.getElementById("lakh").style.color = "#0d4876"
-			document.getElementById("lakh").style.backgroundColor = "#cfdbe3"
-			document.getElementById("million").style.color = "white"
-			document.getElementById("million").style.backgroundColor = "#2269a0"
-			document.getElementById("default").style.color = "#0d4876"
-			document.getElementById("default").style.backgroundColor = "#cfdbe3"
-			document.getElementById("thousand").style.color = "#0d4876"
-			document.getElementById("thousand").style.backgroundColor = "#cfdbe3"
-		} else {
-			document.getElementById("thousand").style.color = "#0d4876"
-			document.getElementById("thousand").style.backgroundColor = "#cfdbe3"
-			document.getElementById("default").style.color = "white"
-			document.getElementById("default").style.backgroundColor = "#2269a0"
-			document.getElementById("lakh").style.color = "#0d4876"
-			document.getElementById("lakh").style.backgroundColor = "#cfdbe3"
-			document.getElementById("million").style.color = "#0d4876"
-			document.getElementById("million").style.backgroundColor = "#cfdbe3"
-		}
+		// if (localStorage.getItem('value') === "k") {
+		// 	document.getElementById("thousand").style.color = "white"
+		// 	document.getElementById("thousand").style.backgroundColor = "#2269a0"
+		// 	document.getElementById("lakh").style.color = "#0d4876"
+		// 	document.getElementById("lakh").style.backgroundColor = "#cfdbe3"
+		// 	document.getElementById("million").style.color = "#0d4876"
+		// 	document.getElementById("million").style.backgroundColor = "#cfdbe3"
+		// 	document.getElementById("default").style.color = "#0d4876"
+		// 	document.getElementById("default").style.backgroundColor = "#cfdbe3"
+		// } else if (localStorage.getItem('value') === "l") {
+		// 	document.getElementById("lakh").style.color = "white"
+		// 	document.getElementById("lakh").style.backgroundColor = "#2269a0"
+		// 	document.getElementById("million").style.color = "#0d4876"
+		// 	document.getElementById("million").style.backgroundColor = "#cfdbe3"
+		// 	document.getElementById("default").style.color = "#0d4876"
+		// 	document.getElementById("default").style.backgroundColor = "#cfdbe3"
+		// 	document.getElementById("thousand").style.color = "#0d4876"
+		// 	document.getElementById("thousand").style.backgroundColor = "#cfdbe3"
+		// } else if (localStorage.getItem('value') === "m") {
+		// 	document.getElementById("lakh").style.color = "#0d4876"
+		// 	document.getElementById("lakh").style.backgroundColor = "#cfdbe3"
+		// 	document.getElementById("million").style.color = "white"
+		// 	document.getElementById("million").style.backgroundColor = "#2269a0"
+		// 	document.getElementById("default").style.color = "#0d4876"
+		// 	document.getElementById("default").style.backgroundColor = "#cfdbe3"
+		// 	document.getElementById("thousand").style.color = "#0d4876"
+		// 	document.getElementById("thousand").style.backgroundColor = "#cfdbe3"
+		// } else {
+		// 	document.getElementById("thousand").style.color = "#0d4876"
+		// 	document.getElementById("thousand").style.backgroundColor = "#cfdbe3"
+		// 	document.getElementById("default").style.color = "white"
+		// 	document.getElementById("default").style.backgroundColor = "#2269a0"
+		// 	document.getElementById("lakh").style.color = "#0d4876"
+		// 	document.getElementById("lakh").style.backgroundColor = "#cfdbe3"
+		// 	document.getElementById("million").style.color = "#0d4876"
+		// 	document.getElementById("million").style.backgroundColor = "#cfdbe3"
+		// }
 	}
 	return (
 		<>
@@ -428,15 +457,27 @@ export default function Header() {
 
 								<li class="geex-content__header__quickaction__item" >
 									<a class="geex-content__header__quickaction__link  geex-btn__customizer" onClick={handledropdownMenu} >
-										<img src={change} className='dropbtn' />
+									<img src={change} className='dropbtn' />
+										{/* {localStorage.getItem('value') === '' || localStorage.getItem('value') === "undefined"?<img src={change} className='dropbtn' />:<p>{localStorage.getItem("value")}</p>} */}
 									</a>
+									
 									<div id="myDropdown" class="dropdown-content">
 										<a id='default' onClick={() => handleThousand("")}>Default</a><hr className='custom-hr' />
 										<a id='thousand' onClick={() => handleThousand("k")}>Thousand</a><hr className='custom-hr' />
 										<a id='lakh' onClick={() => handleThousand("l")}>Lakh</a><hr className='custom-hr' />
-										<a id='million' onClick={() => handleThousand("m")}>Million</a>
+										<a id='million' onClick={() => handleThousand("m")}>Million</a><hr className='custom-hr' />
+										<a id='crore' onClick={() => handleThousand("c")}>Crore</a><hr className='custom-hr' />
+										<a id='billion' onClick={() => handleThousand("b")}>Billion</a>
 									</div>
 								</li>
+								
+								{localStorage.getItem('value') === '' || localStorage.getItem('value') === "undefined"?null:null}
+								{localStorage.getItem("value") === 'k'? <li class="geex-content__header__quickaction__item " className='currency' ><p>Thousand</p></li>:null}
+								{localStorage.getItem("value") === 'l'? <li class="geex-content__header__quickaction__item currency"  className='currency'><p>Lakh</p></li>:null}
+								{localStorage.getItem("value") === 'm'? <li class="geex-content__header__quickaction__item currency"  className='currency'><p>Million</p></li>:null}
+								{localStorage.getItem("value") === 'c'? <li class="geex-content__header__quickaction__item currency"  className='currency'><p>Crore</p></li>:null}
+								{localStorage.getItem("value") === 'b'? <li class="geex-content__header__quickaction__item currency"  className='currency'><p>Billion</p></li>:null}
+							
 								<li class="geex-content__header__quickaction__item">
 									{/* <a href="#" class="geex-content__header__quickaction__link  geex-btn__customizer">
 										<img src={filter}/>
@@ -797,7 +838,7 @@ export default function Header() {
 																				isMulti
 																				defaultValue={defaultLotNo}
 																				options={LotNo}
-																				onChange={(e) => { handleSelect(e, 'strLotNoID', setDefaultLotNo) }}
+																				onChange={(e) => { handleSelect(e, 'strLotNo', setDefaultLotNo) }}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" onClick={handleOnClickLotNo} /> */}
 																		</form>

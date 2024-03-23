@@ -39,7 +39,11 @@ export default function TopSalesmanBySales() {
       return ((((val / 100000).toFixed(1)).toString()) + "L");
     } else if (filter.Thousand === 'm') {
       return ((((val / 1000000).toFixed(1)).toString()) + "M");
-    } else {
+    }else if (filter.Thousand === 'c') {
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		}else if (filter.Thousand === 'b') {
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+		}  else {
       return val;
     }
   }
@@ -49,6 +53,7 @@ export default function TopSalesmanBySales() {
     data: Amount
   }]
   options = {
+    colors:['#0d4876'],
     chart: {
       height: 350,
       type: 'bar',
@@ -71,7 +76,7 @@ export default function TopSalesmanBySales() {
         let value = format(val)
         return value
       },
-      enabled: true,
+      enabled: false,
       offsetY: -20,
       style: {
         fontSize: '12px',
@@ -132,31 +137,16 @@ export default function TopSalesmanBySales() {
       breakpoint: 595,
       options: {
         dataLabels: {
-          formatter: function (value) {
-            if (Math.max(Amount) < 1000000) {
-              return ((((value / 1000).toFixed(1)).toString()) + "K")
-            }
-            else {
-              return ((((value / 100000).toFixed(1)).toString()) + "L")
-            }
-
-        
+          enabled: false
         },
-        enabled: true,
-        offsetY: -20,
-        style: {
-          fontSize: '12px',
-          colors: ["#304758"]
-        },
-      },
       tooltip: {
         x: {
-          title: {
+          
             formatter: function (val) {
               return val
               // return ((((val / 1000).toFixed(1)).toString()) + "K");
             }
-          }
+        
 
         }
       },

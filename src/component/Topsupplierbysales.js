@@ -39,7 +39,11 @@ export default function Topsupplierbysales() {
 		  return ((((val / 100000).toFixed(1)).toString()) + "L");
 		} else if (filter.Thousand === 'm') {
 		  return ((((val / 1000000).toFixed(1)).toString()) + "M");
-		} else {
+		}else if (filter.Thousand === 'c') {
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		}else if (filter.Thousand === 'b') {
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+		}  else {
 		  return val;
 		}
 	  }
@@ -56,6 +60,7 @@ export default function Topsupplierbysales() {
 				show: true
 			}
 		},
+		colors:['#0d4876'],
 		annotations: {
 			xaxis: [{
 			}],
@@ -68,12 +73,8 @@ export default function Topsupplierbysales() {
 			}
 		},
 		dataLabels: {
-			enabled: true,
-			formatter: function (val) {
-				let value = format(val)
-				return value
-			},
-		},
+			enabled: false
+		  },
 		xaxis: {
 			categories: Name,
 		},

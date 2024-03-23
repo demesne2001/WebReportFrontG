@@ -21,7 +21,7 @@ export default function Hourlysales() {
 	}, [inputdata]);
 	let defaulres = {}
 	function fetchData() {
-		console.log("input", inputdata);
+		// console.log("input", inputdata);
 		post(inputdata, API.GetHourlySales, defaulres, 'post').then((response) => {
 			let total = [];
 			let name = [];
@@ -40,8 +40,12 @@ export default function Hourlysales() {
 			return ((((val / 100000).toFixed(1)).toString()) + "L");
 		} else if (filter.Thousand === 'm') {
 			return ((((val / 1000000).toFixed(1)).toString()) + "M");
+		} else if (filter.Thousand === 'c') {
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		}else if (filter.Thousand === 'b') {
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
 		} else {
-			return val;
+			return Math.floor(val);
 		}
 	}
 	let options = {}
@@ -62,12 +66,14 @@ export default function Hourlysales() {
 				blur: 10,
 				opacity: 0.2
 			},
+			
 			toolbar: {
 				show: true
 			}
 		},
+		colors:['#0d4876'],
 		dataLabels: {
-			enabled: true,
+			enabled: false,
 			formatter: function (val) {
 				let value = format(val)
 				return value
@@ -120,7 +126,7 @@ export default function Hourlysales() {
 					labels: {
 						show: true,
 						formatter: function(value) { 
-							console.log(value);
+							// console.log(value);
 							return ((((value / 1000).toFixed(1)).toString()) + "K"); },
 					}
 				}
@@ -133,17 +139,26 @@ export default function Hourlysales() {
 		// console.log(inputdata)
 		// console.log("hourly", inputdata)
 		if (e === 'H') {
-			document.getElementById('hourly').style.backgroundColor="#1799fb";
+			document.getElementById('hourly').style.backgroundColor="#0d4876";
+			document.getElementById('hourly').style.color="white";
 			document.getElementById('weekly').style.background="none";
 			document.getElementById('days').style.background="none";
+			document.getElementById('days').style.color = "#0d4876";
+			document.getElementById('weekly').style.color = "#0d4876";
 		} else if(e === 'L7') {
-			document.getElementById('weekly').style.backgroundColor="#1799fb";
+			document.getElementById('weekly').style.backgroundColor="#0d4876";
+			document.getElementById('weekly').style.color="white";
 			document.getElementById('days').style.background="none";
+			document.getElementById('days').style.color = "#0d4876";
+			document.getElementById('hourly').style.color = "#0d4876";
 			document.getElementById('hourly').style.background="none";
 		} else {
-			document.getElementById('days').style.backgroundColor="#1799fb";
+			document.getElementById('days').style.backgroundColor="#0d4876";
+			document.getElementById('days').style.color="white";
 			document.getElementById('hourly').style.background="none";
 			document.getElementById('weekly').style.background="none";
+			document.getElementById('weekly').style.color = "#0d4876";
+			document.getElementById('hourly').style.color = "#0d4876";
 		}
 	}
 	// function handledropdownMenu() {
@@ -184,7 +199,7 @@ export default function Hourlysales() {
 				</div>
 				<div class="geex-content__section__content">
 					<div class="toolbar">
-						<button id='hourly' className='chart-btn' onClick={() => handlechartButton("H")}>Houly</button>
+						<button id='hourly' className='chart-btn' onClick={() => handlechartButton("H")}>Hourly</button>
 						<button id='weekly' className='chart-btn' onClick={() => handlechartButton("L7")}>7 D</button>
 						<button id='days' className='chart-btn' onClick={() => handlechartButton("L14")}>15 D</button>
 					</div>

@@ -34,6 +34,9 @@ export default function Topsellingproduct() {
 	const series = Amount
 	const options = {
 		labels: Name,
+		dataLabels: {
+			enabled: true
+		  },
 		chart: {
 	
 			type: 'donut',

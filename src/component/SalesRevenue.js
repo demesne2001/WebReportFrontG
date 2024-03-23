@@ -169,8 +169,12 @@ export default function SalesRevenue() {
         return ((((val / 100000).toFixed(1)).toString()) + "L");
       } else if (filter.Thousand === 'm') {
         return ((((val / 1000000).toFixed(1)).toString()) + "M");
-      } else {
-        return val;
+      }else if (filter.Thousand === 'c') {
+        return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+      }else if (filter.Thousand === 'b') {
+        return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+      }  else {
+        return Math.floor(val);
       }
 	  }
     const makeSlabe = () => {
@@ -203,7 +207,7 @@ export default function SalesRevenue() {
     dataLabels: {
       enabled: false
     },
-
+    colors:['#0d4876','#26e7a6'],
     stroke: {
       width: [2, 4]
     },
@@ -230,6 +234,8 @@ export default function SalesRevenue() {
           color: '#008FFB',
         },
         labels: {
+          formatter: (value) => { return format(value) }
+          },
           style: {
             colors: '#008FFB',
           },
@@ -237,7 +243,6 @@ export default function SalesRevenue() {
             let value = format(val)
             return value
           },
-        },
         title: {
           text: "Amount",
           style: {
@@ -309,7 +314,7 @@ export default function SalesRevenue() {
 					labels: {
 						show: true,
 						formatter: function(value) { 
-							console.log(value);
+							// console.log(value);
 							return ((((value / 1000).toFixed(1)).toString()) + "K"); },
 					}
         },

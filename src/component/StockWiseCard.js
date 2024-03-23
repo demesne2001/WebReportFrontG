@@ -20,6 +20,21 @@ export default function StockWiseCard() {
         }
     }, [inputdata]);
     let defaulres = {}
+    function format(val) {
+		if (filter.Thousand === 'k') {
+			return ((((val / 1000).toFixed(1)).toString()) + "K");
+		} else if (filter.Thousand === 'l') {
+			return ((((val / 100000).toFixed(1)).toString()) + "L");
+		} else if (filter.Thousand === 'm') {
+			return ((((val / 1000000).toFixed(1)).toString()) + "M");
+		} else if (filter.Thousand === 'c') {
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		}else if (filter.Thousand === 'b') {
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+		} else {
+			return Math.floor(val);;
+		}
+	}
     function fetchData() {
 
         post(inputdata, API.GetStockCard, defaulres, 'post').then((response) => {
@@ -68,7 +83,7 @@ export default function StockWiseCard() {
                         </div>
                         <div>
                             <p class="card-top-main-title">Stock Amt : <span
-                                class="card-top-main-amount1">₹{StockAmt}</span> </p>
+                                class="card-top-main-amount1">₹{format(StockAmt)}</span> </p>
                         </div>
 
 
@@ -84,7 +99,7 @@ export default function StockWiseCard() {
                         </div>
                         <div>
                             <p class="card-top-main-title">Pur. Amt : <span
-                                class="card-top-main-amount1">₹{PurcAmt}</span> </p>
+                                class="card-top-main-amount1">₹{format(PurcAmt)}</span> </p>
                         </div>
                     </div>
                 </div>

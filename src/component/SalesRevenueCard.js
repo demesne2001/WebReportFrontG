@@ -18,6 +18,21 @@ export default function SalesRevenueCard() {
 		}
 	}, [inputdata]);
 	let defaulres = {}
+	function format(val) {
+		if (filter.Thousand === 'k') {
+			return ((((val / 1000).toFixed(1)).toString()) + "K");
+		} else if (filter.Thousand === 'l') {
+			return ((((val / 100000).toFixed(1)).toString()) + "L");
+		} else if (filter.Thousand === 'm') {
+			return ((((val / 1000000).toFixed(1)).toString()) + "M");
+		} else if (filter.Thousand === 'c') {
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		}else if (filter.Thousand === 'b') {
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+		} else {
+			return Math.floor(val);;
+		}
+	}
 	function fetchData() {
 		post(inputdata, API.GetSalesCard, defaulres, 'post').then((response) => {
 			// console.log("top",response)
@@ -48,13 +63,13 @@ export default function SalesRevenueCard() {
 							<img src={trend} />
 						</div>
 						<p class="card-top-main-title">Sales Revenue</p>
-						<p class="card-top-main-amount">₹{SalesAmount}</p>
+						<p class="card-top-main-amount">₹{format(SalesAmount)}</p>
 					</div>
-					<div class="line"></div>
+					<div class="line middle-color-cardline"></div>
 					<div class="right-part">
 						<p>No.of bill : <span class="right-part-numericdata">{NoOfBill}</span></p>
 						<p>Qty : <span class="right-part-numericdata">{SalesQty}</span></p>
-						<p>Avg.bill value : <span class="right-part-numericdata">₹{AvgSale}</span>
+						<p>Avg.bill value : <span class="right-part-numericdata">₹{format(AvgSale)}</span>
 						</p>
 					</div>
 				</div>

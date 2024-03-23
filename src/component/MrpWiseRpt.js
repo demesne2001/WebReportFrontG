@@ -137,8 +137,12 @@ export default function MrpWiseRpt() {
 			return ((((val / 100000).toFixed(1)).toString()) + "L");
 		} else if (filter.Thousand === 'm') {
 			return ((((val / 1000000).toFixed(1)).toString()) + "M");
-		} else {
-			return val;
+		}else if (filter.Thousand === 'c') {
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		}else if (filter.Thousand === 'b') {
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+		}  else {
+			return Math.floor(val);;
 		}
 	}
 	const makeSlabe = () => {
@@ -154,14 +158,15 @@ export default function MrpWiseRpt() {
 	}
 	const series = [{
 		name: 'Amount',
-		type: 'area',
+		type: 'column',
 		data: Amount2
 	}, {
 		name: 'Qty',
-		type: 'area',
+		type: 'line',
 		data: Amount1
 	}]
 	const options = {
+		colors:['#0d4876','#26e7a6'],
 		chart: {
 			height: 350,
 			type: 'line',
@@ -171,8 +176,8 @@ export default function MrpWiseRpt() {
 			enabled: false
 		},
 		stroke: {
-			curve: 'stepline',
-			width: [1, 4, 4]
+
+			width: [2, 4]
 		},
 		title: {
 			text: '',
@@ -251,6 +256,7 @@ export default function MrpWiseRpt() {
 		responsive: [{
 			breakpoint: 595,
 			options: {
+				
 				tooltip: {
 					title: {
 						formatter: function (val) {
@@ -270,7 +276,7 @@ export default function MrpWiseRpt() {
 							labels: {
 								show: true,
 								formatter: function (value) {
-									console.log(value);
+									// console.log(value);
 									return ((((value / 1000).toFixed(1)).toString()) + "K");
 								},
 							}
@@ -343,7 +349,7 @@ export default function MrpWiseRpt() {
 				</div>
 				<div class="geex-content__section__content">
 
-					<ReactApexChart options={options} series={series} type="area" height={350} />
+					<ReactApexChart options={options} series={series} type="line" height={350} />
 
 				</div>
 			</div>

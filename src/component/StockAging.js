@@ -57,6 +57,10 @@ export default function StockAging() {
 		  return ((((val / 100000).toFixed(1)).toString()) + "L");
 		} else if (filter.Thousand === 'm') {
 		  return ((((val / 1000000).toFixed(1)).toString()) + "M");
+		} else if (filter.Thousand === 'c') {
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		}else if (filter.Thousand === 'b') {
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
 		} else {
 		  return val;
 		}
@@ -81,6 +85,7 @@ export default function StockAging() {
 	}
 	]
 	const options = {
+		colors:['#0d4876','#26e7a6'],
 		annotations: {
 			//   points: [{
 			// 	x: 'Bananas',
@@ -220,7 +225,6 @@ export default function StockAging() {
 								  formatter:function(val) {
 									  return val;
 								  },
-								  
 							  }
 						  },
 				yaxis: 
@@ -229,12 +233,11 @@ export default function StockAging() {
 					labels: {
 						show: true,
 						formatter: function(value) { 
-							console.log(value);
+							// console.log(value);
 							return ((((value / 1000).toFixed(1)).toString()) + "K"); },
 					}
-          
-          
-          
+
+
         },
         {
 			seriesName: 'Qty',

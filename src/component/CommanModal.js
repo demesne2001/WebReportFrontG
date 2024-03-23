@@ -5,6 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import InputGroup from 'react-bootstrap/InputGroup';
 import CreatContext from './Context/CreateContext';
 import axios from 'axios';
+import search_icon from './assets/font/svg/search.svg';
+import spinear from './assets/font/svg/spinar.svg'
 
 
 function Commonmodel(props) {
@@ -15,8 +17,11 @@ function Commonmodel(props) {
     const [finalAllitem, setfinalAllitem] = useState([]);
     const [scrollTop, setScrollTop] = useState(0);
     const [multicheck, setmulticheck] = useState([])
-    const [page, setPage] = useState(2);
+    const [multicheckName, setmulticheckName] = useState([])
+    const [page, setPage] = useState(3);
     const [search, setSearch] = useState(contextSetparam.CommanChildFilter)
+    const [searchValue, setsearchValue] = useState("");
+    const [searchProcess, setSearchProcess] = useState(false);
 
     let updatedList = [...props.prdemo];
 
@@ -53,14 +58,21 @@ function Commonmodel(props) {
     function handleCheck(e) {
         let finalcheck = e.target.checked;
         let value = parseInt(e.target.value)
+        let name = e.target.name;
 
         if (finalcheck) {
             setmulticheck([...multicheck, value])
+            setmulticheckName([...multicheckName, name])
         }
         else {
             setmulticheck((prevData) => {
                 return prevData.filter((id) => {
                     return id !== value
+                })
+            })
+            setmulticheckName((prevData) => {
+                return prevData.filter((id) => {
+                    return id !== name
                 })
             })
         }
@@ -70,10 +82,14 @@ function Commonmodel(props) {
 
     const handlesavefilter = () => {
         var stringConvert = multicheck.toString()
+        var stringNameConvert = multicheckName.toString()
         // props.setvalues({ ...props.valuesform, [props.modelprops.labelname]: stringConvert })
         contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert })
+        contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.SetTempCommanNameFilter, [props.modelprops['labelname']]: stringNameConvert})
         contextSetparam.setchildFilterShow(false)
+        
         setmulticheck([])
+        setmulticheckName([])
     }
 
     const handleResetfilter = () => {
@@ -83,7 +99,9 @@ function Commonmodel(props) {
             }
         }
         setmulticheck([])
+        setmulticheckName([])
         contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: "" })
+        contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: "" })
     }
 
 
@@ -97,8 +115,9 @@ function Commonmodel(props) {
 
         if (scrollRatio === 1) {
             setPage(page + 1);
+            var input = { ...search, ['PageNo']: page, ['PageSize']: 10 }
 
-            axios.post(props.modelprops.api, { ...contextSetparam.CommanChildFilter, ["PageNo"]: page })
+            axios.post(props.modelprops.api, input)
                 .then(response => {
                     setfinalitem([...finalitem, ...response.data.lstResult])
                 })
@@ -109,7 +128,7 @@ function Commonmodel(props) {
 
 
     const fetchItemdata = () => {
-        var input = { ...search, ['PageSize'] : 10 }
+        var input = { ...search, ['PageSize']: 10 }
         if (props.modelprops.api !== undefined) {
             // console.log("search", search)
             axios.post(props.modelprops.api, input)
@@ -123,18 +142,32 @@ function Commonmodel(props) {
 
 
     const handleSearch = (event) => {
-        setSearch({ ...search, ["search"]: event.target.value })
+        setsearchValue(event.target.value)
     }
 
-    const cancelbutton = (e) => {
+    const handleSearchClick = async () => {
+        setSearchProcess(true)
+        setTimeout(() => {
+            setSearch({ ...search, ["search"]: searchValue })
+            setSearchProcess(false)
+        }, 1000);
+
+
+    }
+
+    const cancelbutton = (e, name) => {
         setmulticheck((prevData) => {
             return prevData.filter((id) => {
                 return id !== e
             })
         })
+        setmulticheckName((prevData) => {
+            return prevData.filter((id) => {
+                return id !== name
+            })
+        })
     }
-
-
+    
     return (
         <>
             {
@@ -145,10 +178,22 @@ function Commonmodel(props) {
                                 <Modal.Title>Design Filter</Modal.Title>
                             </Modal.Header>
 
-                            <Modal.Body className='modal-body' style={{ padding:0, paddingRight:30, paddingLeft:30}}> 
+                            <Modal.Body className='modal-body' style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>
                                 <Form className='comman-modal-form'>
-                                    <InputGroup >
-                                        <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
+                                    {searchProcess === true ? <><InputGroup >
+                                        <Form.Control
+                                            placeholder='Search here...'
+                                            style={{ border: '1px solid' }}
+                                            aria-label="Search"
+                                            name='Search'
+                                            aria-describedby="basic-addon1"
+                                            onChange={handleSearch}
+                                        >
+                                        </Form.Control>
+                                        <InputGroup.Text id="basic-addon1">
+                                        <i class="fa fa-spinner fa-spin" style={{fontSize:20, color:'#0d4876'}}></i>
+                                        </InputGroup.Text>
+                                    </InputGroup><br></br></> : <><InputGroup >
                                         <Form.Control
                                             placeholder='Search here...'
                                             style={{ border: '1px solid' }}
@@ -157,14 +202,27 @@ function Commonmodel(props) {
                                             aria-describedby="basic-addon1"
                                             onChange={handleSearch}
                                         />
-                                    </InputGroup><br></br>
+                                        <InputGroup.Text id="basic-addon1"><img height={20} src={search_icon} style={{ cursor: 'pointer' }} onClick={handleSearchClick} /></InputGroup.Text>
+                                    </InputGroup><br></br></>}
+                                    {/* <InputGroup >
+                                        <Form.Control
+                                            placeholder='Search here...'
+                                            style={{ border: '1px solid' }}
+                                            aria-label="Search"
+                                            name='Search'
+                                            aria-describedby="basic-addon1"
+                                            onChange={handleSearch}
+                                        />
+                                        <InputGroup.Text id="basic-addon1"><img height={20} src={search_icon} style={{cursor:'pointer'}} onClick={handleSearchClick}/></InputGroup.Text>
+                                    </InputGroup><br></br> */}
 
                                     {multicheck.length !== 0 ?
-                                        < div className='selected-item'>
+                                        <div className='selected-item style-3'>
+
                                             {finalAllitem.map((ele) => {
                                                 if (multicheck.indexOf(ele[props.modelprops.id]) !== -1) {
                                                     return <span>
-                                                        <label className='selected-label'>{ele[props.modelprops.name]}<button onClick={() => cancelbutton(ele[props.modelprops.id])} className='cancel-button'>X</button></label>
+                                                        <label className='selected-label'>{ele[props.modelprops.name]}<button onClick={() => cancelbutton(ele[props.modelprops.id], ele[props.modelprops.name])} className='cancel-button'>X</button></label>
                                                     </span>
                                                 }
 

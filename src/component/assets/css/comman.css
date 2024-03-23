@@ -25,7 +25,7 @@ select {
   overflow: auto;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  /* margin-top: 230px; */
+  margin-top: 320px;
   border-radius: 20px;
   padding: 0;
 }
@@ -47,16 +47,18 @@ select {
 }
 
 .chart-btn {
-  margin-left: 20px;
+  margin-left: 10px;
   background: none;
-  color: black;
+  color: #0d4876;
   border-radius: 7px;
-  font-size: 10px;
-  height: 20px;
+  font-size: 15px;
+  border: 1px solid #0d4876;
+  height: 25px;
   box-shadow: #0d4876 10;
 }
 #hourly {
-  background-color: #1799fb;
+  background-color: #0d4876;
+  color: white;
 }
 
 .custom-hr {
@@ -106,6 +108,8 @@ select {
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 10px;
+  overflow: auto;
+  white-space: nowrap;
   background-color: rgb(224, 224, 224);
 }
 .selected-label {
@@ -113,7 +117,6 @@ select {
   padding: 10px;
   margin: 2px;
   background-color: rgb(247, 247, 247);
-
   border-radius: 10px;
 }
 
@@ -128,4 +131,62 @@ select {
 
 .cancel-button:hover {
   background-color: rgb(255, 0, 0);
+}
+@media only screen and (max-width: 600px) {
+  .selected-label {
+    border: 1px solid;
+    padding: 5px;
+    margin: 2px;
+    height: 35px;
+    background-color: rgb(247, 247, 247);
+    border-radius: 10px;
+  }
+  .cancel-button {
+    margin-left: 10px;
+    background-color: rgb(255, 73, 73);
+    height: 19px;
+    color: white;
+    font-size: 9px;
+    border-radius: 5px;
+  }
+}
+
+
+.style-3::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+
+.style-3::-webkit-scrollbar
+{
+  height: 10px;
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.style-3::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #a3a1a1;
+}
+
+#pdf-div{
+  display: none;
+  width: 100%;
+  background-color: #a3a1a1;
+}
+
+.currency {
+  width: fit-content;
+  padding: 10px;
+  background: #0d487630;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  align-items: center;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
