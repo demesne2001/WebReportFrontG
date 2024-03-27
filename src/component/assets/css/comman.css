@@ -186,7 +186,8 @@ select {
 #pdf-div{
   display: none;
   width: 100%;
-  background-color: #a3a1a1;
+  background-color: #fff;
+  margin-bottom: 20px;
 }
 
 .currency {

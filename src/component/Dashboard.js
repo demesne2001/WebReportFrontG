@@ -33,18 +33,10 @@ export default function Dashboard() {
         const input = document.getElementById('rootElementId');
         html2canvas(input)
           .then((canvas) => {
-            var v = 0
-            v += 1024;
-            let x = parseFloat((v).toFixed(2))
-            //   const imgData = canvas.toDataURL('image/JPEG',x);
-            //   const pdf = new jsPDF("P","mm", "a2");
-            //   pdf.addImage(imgData, 'JPEG', 0, 0);
-            //   pdf.save("download");
-            var pdf = new jsPDF("P","mm", "a2");
-            var marginLeft=0;
-            var marginRight=0
-            pdf.addImage(canvas.toDataURL("image/jpeg",x,2024,2024,2048),"jpeg",10,10)
-            pdf.save("datauristring")
+              const imgData = canvas.toDataURL('image/png');
+              const pdf = new jsPDF("p","cm", "a1");
+              pdf.addImage(imgData, 'png', 8, 8);
+              pdf.save("download");
           })
           document.getElementById('pdf-div').style.display = "none"
       }
