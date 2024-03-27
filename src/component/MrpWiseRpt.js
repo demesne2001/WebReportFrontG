@@ -46,6 +46,7 @@ export default function MrpWiseRpt() {
 					item.pop()
 					setAmount2(item);
 				});
+
 			}
 		})
 	}
@@ -145,6 +146,35 @@ export default function MrpWiseRpt() {
 			return Math.floor(val);;
 		}
 	}
+
+	   function format_responsive(val) {
+      if (filter.Thousand === 'k') {
+        return ((((val / 1000).toFixed(1)).toString()) + "K");
+      } else if (filter.Thousand === 'l') {
+        return ((((val / 100000).toFixed(1)).toString()) + "L");
+      } else if (filter.Thousand === 'm') {
+        return ((((val / 1000000).toFixed(1)).toString()) + "M");
+      } else if (filter.Thousand === 'c') {
+        return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+      } else if (filter.Thousand === 'b') {
+        return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+      } else {
+		const arr = Amount2.map(Number)
+		// console.log(Math.max(...arr));
+        if (Math.max(...arr) < 1000000) {
+          return ((((val / 1000).toFixed(1)).toString()) + "K")
+        }
+        else {
+			
+          if (Math.max(...arr) > 10000000) {
+            return ((((val / 10000000).toFixed(1)).toString()) + "CR")
+          } else {
+
+            return ((((val / 100000).toFixed(1)).toString()) + "L")
+          }
+        }
+      }
+    }
 	const makeSlabe = () => {
 		let slab = 0
 		let numberArray = [];
@@ -186,6 +216,7 @@ export default function MrpWiseRpt() {
 		},
 		xaxis: {
 			categories: Name1,
+			
 		},
 		yaxis: [
 			{
@@ -277,7 +308,7 @@ export default function MrpWiseRpt() {
 								show: true,
 								formatter: function (value) {
 									// console.log(value);
-									return ((((value / 1000).toFixed(1)).toString()) + "K");
+									return format_responsive(value);
 								},
 							}
 

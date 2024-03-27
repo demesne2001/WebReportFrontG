@@ -175,7 +175,7 @@ function Commonmodel(props) {
                     <>
                         <Modal show={contextSetparam.childFilterShow} onHide={handleClose} >
                             <Modal.Header closeButton>
-                                <Modal.Title>Design Filter</Modal.Title>
+                                <Modal.Title>Filter</Modal.Title>
                             </Modal.Header>
 
                             <Modal.Body className='modal-body' style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>

@@ -206,15 +206,15 @@ export default function ChildHeader(props) {
                 // console.log(true);
                 return true
             } else if (outputString.indexOf(JSON.stringify({ 'id': parseInt(i), 'check': true })) !== -1) {
-                console.log(true);
+                // console.log(true);
                 return true
             } else {
-                console.log(false);
+                // console.log(false);
                 return false
             }
         }
         else {
-            console.log(false);
+            // console.log(false);
         }
         return false
     }
@@ -320,7 +320,7 @@ export default function ChildHeader(props) {
     // }
     if (data.length !== 0) {
         if (value) {
-            console.log("Searching.....")
+            // console.log("Searching.....")
             return (
                 <>
                     <Modal show={show}>

@@ -177,6 +177,34 @@ export default function SalesRevenue() {
         return Math.floor(val);
       }
 	  }
+    function format_responsive(val) {
+      if (filter.Thousand === 'k') {
+        return ((((val / 1000).toFixed(1)).toString()) + "K");
+      } else if (filter.Thousand === 'l') {
+        return ((((val / 100000).toFixed(1)).toString()) + "L");
+      } else if (filter.Thousand === 'm') {
+        return ((((val / 1000000).toFixed(1)).toString()) + "M");
+      } else if (filter.Thousand === 'c') {
+        return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+      } else if (filter.Thousand === 'b') {
+        return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+      } else {
+        const arr = Amount1.map(Number)
+        // console.log(Math.max(...arr));
+            if (Math.max(...arr) < 1000000) {
+              return ((((val / 1000).toFixed(1)).toString()) + "K")
+            }
+            else {
+          
+              if (Math.max(...arr) > 100000000) {
+                return ((((val / 10000000).toFixed(1)).toString()) + "CR")
+              } else {
+    
+                return ((((val / 100000).toFixed(1)).toString()) + "L")
+              }
+            }
+      }
+    }
     const makeSlabe = () => {
       let slab = [];
       let numberArray = [];
@@ -313,9 +341,10 @@ export default function SalesRevenue() {
             {
 					labels: {
 						show: true,
-						formatter: function(value) { 
-							// console.log(value);
-							return ((((value / 1000).toFixed(1)).toString()) + "K"); },
+              formatter: function(value) { 
+                // console.log(value);
+                return format_responsive(value); },
+            
 					}
         },
         {

@@ -15,13 +15,13 @@ export default function Hourlysales() {
 
 	useEffect(() => {
 		if (inputdata) {
-			console.log('Hourlysales')
+			// console.log('Hourlysales')
 			fetchData();
 		}
 	}, [inputdata]);
 	let defaulres = {}
 	function fetchData() {
-		// console.log("input", inputdata);
+		console.log("input", inputdata);
 		post(inputdata, API.GetHourlySales, defaulres, 'post').then((response) => {
 			let total = [];
 			let name = [];
@@ -42,10 +42,38 @@ export default function Hourlysales() {
 			return ((((val / 1000000).toFixed(1)).toString()) + "M");
 		} else if (filter.Thousand === 'c') {
 			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
-		}else if (filter.Thousand === 'b') {
+		} else if (filter.Thousand === 'b') {
 			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
 		} else {
 			return Math.floor(val);
+		}
+	}
+	function format_responsive(val) {
+		if (filter.Thousand === 'k') {
+			return ((((val / 1000).toFixed(1)).toString()) + "K");
+		} else if (filter.Thousand === 'l') {
+			return ((((val / 100000).toFixed(1)).toString()) + "L");
+		} else if (filter.Thousand === 'm') {
+			return ((((val / 1000000).toFixed(1)).toString()) + "M");
+		} else if (filter.Thousand === 'c') {
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		} else if (filter.Thousand === 'b') {
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+		} else {
+			const arr = Amount.map(Number)
+			// console.log(Math.max(...arr));
+			if (Math.max(...arr) < 1000000) {
+				return ((((val / 1000).toFixed(1)).toString()) + "K")
+			}
+			else {
+
+				if (Math.max(...arr) > 100000000) {
+					return ((((val / 10000000).toFixed(1)).toString()) + "CR")
+				} else {
+
+					return ((((val / 100000).toFixed(1)).toString()) + "L")
+				}
+			}
 		}
 	}
 	let options = {}
@@ -54,7 +82,7 @@ export default function Hourlysales() {
 		data: Amount
 	}]
 	options = {
-		
+
 		chart: {
 			height: 350,
 			type: 'line',
@@ -66,12 +94,12 @@ export default function Hourlysales() {
 				blur: 10,
 				opacity: 0.2
 			},
-			
+
 			toolbar: {
 				show: true
 			}
 		},
-		colors:['#0d4876'],
+		colors: ['#0d4876'],
 		dataLabels: {
 			enabled: false,
 			formatter: function (val) {
@@ -125,38 +153,39 @@ export default function Hourlysales() {
 				yaxis: {
 					labels: {
 						show: true,
-						formatter: function(value) { 
+						formatter: function (value) {
 							// console.log(value);
-							return ((((value / 1000).toFixed(1)).toString()) + "K"); },
+							return format_responsive(value);
+						},
 					}
 				}
 			}
-			}]
+		}]
 	}
 	function handlechartButton(e) {
-		inputdata = {...inputdata, ['ExtraVar']: e}
+		inputdata = { ...inputdata, ['ExtraVar']: e }
 		fetchData()
 		// console.log(inputdata)
 		// console.log("hourly", inputdata)
 		if (e === 'H') {
-			document.getElementById('hourly').style.backgroundColor="#0d4876";
-			document.getElementById('hourly').style.color="white";
-			document.getElementById('weekly').style.background="none";
-			document.getElementById('days').style.background="none";
+			document.getElementById('hourly').style.backgroundColor = "#0d4876";
+			document.getElementById('hourly').style.color = "white";
+			document.getElementById('weekly').style.background = "none";
+			document.getElementById('days').style.background = "none";
 			document.getElementById('days').style.color = "#0d4876";
 			document.getElementById('weekly').style.color = "#0d4876";
-		} else if(e === 'L7') {
-			document.getElementById('weekly').style.backgroundColor="#0d4876";
-			document.getElementById('weekly').style.color="white";
-			document.getElementById('days').style.background="none";
+		} else if (e === 'L7') {
+			document.getElementById('weekly').style.backgroundColor = "#0d4876";
+			document.getElementById('weekly').style.color = "white";
+			document.getElementById('days').style.background = "none";
 			document.getElementById('days').style.color = "#0d4876";
 			document.getElementById('hourly').style.color = "#0d4876";
-			document.getElementById('hourly').style.background="none";
+			document.getElementById('hourly').style.background = "none";
 		} else {
-			document.getElementById('days').style.backgroundColor="#0d4876";
-			document.getElementById('days').style.color="white";
-			document.getElementById('hourly').style.background="none";
-			document.getElementById('weekly').style.background="none";
+			document.getElementById('days').style.backgroundColor = "#0d4876";
+			document.getElementById('days').style.color = "white";
+			document.getElementById('hourly').style.background = "none";
+			document.getElementById('weekly').style.background = "none";
 			document.getElementById('weekly').style.color = "#0d4876";
 			document.getElementById('hourly').style.color = "#0d4876";
 		}

@@ -20,24 +20,38 @@ export default function Setcontext(props) {
       "strSubCategory1ID": "",
       "strSubCategory2ID": "",
       "strSubCategory3ID": "",
-      "ExtraVar":"H",
-      "strLotNo":""
+      "strSubCategory4ID": "",
+      "strSubCategory5ID": "",
+      "strSubCategory6ID": "",
+      "strSubCategory7ID": "",
+      "strSubCategory8ID": "",
+      "strSubCategory9ID": "",
+      "strSubCategory10ID": "",
+      "strDayBookID": "",
+      "ExtraVar": "H",
+      "strLotNo": "",
+      "strCity": "",
+      "strState": "",
+      "strRegionID": "",
+      "strSalesAccountID": "",
+      "strPurchaseAccountID": "",
+      "strStyleID": ""
     }
     
 
     const commsnChildFilterDefault = {
-        "search": "",
-        "strCompanyID": "",
-        "strBranchID": "",
-        "strDepartmentID": "",
-        "strBrandID": "",
-        "strProductID": "",
-        "strItemGroupID": "",
-        "PageSize": 0,
-        "PageNo": 0,
-        "strItemID": "",
-        "strDesignID": "",
-        "SubCategoryNo": 0
+      "search": "",
+      "strCompanyID": "",
+      "strBranchID": "",
+      "strDepartmentID": "",
+      "strBrandID": "",
+      "strProductID": "",
+      "strItemGroupID": "",
+      "PageSize": 0,
+      "PageNo": 0,
+      "strItemID": "",
+      "strDesignID": "",
+      "SubCategoryNo": 0
     }
 
     const[CommanFilter,SetCommanFilter]=useState(commanFilterDefault);

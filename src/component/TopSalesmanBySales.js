@@ -83,12 +83,23 @@ export default function TopSalesmanBySales() {
         colors: ["#304758"]
       },
     },
+    tooltip:{
+			x:{formatter:function(val) {
+				return val
+			}}
+		},
 
     xaxis: {
       categories: Name,
       position: 'bottom',
       labels: {
-
+        formatter:function(val){
+          if (val.length > 7) {
+            return val.slice(0,7) + "..."
+          } else {
+            return val
+          }
+        }
       },
       axisBorder: {
         show: false

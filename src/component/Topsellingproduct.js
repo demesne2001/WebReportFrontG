@@ -37,6 +37,21 @@ export default function Topsellingproduct() {
 		dataLabels: {
 			enabled: true
 		  },
+		  plotOptions: {
+			pie: {
+				donut: {
+					labels: {
+						show: true,
+						name: {
+
+						},
+						value: {
+
+						}
+					}
+				}
+			}
+		},
 		chart: {
 	
 			type: 'donut',
@@ -52,6 +67,13 @@ export default function Topsellingproduct() {
 		},
 		legend: {
 			position: 'bottom',
+			formatter:function(val){
+				if (val.length > 7) {
+					return val.slice(0,7) + "..."
+				} else {
+					return val
+				}
+			}
 			// fontSize: '14px',
 			// fontFamily: 'Helvetica, Arial',
 			// fontWeight: 400,
@@ -59,6 +81,24 @@ export default function Topsellingproduct() {
 		responsive: [{
 			breakpoint: 595,
 			options: {
+				dataLabels: {
+					enabled: false
+				  },
+				plotOptions: {
+					pie: {
+						donut: {
+							labels: {
+								show: true,
+								name: {
+									fontSize: '12px',
+								},
+								value: {
+									fontSize: '12px',
+								}
+							}
+						}
+					}
+				},
 				chart: {
 					width: 500
 				},

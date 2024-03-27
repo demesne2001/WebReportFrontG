@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 
 export default function FilterPrint() {
     const filter = useContext(CreatContext);
-    console.log(filter.CommanNameFilter)
+    // console.log(filter.CommanNameFilter)
   return (
     <div>
         <Table striped bordered hover>

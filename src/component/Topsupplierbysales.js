@@ -17,9 +17,9 @@ export default function Topsupplierbysales() {
 			fetchData();
 		}
 	}, [inputdata]);
-	let defaulres= {}
+	let defaulres = {}
 	function fetchData() {
-		post(inputdata,API.GetTopsupplierbysales,  defaulres,'post').then((response) => {
+		post(inputdata, API.GetTopsupplierbysales, defaulres, 'post').then((response) => {
 			let total = [];
 			let name = [];
 			// console.log(response.data.lstResult['0']['sales']);
@@ -34,22 +34,45 @@ export default function Topsupplierbysales() {
 
 	function format(val) {
 		if (filter.Thousand === 'k') {
+			return ((((val / 1000).toFixed(1)).toString()) + "K");
+		} else if (filter.Thousand === 'l') {
+			return ((((val / 100000).toFixed(1)).toString()) + "L");
+		} else if (filter.Thousand === 'm') {
+			return ((((val / 1000000).toFixed(1)).toString()) + "M");
+		} else if (filter.Thousand === 'c') {
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		} else if (filter.Thousand === 'b') {
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+		} else {
+			return val;
+		}
+	}
+	function format_responsive(val) {
+		if (filter.Thousand === 'k') {
 		  return ((((val / 1000).toFixed(1)).toString()) + "K");
 		} else if (filter.Thousand === 'l') {
 		  return ((((val / 100000).toFixed(1)).toString()) + "L");
 		} else if (filter.Thousand === 'm') {
 		  return ((((val / 1000000).toFixed(1)).toString()) + "M");
-		}else if (filter.Thousand === 'c') {
-			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
-		}else if (filter.Thousand === 'b') {
-			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
-		}  else {
-		  return val;
+		} else if (filter.Thousand === 'c') {
+		  return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+		} else if (filter.Thousand === 'b') {
+		  return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+		} else {
+		  if (Math.max(Amount) < 1000000) {
+			return ((((val / 1000).toFixed(1)).toString()) + "K")
+		  }
+		  else {
+			if (Math.max(Amount) < 100000000) {
+			  return ((((val / 10000000).toFixed(1)).toString()) + "CR")
+			} else {
+			  return ((((val / 100000).toFixed(1)).toString()) + "L")
+			}
+		  }
 		}
 	  }
-
 	const series = [{
-		name : 'Amount',
+		name: 'Amount',
 		data: Amount
 	}]
 	const options = {
@@ -60,12 +83,19 @@ export default function Topsupplierbysales() {
 				show: true
 			}
 		},
-		colors:['#0d4876'],
+		colors: ['#0d4876'],
 		annotations: {
 			xaxis: [{
 			}],
 			yaxis: [
 			]
+		},
+		tooltip: {
+			x: {
+				formatter: function (val) {
+					return val
+				}
+			}
 		},
 		plotOptions: {
 			bar: {
@@ -74,7 +104,7 @@ export default function Topsupplierbysales() {
 		},
 		dataLabels: {
 			enabled: false
-		  },
+		},
 		xaxis: {
 			categories: Name,
 		},
@@ -89,6 +119,16 @@ export default function Topsupplierbysales() {
 			reversed: false,
 			axisTicks: {
 				show: true
+			},
+			labels: {
+				formatter: function (val) {
+
+					if (val.length > 7) {
+						return val.slice(0, 7) + "..."
+					} else {
+						return val
+					}
+				}
 			}
 		},
 		responsive: [{
@@ -96,34 +136,30 @@ export default function Topsupplierbysales() {
 			options: {
 				tooltip: {
 					x: {
-						formatter:function(val) {
+						formatter: function (val) {
 							return val;
 						},
-						
 					}
 				},
 				yaxis: {
 					labels: {
 						show: true,
-						formatter: (value) => { if(typeof(value) === "string"){return value.substr(0, 3) + "..." } else{ return value } },
+						formatter: (value) => { if (typeof (value) === "string") { return value.substr(0, 3) + "..." } else { return value } },
 					}
 				},
 				xaxis: {
 					labels: {
 						show: true,
 						formatter: (value) => {
-							if (Math.max(Amount) < 1000000) {
-							 return ((((value / 1000).toFixed(1)).toString()) + "K") }
-							 else{
-								return ((((value / 100000).toFixed(1)).toString()) + "L") }
+								return format_responsive(value)
 
-							 }
+						}
 					}
-								
+
 				}
 			}
-				
-			}
+
+		}
 		]
 	}
 
