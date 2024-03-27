@@ -42,9 +42,9 @@ export default function Dashboard() {
       }
     return (
         <Setcontext>
-            <button className="button" onClick={downloadPdfDocument}>
+            {/* <button className="button" onClick={downloadPdfDocument}>
                 Export to PDF
-            </button>
+            </button> */}
             <body class="geex-dashboard" >
                 <main class="geex-main-content">
                     <Navigation />
