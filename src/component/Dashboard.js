@@ -34,17 +34,17 @@ export default function Dashboard() {
         html2canvas(input)
           .then((canvas) => {
               const imgData = canvas.toDataURL('image/png');
-              const pdf = new jsPDF("p","mm", "a2");
-              pdf.addImage(imgData, 'JPEG', 0, 0);
+              const pdf = new jsPDF("p","cm", "a1");
+              pdf.addImage(imgData, 'png', 8, 8);
               pdf.save("download");
           })
           document.getElementById('pdf-div').style.display = "none"
       }
     return (
         <Setcontext>
-            {/* <button className="button" onClick={downloadPdfDocument}>
+            <button className="button" onClick={downloadPdfDocument}>
                 Export to PDF
-            </button> */}
+            </button>
             <body class="geex-dashboard" >
                 <main class="geex-main-content">
                     <Navigation />
