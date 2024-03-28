@@ -210,6 +210,21 @@ select {
   align-items: center;
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
+.filtermodal1 .modal-header {
+  padding-bottom: 0;
+}
+.filtermodal1 .modal-body {
+  padding: 0 1.75rem 0 1.75rem;
+}
+.filtermodal1  .modal-footer {
+  padding-top: 0;
+}
+/* body {
+  --scroll-size: 5px;
+  --scroll-radius: 10px;
+  --scroll-track: rgb(255 255 255 / 10%);
+  --scroll-thumb-color: #fff;
+} */
 
 @media only screen and (max-width: 503px) {
   .dropdown-content {
@@ -221,5 +236,9 @@ select {
     margin-top: 340px;
     margin-left: 80px;
   }
- 
+}
+.currancy-label {
+  margin-left: 10px;
+  font-weight: bold;
+  color: #0d4876;
 }

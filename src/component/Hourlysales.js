@@ -5,6 +5,7 @@ import API from './Utility/API';
 import post from './Utility/APIHandle';
 import menu from './assets/font/svg/menuButton.svg'
 import './assets/css/comman.css'
+import time from './assets/font/svg/time.svg'
 
 export default function Hourlysales() {
 	const filter = useContext(CreatContext);
@@ -212,7 +213,7 @@ export default function Hourlysales() {
 					<div class="geex-content__section__header__title-part ">
 
 						<h4 class="geex-content__section__header__title ">
-							<i class="fas fa-tags  title-icon"></i>Hourly sales
+							<i class="fas fa-clock  title-icon"></i>Hourly sales
 						</h4>
 
 					</div>
@@ -234,7 +235,7 @@ export default function Hourlysales() {
 					</div>
 
 					{/* <div id="column-chart"> */}
-					< ReactApexChart options={options} series={series} type="line" height={320} />
+					<ReactApexChart options={options} series={series} type="line" height={320} />
 					{/* </div>  */}
 					{/* <img src="assets/img//Graph/Hourlysales.png" class="graph-img img-fluid" /> */}
 				</div >

@@ -438,7 +438,7 @@ Sidebar
 .geex-sidebar__menu__link.default-active,
 .geex-sidebar__menu__link.active,
 .geex-sidebar__menu__link:hover {
-  color: var(--primary-color) !important;
+  color: #0d4876;
   background: rgb(36 90 131 / 18%);
 }
 
@@ -647,6 +647,7 @@ Sidebar
 }
 
 .geex-customizer__body {
+  height: 67vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2019,8 +2020,8 @@ blockquote span:before {
 @media only screen and (max-width: 1920px) {
   .geex-main-content {
     gap: 50px;
-    -webkit-padding-start: 380px;
-    padding-inline-start: 380px;
+    -webkit-padding-start: 365px;
+    padding-inline-start: 365px;
   }
 }
 
@@ -2825,15 +2826,18 @@ blockquote span:before {
 }
 
 .geex-content__section {
-  /* padding: 21px; */
-  padding-right: 1px;
+  padding: 0;
+  /* padding-right: 1px; */
+  /* padding-left: 9px; */
   border-radius: 24px;
-  padding-left: 9px;
   padding-top: 13px;
   padding-bottom: 22px;
   border-radius: 24px;
   background-color: var(--light-color);
   margin-bottom: 20px;
+}
+.geex-content__section__content {
+  padding: 10px;
 }
 
 @media only screen and (max-width: 479px) {

@@ -4,6 +4,7 @@ import user from './assets/font/svg/menu.svg'
 import refresh from './assets/font/svg/refresh.svg'
 import department from './assets/font/svg/it-department.svg'
 import filter from './assets/font/svg/filter.svg'
+import expand from './assets/font/svg/expand.svg'
 import menu from './assets/font/svg/menu.svg'
 import change from './assets/font/svg/change.svg'
 import option from './assets/font/svg/option.svg'
@@ -347,7 +348,7 @@ export default function Header() {
 				})
 			} else {
 				await post(FilterInput, api, {}, "post").then((res) => {
-					let Dept = [{'value':"", 'label':'NONE'}]
+					let Dept = [{ 'value': "", 'label': 'NONE' }]
 					let jsonTemp = {}
 					res.data.lstResult.forEach(element => {
 						jsonTemp = {}
@@ -737,7 +738,7 @@ export default function Header() {
 							</ul>
 							<ul class="geex-content__header__quickaction">
 
-								<li class="geex-content__header__quickaction__item" >
+								<li class="geex-content__header__quickaction__item" style={{ width: 150 }} >
 									<a class="geex-content__header__quickaction__link  geex-btn__customizer" onClick={handledropdownMenu} >
 										<img src={change} className='dropbtn' />
 										{/* {localStorage.getItem('value') === '' || localStorage.getItem('value') === "undefined"?<img src={change} className='dropbtn' />:<p>{localStorage.getItem("value")}</p>} */}
@@ -751,14 +752,15 @@ export default function Header() {
 										<a id='crore' onClick={() => handleThousand("c")}>Crores</a><hr className='custom-hr' />
 										<a id='billion' onClick={() => handleThousand("b")}>Billions</a>
 									</div>
+									{localStorage.getItem('value') === '' ? <p className='currancy-label'>Default</p> : null}
+									{localStorage.getItem("value") === 'k' ? <p className='currancy-label'>Thousands</p> : null}
+									{localStorage.getItem("value") === 'l' ? <p className='currancy-label'>Lakhs</p> : null}
+									{localStorage.getItem("value") === 'm' ? <p className='currancy-label'>Millions</p> : null}
+									{localStorage.getItem("value") === 'c' ? <p className='currancy-label'>Crores</p> : null}
+									{localStorage.getItem("value") === 'b' ? <p className='currancy-label'>Billions</p> : null}
 								</li>
 
-								{localStorage.getItem('value') === '' || localStorage.getItem('value') === "undefined" ? null : null}
-								{localStorage.getItem("value") === 'k' ? <li class="geex-content__header__quickaction__item " className='currency' ><p>Thousands</p></li> : null}
-								{localStorage.getItem("value") === 'l' ? <li class="geex-content__header__quickaction__item currency" className='currency'><p>Lakhs</p></li> : null}
-								{localStorage.getItem("value") === 'm' ? <li class="geex-content__header__quickaction__item currency" className='currency'><p>Millions</p></li> : null}
-								{localStorage.getItem("value") === 'c' ? <li class="geex-content__header__quickaction__item currency" className='currency'><p>Crores</p></li> : null}
-								{localStorage.getItem("value") === 'b' ? <li class="geex-content__header__quickaction__item currency" className='currency'><p>Billions</p></li> : null}
+
 
 								<li class="geex-content__header__quickaction__item">
 									{/* <a href="#" class="geex-content__header__quickaction__link  geex-btn__customizer">
@@ -767,7 +769,7 @@ export default function Header() {
 									<a class="geex-content__header__quickaction__link  geex-btn__customizer">
 										<img onClick={handleShow} src={filter} />
 									</a>
-									<Modal show={show} onHide={handleClose} class="modal-dialog1" size='xl'>
+									<Modal show={show} onHide={handleClose} className="modal-dialog1 filtermodal1" size='xl'>
 										<Modal.Header >
 											<div class="geex-customizer__header">
 												<h4 class="geex-customizer__title">Filter By</h4>
@@ -784,11 +786,11 @@ export default function Header() {
 											</div>
 										</Modal.Header>
 										<Modal.Body >
-											<div class="geex-customizer__body">
+											<div class="geex-customizer__body1 " >
 												<div class="container">
 													<div class="filter-top">
 														<div class="row">
-															<div class="col-xl-2 col-lg-6 col-md-6 col-sm-12">
+															<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
 																<div class="card-filter-contain">
 																	<form class="form-group">
 																		<label for="sel1" class="form-label">From Date </label>
@@ -796,7 +798,7 @@ export default function Header() {
 																	</form>
 																</div>
 															</div>
-															<div class="col-xl-2 col-lg-6 col-md-6 col-sm-12">
+															<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
 																<div class="card-filter-contain">
 																	<form class="form-group">
 																		<label for="sel1" class="form-label">To Date</label>
@@ -805,7 +807,7 @@ export default function Header() {
 																</div>
 															</div>
 
-															<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+															<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
 																<div class="card-filter-contain">
 																	<form class="from-group">
 																		<label for="sel1" class="form-label">Company </label>
@@ -836,7 +838,7 @@ export default function Header() {
 																	</form>
 																</div>
 															</div>
-															<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+															<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
 																<div class="card-filter-contain">
 																	<form>
 																		<label for="sel1" class="form-label">Branch </label>
@@ -847,7 +849,7 @@ export default function Header() {
 																	</form>
 																</div>
 															</div>
-															<br/>
+															<br />
 															<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
 																<div class="card-filter-contain">
 																	<form>
@@ -875,32 +877,32 @@ export default function Header() {
 																</div>
 															</div>
 															<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																	<div class="card-filter-contain">
-																		<form>
-																			<label for="sel1" class="form-label">DayBook </label>
-																			{/* <select class="form-select form-control" aria-label="Default select example" onChange={handleChartValueOption}>
+																<div class="card-filter-contain">
+																	<form>
+																		<label for="sel1" class="form-label">DayBook </label>
+																		{/* <select class="form-select form-control" aria-label="Default select example" onChange={handleChartValueOption}>
 																			<option value="AMTWITHTAX">AMTWITHTAX</option>
 																			<option value="TAXABLEAMT">TAXABLEAMT</option>
 																		</select> */}
-																			<Select
-																				ref={DaybookRef}
+																		<Select
+																			ref={DaybookRef}
 
-																				closeMenuOnSelect={false}
-																				components={animatedComponents}
-																				defaultValue={defaultDayBook}
-																				options={DayBook}
-																				onChange={(e) => { handleSelectDayBook(e) }}
+																			closeMenuOnSelect={false}
+																			components={animatedComponents}
+																			defaultValue={defaultDayBook}
+																			options={DayBook}
+																			onChange={(e) => { handleSelectDayBook(e) }}
 
-																				styles={{
-																					control: (provided, state) => ({
-																						...provided,
-																						height: '45px',
-																					}),
-																				}}
-																			/>
-																		</form>
-																	</div>
+																			styles={{
+																				control: (provided, state) => ({
+																					...provided,
+																					height: '45px',
+																				}),
+																			}}
+																		/>
+																	</form>
 																</div>
+															</div>
 														</div>
 													</div>
 													<div class="stock-filter">
@@ -950,6 +952,12 @@ export default function Header() {
 																					defaultValue={defaultDept}
 																					options={Department}
 																					onChange={(e) => { handleSelect(e, 'strDepartmentID', setDefaultDept) }}
+																					styles={{
+																						control: (provided, state) => ({
+																							...provided,
+																							height: '45px',
+																						}),
+																					}}
 																				/>
 																			</div>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDepartmentID'].slice(0, -1)} onClick={handleOnClickDepartmentId} /> */}
@@ -979,6 +987,12 @@ export default function Header() {
 																				defaultValue={defaultstyle}
 																				options={style}
 																				onChange={(e) => { handleSelect(e, 'strStyleID', setDefaultstyle) }}
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" onClick={handleOnClickLotNo} /> */}
 																		</form>
@@ -1006,6 +1020,12 @@ export default function Header() {
 																				defaultValue={defaultColor}
 																				options={color}
 																				onChange={(e) => { handleSelect(e, 'strColorID', setDefaultColor) }}
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strColorID'].slice(0, -1)} onClick={handleOnClickColor} /> */}
 
@@ -1027,7 +1047,7 @@ export default function Header() {
 																				<option value="3">Three</option>
 																			</select> */}
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc' }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strPurchaseAccountID'].slice(0, -1)} onClick={handleOnClickPurchase} />
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strPurchaseAccountID'].slice(0, -1)} onClick={handleOnClickPurchase} />
 																		</form>
 																	</div>
 																</div>
@@ -1053,6 +1073,12 @@ export default function Header() {
 																				defaultValue={defaultItemGroup}
 																				options={ItemGroup}
 																				onChange={(e) => { handleSelect(e, 'strItemGroupID', setDefaultItemGroup) }}
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
 																		</form>
@@ -1088,6 +1114,12 @@ export default function Header() {
 																				defaultValue={defaultItemName}
 																				options={ItemName}
 																				onChange={(e) => { handleSelect(e, 'strItemID', setDefaultItemName) }}
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemID'].slice(0, -1)} onClick={handleOnClickItemID} /> */}
 																			{/*</InfiniteScroll> */}
@@ -1119,6 +1151,12 @@ export default function Header() {
 																				defaultValue={defaultstate}
 																				options={state}
 																				onChange={(e) => { handleSelectState(e) }}
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
 																		</form>
@@ -1139,7 +1177,7 @@ export default function Header() {
 																				<option value="3">Three</option>
 																			</select> */}
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc' }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesAccountID'].slice(0, -1)} onClick={handleOnClickSalesParty} />
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesAccountID'].slice(0, -1)} onClick={handleOnClickSalesParty} />
 																		</form>
 																	</div>
 																</div>
@@ -1165,7 +1203,12 @@ export default function Header() {
 																				defaultValue={defaultProduct}
 																				options={Product}
 																				onChange={(e) => { handleSelect(e, 'strProductID', setDefaultProduct) }}
-
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strProductID'].slice(0, -1)} onClick={handleOnClickProduct} /> */}
 
@@ -1187,7 +1230,7 @@ export default function Header() {
 																				<option value="3">Three</option>
 																			</select> */}
 
-																			<input type='text' style={{ border: '1px solid #cccccc' }} placeholder='Select...' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDesignID'].slice(0, -1)} onClick={handleOnClickDesign} />
+																			<input type='text' style={{ border: '1px solid #cccccc', height: '45px', }} placeholder='Select...' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDesignID'].slice(0, -1)} onClick={handleOnClickDesign} />
 																		</form>
 																	</div>
 																</div>
@@ -1213,6 +1256,12 @@ export default function Header() {
 																				defaultValue={defaultcity}
 																				options={city}
 																				onChange={(e) => { handleSelectCity(e) }}
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
 																		</form>
@@ -1240,6 +1289,12 @@ export default function Header() {
 																				defaultValue={defaultSalesman}
 																				options={Salesman}
 																				onChange={(e) => { handleSelect(e, 'strSalesmanID', setDefaultSalesman) }}
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesmanID'].slice(0, -1)} onClick={handleOnClickSalesMan} /> */}
 																		</form>
@@ -1266,16 +1321,18 @@ export default function Header() {
 																				isMulti
 																				defaultValue={defaultBrand}
 																				options={Brand}
-
 																				onChange={(e) => { handleSelect(e, 'strBrandID', setDefaultBrand) }}
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strBrandID'].slice(0, -1)} onClick={handleOnClickBrand} /> */}
 																		</form>
 																	</div>
 																</div>
-																
-																
-																
 																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
 																	<div class="card-filter-contain">
 																		<form>
@@ -1298,6 +1355,12 @@ export default function Header() {
 																				defaultValue={defaultLotNo}
 																				options={LotNo}
 																				onChange={(e) => { handleSelect(e, 'strLotNo', setDefaultLotNo) }}
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" onClick={handleOnClickLotNo} /> */}
 																		</form>
@@ -1325,6 +1388,12 @@ export default function Header() {
 																				defaultValue={defaultregion}
 																				options={region}
 																				onChange={(e) => { handleSelect(e, 'strRegionID', setDefaultregion) }}
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
 																		</form>
@@ -1357,6 +1426,12 @@ export default function Header() {
 																						defaultValue={defaultSubCatogory1}
 																						options={SubCatogory1}
 																						onChange={(e) => { handleSelect(e, 'strSubCategory1ID', setDefaultSubCatogory1) }}
+																						styles={{
+																							control: (provided, state) => ({
+																								...provided,
+																								height: '45px',
+																							}),
+																						}}
 																					/>
 																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
 																				</form>
@@ -1384,6 +1459,12 @@ export default function Header() {
 																						defaultValue={defaultSubCatogory2}
 																						options={SubCatogory2}
 																						onChange={(e) => { handleSelect(e, 'strSubCategory2ID', setDefaultSubCatogory2) }}
+																						styles={{
+																							control: (provided, state) => ({
+																								...provided,
+																								height: '45px',
+																							}),
+																						}}
 																					/>
 																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
 																				</form>
@@ -1411,6 +1492,12 @@ export default function Header() {
 																						defaultValue={defaultSubCatogory3}
 																						options={SubCatogory3}
 																						onChange={(e) => { handleSelect(e, 'strSubCategory3ID', setDefaultSubCatogory3) }}
+																						styles={{
+																							control: (provided, state) => ({
+																								...provided,
+																								height: '45px',
+																							}),
+																						}}
 																					/>
 																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
 																				</form>
@@ -1433,6 +1520,12 @@ export default function Header() {
 																						defaultValue={defaultSubCatogory4}
 																						options={SubCatogory4}
 																						onChange={(e) => { handleSelect(e, 'strSubCategory4ID', setDefaultSubCatogory4) }}
+																						styles={{
+																							control: (provided, state) => ({
+																								...provided,
+																								height: '45px',
+																							}),
+																						}}
 																					/>
 																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
 																				</form>
@@ -1455,6 +1548,12 @@ export default function Header() {
 																						defaultValue={defaultSubCatogory5}
 																						options={SubCatogory5}
 																						onChange={(e) => { handleSelect(e, 'strSubCategory5ID', setDefaultSubCatogory5) }}
+																						styles={{
+																							control: (provided, state) => ({
+																								...provided,
+																								height: '45px',
+																							}),
+																						}}
 																					/>
 																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
 																				</form>
@@ -1477,6 +1576,12 @@ export default function Header() {
 																						defaultValue={defaultSubCatogory6}
 																						options={SubCatogory6}
 																						onChange={(e) => { handleSelect(e, 'strSubCategory6ID', setDefaultSubCatogory6) }}
+																						styles={{
+																							control: (provided, state) => ({
+																								...provided,
+																								height: '45px',
+																							}),
+																						}}
 																					/>
 																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
 																				</form>
@@ -1499,24 +1604,18 @@ export default function Header() {
 																						defaultValue={defaultSubCatogory7}
 																						options={SubCatogory7}
 																						onChange={(e) => { handleSelect(e, 'strSubCategory7ID', setDefaultSubCatogory7) }}
+																						styles={{
+																							control: (provided, state) => ({
+																								...provided,
+																								height: '45px',
+																							}),
+																						}}
 																					/>
 																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
 																				</form>
 																			</div>
 																		</div> : null}
 																	</> : null}
-																
-																
-																
-																
-																
-
-
-
-
-
-																
-																
 															</div>
 														</div>
 													</div>
@@ -1538,13 +1637,13 @@ export default function Header() {
 								</li>
 								<li class="geex-content__header__quickaction__item">
 									<a href="#" class="geex-content__header__quickaction__link">
-										<img src={refresh} />
+										<img src={refresh}  />
 									</a>
 								</li>
 								<li class="geex-content__header__quickaction__item">
 									<a href="#" class="geex-content__header__quickaction__link" onClick={handleFullScreen}>
-										<i class="fas fa-expand-alt"></i>
-
+										{/* <i class="fas fa-expand-alt"></i> */}
+										<img src={expand} />
 									</a>
 								</li>
 								<li class="geex-content__header__quickaction__item">

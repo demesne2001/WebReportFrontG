@@ -559,9 +559,10 @@ h4.geex-customizer__title {
   font-size: 25px;
 }
 img.filter-icon {
-  border-radius: 5px;
-  height: 28px;
-  width: 28px;
+    border-radius: 5px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
 }
 select.col.form-select {
   color: gray;
@@ -911,6 +912,7 @@ span.right-part-numericdata {
     height: auto;
     background-color: #fdfdfd;
     border-radius: 10px;
+    z-index: 9999;
   }
   .geex-content__header__title {
     font-size: 32px;
