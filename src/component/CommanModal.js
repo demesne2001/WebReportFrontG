@@ -85,7 +85,7 @@ function Commonmodel(props) {
         var stringNameConvert = multicheckName.toString()
         // props.setvalues({ ...props.valuesform, [props.modelprops.labelname]: stringConvert })
         contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert })
-        contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.SetTempCommanNameFilter, [props.modelprops['labelname']]: stringNameConvert})
+        contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: stringNameConvert})
         contextSetparam.setchildFilterShow(false)
         
         setmulticheck([])
@@ -178,7 +178,7 @@ function Commonmodel(props) {
                                 <Modal.Title>Filter</Modal.Title>
                             </Modal.Header>
 
-                            <Modal.Body className='modal-body' style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>
+                            <Modal.Body className='modal-body' modal-dialog-scrollable style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>
                                 <Form className='comman-modal-form'>
                                     {searchProcess === true ? <><InputGroup >
                                         <Form.Control

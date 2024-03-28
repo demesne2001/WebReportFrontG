@@ -60,11 +60,11 @@ export default function Setcontext(props) {
     const[TempCommanNameFilter,SetTempCommanNameFilter]=useState(commanFilterDefault);
     const[CommanChildFilter,SetCommanChildFilter]=useState(commsnChildFilterDefault);
     const [childFilterShow, setchildFilterShow] = useState(false);
-    
+    const [flag, setflag] = useState(0);
     const [MenuShow, setMenuShow] = useState(20);
     const [Thousand, setThousand] = useState(localStorage.getItem("value"));
   return (
-    <CreateContext.Provider value = {{CommanNameFilter, SetCommanNameFilter, TempCommanNameFilter, SetTempCommanNameFilter,Thousand, setThousand, MenuShow, setMenuShow, CommanFilter,SetCommanFilter, CommanChildFilter, SetCommanChildFilter, childFilterShow, setchildFilterShow, TempCommanFilter, SetTempCommanFilter}}>
+    <CreateContext.Provider value = {{flag, setflag, CommanNameFilter, SetCommanNameFilter, TempCommanNameFilter, SetTempCommanNameFilter,Thousand, setThousand, MenuShow, setMenuShow, CommanFilter,SetCommanFilter, CommanChildFilter, SetCommanChildFilter, childFilterShow, setchildFilterShow, TempCommanFilter, SetTempCommanFilter}}>
     {props.children}
     </CreateContext.Provider>
   )

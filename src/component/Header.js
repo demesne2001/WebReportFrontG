@@ -13,7 +13,7 @@ import brand from './assets/font/svg/brand.svg'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import './assets/css/comman.css';
-
+import pdf from './assets/font/svg/pdf.svg'
 import fit from './assets/font/svg/tape.svg'
 // import measuring from './assets/font/svg/measuring-tape.svg'
 import product from './assets/font/svg/product.svg'
@@ -45,6 +45,7 @@ const FilterInput = {
 	"SubCategoryNo": 0
 }
 export default function Header() {
+	const [fullscreen, setFullScreen] = useState(false);
 	const DepartmentRef = useRef();
 	const ItemGrRef = useRef();
 	const ColorRef = useRef();
@@ -196,7 +197,7 @@ export default function Header() {
 		['strCity']: FilterContext.TempCommanNameFilter['strCity'],
 		['strState']: FilterContext.TempCommanNameFilter['strState'],
 		['strRegionID']: FilterContext.TempCommanNameFilter['strRegionID'],
-		['strColorID']: FilterContext.TempCommanNameFilter['strColorID']
+		['strColorID']: FilterContext.TempCommanNameFilter['strColorID'],
 	}
 	const [FilterTempData, setFilterTempData] = useState(FilterContext.CommanFilter)
 	const [Department, setDepartment] = useState([]);
@@ -445,7 +446,7 @@ export default function Header() {
 			}
 		}
 		setdemo(newarr)
-		setprops1({ 'api': API.GetPurchaseParty, 'labelname': 'strPurchaseAccountID', 'id': 'AccountID', 'name': 'AccountName'})
+		setprops1({ 'api': API.GetPurchaseParty, 'labelname': 'strPurchaseAccountID', 'id': 'AccountID', 'name': 'AccountName' })
 		FilterContext.setchildFilterShow(true);
 	}
 
@@ -464,12 +465,12 @@ export default function Header() {
 			}
 		}
 		setdemo(newarr)
-		setprops1({ 'api': API.GetSalesParty, 'labelname': 'strSalesAccountID', 'id': 'AccountID', 'name': 'AccountName'})
+		setprops1({ 'api': API.GetSalesParty, 'labelname': 'strSalesAccountID', 'id': 'AccountID', 'name': 'AccountName' })
 		FilterContext.setchildFilterShow(true);
 	}
 
 	function handleApply() {
-		// console.log(FilterData, FilterContext.CommanFilter, FilterContext.TempCommanFilter);
+		console.log("name", FilterNameData, FilterContext.TempCommanNameFilter);
 		if (JSON.stringify(FilterData) !== JSON.stringify(FilterContext.CommanFilter)) {
 			FilterContext.SetCommanFilter(FilterData);
 			FilterContext.SetCommanNameFilter(FilterNameData);
@@ -548,15 +549,16 @@ export default function Header() {
 				}
 			}
 		}
-		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [key]: inputstringName })
+		console.log(key, "hii");
+		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [key]: inputString })
 		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, [key]: inputstringName })
 	}
 	function handleSelectDayBook(e) {
 		setDefaultDayBook(e)
 		// console.log(e);
-		
+
 		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strDayBookID']: e.value.toString() })
-		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strDayBookID']: e.value.toString() })
+		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strDayBookID']: e.label.toString() })
 	}
 
 	function handleSelectState(e) {
@@ -574,7 +576,7 @@ export default function Header() {
 			}
 		}
 		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strState']: inputString })
-		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strState']: inputstringName })
+		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strState']: inputString })
 	}
 
 	function handleSelectCity(e) {
@@ -641,6 +643,21 @@ export default function Header() {
 		format_D = format_D.replace("dd", day.toString().padStart(2, "0"));
 
 		return format_D;
+	}
+
+	function handleDownload() {
+		FilterContext.setflag(FilterContext.flag + 1);
+	}
+
+	function handleFullScreen() {
+		if (fullscreen === true) {
+			setFullScreen(false);
+			document.exitFullscreen()
+		} else {
+			setFullScreen(true);
+			var ele = document.documentElement
+			ele.requestFullscreen()
+		}
 	}
 
 	function setColorOfDropDown() {
@@ -843,7 +860,33 @@ export default function Header() {
 																	</form>
 																</div>
 															</div>
-															
+															<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+																	<div class="card-filter-contain">
+																		<form>
+																			<label for="sel1" class="form-label">DayBook </label>
+																			{/* <select class="form-select form-control" aria-label="Default select example" onChange={handleChartValueOption}>
+																			<option value="AMTWITHTAX">AMTWITHTAX</option>
+																			<option value="TAXABLEAMT">TAXABLEAMT</option>
+																		</select> */}
+																			<Select
+																				ref={DaybookRef}
+
+																				closeMenuOnSelect={false}
+																				components={animatedComponents}
+																				defaultValue={defaultDayBook}
+																				options={DayBook}
+																				onChange={(e) => { handleSelectDayBook(e) }}
+
+																				styles={{
+																					control: (provided, state) => ({
+																						...provided,
+																						height: '45px',
+																					}),
+																				}}
+																			/>
+																		</form>
+																	</div>
+																</div>
 														</div>
 													</div>
 													<div class="stock-filter">
@@ -906,90 +949,6 @@ export default function Header() {
 																			<div class="filter-icon-title">
 																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
 																					src={option} />
-																				<label for="sel1" class="form-label">Item Group </label>
-																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Item Group - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
-																				ref={ItemGrRef}
-																				closeMenuOnSelect={false}
-																				components={animatedComponents}
-																				isMulti
-																				defaultValue={defaultItemGroup}
-																				options={ItemGroup}
-																				onChange={(e) => { handleSelect(e, 'strItemGroupID', setDefaultItemGroup) }}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
-																		</form>
-																	</div>
-																</div>
-																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																	<div class="card-filter-contain">
-																		<form>
-																			<div class="filter-icon-title">
-																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
-																					src={product} />
-																				<label for="sel1" class="form-label">Product </label>
-																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Product - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
-																				ref={ProductRef}
-																				closeMenuOnSelect={false}
-																				components={animatedComponents}
-																				isMulti
-																				defaultValue={defaultProduct}
-																				options={Product}
-																				onChange={(e) => { handleSelect(e, 'strProductID', setDefaultProduct) }}
-
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strProductID'].slice(0, -1)} onClick={handleOnClickProduct} /> */}
-
-																		</form>
-																	</div>
-																</div>
-																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																	<div class="card-filter-contain">
-																		<form>
-																			<div class="filter-icon-title">
-																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
-																					src={brand} />
-																				<label for="sel1" class="form-label">Brand </label>
-																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Brand - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
-																				ref={BrandRef}
-																				closeMenuOnSelect={false}
-																				components={animatedComponents}
-																				isMulti
-																				defaultValue={defaultBrand}
-																				options={Brand}
-
-																				onChange={(e) => { handleSelect(e, 'strBrandID', setDefaultBrand) }}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strBrandID'].slice(0, -1)} onClick={handleOnClickBrand} /> */}
-																		</form>
-																	</div>
-																</div>
-																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																	<div class="card-filter-contain">
-																		<form>
-																			<div class="filter-icon-title">
-																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
-																					src={number} />
 																				<label for="sel1" class="form-label">Style</label>
 																			</div>
 																			{/* <select class="col form-select" aria-label="Default select example">
@@ -1008,6 +967,80 @@ export default function Header() {
 																				onChange={(e) => { handleSelect(e, 'strStyleID', setDefaultstyle) }}
 																			/>
 																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" onClick={handleOnClickLotNo} /> */}
+																		</form>
+																	</div>
+																</div>
+																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+																	<div class="card-filter-contain">
+																		<form>
+																			<div class="filter-icon-title">
+																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
+																					src={palette} />
+																				<label for="sel1" class="form-label">Color </label>
+																			</div>
+																			{/* <select class="col form-select" aria-label="Default select example">
+																				<option selected>- - Select Color - -</option>
+																				<option value="1">One</option>
+																				<option value="2">Two</option>
+																				<option value="3">Three</option>
+																			</select> */}
+																			<Select
+																				ref={ColorRef}
+																				closeMenuOnSelect={false}
+																				components={animatedComponents}
+																				isMulti
+																				defaultValue={defaultColor}
+																				options={color}
+																				onChange={(e) => { handleSelect(e, 'strColorID', setDefaultColor) }}
+																			/>
+																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strColorID'].slice(0, -1)} onClick={handleOnClickColor} /> */}
+
+																		</form>
+																	</div>
+																</div>
+																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+																	<div class="card-filter-contain">
+																		<form>
+																			<div class="filter-icon-title">
+																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
+																					src={design} />
+																				<label for="sel1" class="form-label">Purchase Party </label>
+																			</div>
+																			{/* <select class="col form-select" aria-label="Default select example">
+																				<option selected>- - Select Design - -</option>
+																				<option value="1">One</option>
+																				<option value="2">Two</option>
+																				<option value="3">Three</option>
+																			</select> */}
+
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc' }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strPurchaseAccountID'].slice(0, -1)} onClick={handleOnClickPurchase} />
+																		</form>
+																	</div>
+																</div>
+																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+																	<div class="card-filter-contain">
+																		<form>
+																			<div class="filter-icon-title">
+																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
+																					src={option} />
+																				<label for="sel1" class="form-label">Item Group </label>
+																			</div>
+																			{/* <select class="col form-select" aria-label="Default select example">
+																				<option selected>- - Select Item Group - -</option>
+																				<option value="1">One</option>
+																				<option value="2">Two</option>
+																				<option value="3">Three</option>
+																			</select> */}
+																			<Select
+																				ref={ItemGrRef}
+																				closeMenuOnSelect={false}
+																				components={animatedComponents}
+																				isMulti
+																				defaultValue={defaultItemGroup}
+																				options={ItemGroup}
+																				onChange={(e) => { handleSelect(e, 'strItemGroupID', setDefaultItemGroup) }}
+																			/>
+																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
 																		</form>
 																	</div>
 																</div>
@@ -1055,6 +1088,81 @@ export default function Header() {
 																		<form>
 																			<div class="filter-icon-title">
 																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
+																					src={option} />
+																				<label for="sel1" class="form-label">State </label>
+																			</div>
+																			{/* <select class="col form-select" aria-label="Default select example">
+																				<option selected>- - Select Item Group - -</option>
+																				<option value="1">One</option>
+																				<option value="2">Two</option>
+																				<option value="3">Three</option>
+																			</select> */}
+																			<Select
+																				ref={stateRef}
+																				closeMenuOnSelect={false}
+																				components={animatedComponents}
+																				isMulti
+																				defaultValue={defaultstate}
+																				options={state}
+																				onChange={(e) => { handleSelectState(e) }}
+																			/>
+																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
+																		</form>
+																	</div>
+																</div>
+																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+																	<div class="card-filter-contain">
+																		<form>
+																			<div class="filter-icon-title">
+																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
+																					src={design} />
+																				<label for="sel1" class="form-label">Sale Party </label>
+																			</div>
+																			{/* <select class="col form-select" aria-label="Default select example">
+																				<option selected>- - Select Design - -</option>
+																				<option value="1">One</option>
+																				<option value="2">Two</option>
+																				<option value="3">Three</option>
+																			</select> */}
+
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc' }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesAccountID'].slice(0, -1)} onClick={handleOnClickSalesParty} />
+																		</form>
+																	</div>
+																</div>
+																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+																	<div class="card-filter-contain">
+																		<form>
+																			<div class="filter-icon-title">
+																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
+																					src={product} />
+																				<label for="sel1" class="form-label">Product </label>
+																			</div>
+																			{/* <select class="col form-select" aria-label="Default select example">
+																				<option selected>- - Select Product - -</option>
+																				<option value="1">One</option>
+																				<option value="2">Two</option>
+																				<option value="3">Three</option>
+																			</select> */}
+																			<Select
+																				ref={ProductRef}
+																				closeMenuOnSelect={false}
+																				components={animatedComponents}
+																				isMulti
+																				defaultValue={defaultProduct}
+																				options={Product}
+																				onChange={(e) => { handleSelect(e, 'strProductID', setDefaultProduct) }}
+
+																			/>
+																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strProductID'].slice(0, -1)} onClick={handleOnClickProduct} /> */}
+
+																		</form>
+																	</div>
+																</div>
+																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+																	<div class="card-filter-contain">
+																		<form>
+																			<div class="filter-icon-title">
+																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
 																					src={design} />
 																				<label for="sel1" class="form-label">Design </label>
 																			</div>
@@ -1065,10 +1173,95 @@ export default function Header() {
 																				<option value="3">Three</option>
 																			</select> */}
 
-																			<input type='text' style={{border:'1px solid #cccccc'}} placeholder='Select...' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDesignID'].slice(0, -1)} onClick={handleOnClickDesign} />
+																			<input type='text' style={{ border: '1px solid #cccccc' }} placeholder='Select...' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDesignID'].slice(0, -1)} onClick={handleOnClickDesign} />
 																		</form>
 																	</div>
 																</div>
+																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+																	<div class="card-filter-contain">
+																		<form>
+																			<div class="filter-icon-title">
+																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
+																					src={option} />
+																				<label for="sel1" class="form-label"> City </label>
+																			</div>
+																			{/* <select class="col form-select" aria-label="Default select example">
+																				<option selected>- - Select Item Group - -</option>
+																				<option value="1">One</option>
+																				<option value="2">Two</option>
+																				<option value="3">Three</option>
+																			</select> */}
+																			<Select
+																				ref={cityRef}
+																				closeMenuOnSelect={false}
+																				components={animatedComponents}
+																				isMulti
+																				defaultValue={defaultcity}
+																				options={city}
+																				onChange={(e) => { handleSelectCity(e) }}
+																			/>
+																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
+																		</form>
+																	</div>
+																</div>
+																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+																	<div class="card-filter-contain">
+																		<form>
+																			<div class="filter-icon-title">
+																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
+																					src={salesman} />
+																				<label for="sel1" class="form-label">Salesman </label>
+																			</div>
+																			{/* <select class="col form-select" aria-label="Default select example">
+																				<option selected>- - Select Salesman - -</option>
+																				<option value="1">One</option>
+																				<option value="2">Two</option>
+																				<option value="3">Three</option>
+																			</select> */}
+																			<Select
+																				ref={SalesManRef}
+																				closeMenuOnSelect={false}
+																				components={animatedComponents}
+																				isMulti
+																				defaultValue={defaultSalesman}
+																				options={Salesman}
+																				onChange={(e) => { handleSelect(e, 'strSalesmanID', setDefaultSalesman) }}
+																			/>
+																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesmanID'].slice(0, -1)} onClick={handleOnClickSalesMan} /> */}
+																		</form>
+																	</div>
+																</div>
+																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+																	<div class="card-filter-contain">
+																		<form>
+																			<div class="filter-icon-title">
+																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
+																					src={brand} />
+																				<label for="sel1" class="form-label">Brand </label>
+																			</div>
+																			{/* <select class="col form-select" aria-label="Default select example">
+																				<option selected>- - Select Brand - -</option>
+																				<option value="1">One</option>
+																				<option value="2">Two</option>
+																				<option value="3">Three</option>
+																			</select> */}
+																			<Select
+																				ref={BrandRef}
+																				closeMenuOnSelect={false}
+																				components={animatedComponents}
+																				isMulti
+																				defaultValue={defaultBrand}
+																				options={Brand}
+
+																				onChange={(e) => { handleSelect(e, 'strBrandID', setDefaultBrand) }}
+																			/>
+																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strBrandID'].slice(0, -1)} onClick={handleOnClickBrand} /> */}
+																		</form>
+																	</div>
+																</div>
+																
+																
+																
 																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
 																	<div class="card-filter-contain">
 																		<form>
@@ -1101,26 +1294,25 @@ export default function Header() {
 																		<form>
 																			<div class="filter-icon-title">
 																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
-																					src={palette} />
-																				<label for="sel1" class="form-label">Color </label>
+																					src={option} />
+																				<label for="sel1" class="form-label">Region </label>
 																			</div>
 																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Color - -</option>
+																				<option selected>- - Select Item Group - -</option>
 																				<option value="1">One</option>
 																				<option value="2">Two</option>
 																				<option value="3">Three</option>
 																			</select> */}
 																			<Select
-																				ref={ColorRef}
+																				ref={regionRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
 																				isMulti
-																				defaultValue={defaultColor}
-																				options={color}
-																				onChange={(e) => { handleSelect(e, 'strColorID', setDefaultColor) }}
+																				defaultValue={defaultregion}
+																				options={region}
+																				onChange={(e) => { handleSelect(e, 'strRegionID', setDefaultregion) }}
 																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strColorID'].slice(0, -1)} onClick={handleOnClickColor} /> */}
-
+																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
 																		</form>
 																	</div>
 																</div>
@@ -1299,184 +1491,18 @@ export default function Header() {
 																			</div>
 																		</div> : null}
 																	</> : null}
-																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																	<div class="card-filter-contain">
-																		<form>
-																			<div class="filter-icon-title">
-																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
-																					src={option} />
-																				<label for="sel1" class="form-label">State </label>
-																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Item Group - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
-																				ref={stateRef}
-																				closeMenuOnSelect={false}
-																				components={animatedComponents}
-																				isMulti
-																				defaultValue={defaultstate}
-																				options={state}
-																			onChange={(e) => { handleSelectState(e) }}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
-																		</form>
-																	</div>
-																</div>
-																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																	<div class="card-filter-contain">
-																		<form>
-																			<div class="filter-icon-title">
-																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
-																					src={option} />
-																				<label for="sel1" class="form-label"> City </label>
-																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Item Group - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
-																				ref={cityRef}
-																				closeMenuOnSelect={false}
-																				components={animatedComponents}
-																				isMulti
-																				defaultValue={defaultcity}
-																				options={city}
-																			onChange={(e) => { handleSelectCity(e) }}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
-																		</form>
-																	</div>
-																</div>
-																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																	<div class="card-filter-contain">
-																		<form>
-																			<div class="filter-icon-title">
-																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
-																					src={option} />
-																				<label for="sel1" class="form-label">Region </label>
-																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Item Group - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
-																				ref={regionRef}
-																				closeMenuOnSelect={false}
-																				components={animatedComponents}
-																				isMulti
-																				defaultValue={defaultregion}
-																				options={region}
-																			onChange={(e) => { handleSelect(e, 'strRegionID', setDefaultregion) }}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
-																		</form>
-																	</div>
-																</div>
-																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																	<div class="card-filter-contain">
-																		<form>
-																			<div class="filter-icon-title">
-																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
-																					src={design} />
-																				<label for="sel1" class="form-label">Purchase Party </label>
-																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Design - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-
-																			<input type='text' placeholder='Select...' style={{border:'1px solid #cccccc'}} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strPurchaseAccountID'].slice(0, -1)} onClick={handleOnClickPurchase} />
-																		</form>
-																	</div>
-																</div>
-																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																	<div class="card-filter-contain">
-																		<form>
-																			<div class="filter-icon-title">
-																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
-																					src={design} />
-																				<label for="sel1" class="form-label">Sales Party </label>
-																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Design - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-
-																			<input type='text' placeholder='Select...' style={{border:'1px solid #cccccc'}} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesAccountID'].slice(0, -1)} onClick={handleOnClickSalesParty} />
-																		</form>
-																	</div>
-																</div>
+																
+																
+																
+																
 																
 
 
 
 
-																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																	<div class="card-filter-contain">
-																		<form>
-																			<div class="filter-icon-title">
-																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
-																					src={salesman} />
-																				<label for="sel1" class="form-label">Salesman </label>
-																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Salesman - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
-																				ref={SalesManRef}
-																				closeMenuOnSelect={false}
-																				components={animatedComponents}
-																				isMulti
-																				defaultValue={defaultSalesman}
-																				options={Salesman}
-																				onChange={(e) => { handleSelect(e, 'strSalesmanID', setDefaultSalesman) }}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesmanID'].slice(0, -1)} onClick={handleOnClickSalesMan} /> */}
-																		</form>
-																	</div>
-																</div>
-																<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-																<div class="card-filter-contain">
-																	<form>
-																		<label for="sel1" class="form-label">DayBook </label>
-																		{/* <select class="form-select form-control" aria-label="Default select example" onChange={handleChartValueOption}>
-																			<option value="AMTWITHTAX">AMTWITHTAX</option>
-																			<option value="TAXABLEAMT">TAXABLEAMT</option>
-																		</select> */}
-																		<Select
-																			ref={DaybookRef}
-																			
-																			closeMenuOnSelect={false}
-																			components={animatedComponents}
-																			defaultValue={defaultDayBook}
-																			options={DayBook}
-																			onChange={(e) => { handleSelectDayBook(e) }}
 
-																			styles={{
-																				control: (provided, state) => ({
-																					...provided,
-																					height: '45px',
-																				}),
-																			}}
-																		/>
-																	</form>
-																</div>
-															</div>
+																
+																
 															</div>
 														</div>
 													</div>
@@ -1499,6 +1525,17 @@ export default function Header() {
 								<li class="geex-content__header__quickaction__item">
 									<a href="#" class="geex-content__header__quickaction__link">
 										<img src={refresh} />
+									</a>
+								</li>
+								<li class="geex-content__header__quickaction__item">
+									<a href="#" class="geex-content__header__quickaction__link" onClick={handleFullScreen}>
+										<i class="fas fa-expand-alt"></i>
+
+									</a>
+								</li>
+								<li class="geex-content__header__quickaction__item">
+									<a href="#" class="geex-content__header__quickaction__link" onClick={handleDownload}>
+										<img src={pdf} />
 									</a>
 								</li>
 							</ul>

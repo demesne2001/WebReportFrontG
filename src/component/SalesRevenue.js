@@ -245,9 +245,7 @@ export default function SalesRevenue() {
       },
     },
     yaxis: [
-
       {
-
         seriesName: 'Amount',
         stepSize: 40000,
         opposite: false,
@@ -333,7 +331,7 @@ export default function SalesRevenue() {
 						formatter:function(val) {
 							return val;
 						},
-						
+
 					}
 				},
 				yaxis: 
@@ -361,6 +359,13 @@ export default function SalesRevenue() {
           style: {
             colors: '#00E396',
           }
+        },
+        labels: {
+          show: true,
+            formatter: function(val) { 
+              
+              return ((((val / 1000).toFixed(1)).toString()) + "K") },
+          
         },
         title: {
           text: "Qty",

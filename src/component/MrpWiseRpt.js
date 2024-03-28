@@ -334,6 +334,13 @@ export default function MrpWiseRpt() {
 									return val.toFixed(0);
 								},
 							},
+							labels: {
+								show: true,
+								  formatter: function(val) { 
+									
+									return ((((val / 1000).toFixed(1)).toString()) + "K") },
+								
+							},
 							title: {
 								text: "Qty",
 								style: {

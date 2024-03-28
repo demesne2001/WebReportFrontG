@@ -395,7 +395,7 @@ a.geex-content__header__quickaction__link img {
     align-items: center;
     padding: 10px 10px !important;
     color: var(--body-color);
-    background-color: var(--gray-color);
+    background-color: #c10202;
     border: none;
     border-radius: 10px !important;
     -webkit-transition: all 0.3s ease;
@@ -733,7 +733,7 @@ span.right-part-numericdata {
     align-items: center;
     padding: 5px 5px !important;
     color: var(--body-color);
-    background-color: var(--gray-color);
+    background-color: #c10202;
     border: none;
     border-radius: 6px !important;
     -webkit-transition: all 0.3s ease;
@@ -846,7 +846,7 @@ span.right-part-numericdata {
     align-items: center;
     padding: 5px 5px !important;
     color: var(--body-color);
-    background-color: var(--gray-color);
+    background-color: #c10202;
     border: none;
     border-radius: 6px !important;
     -webkit-transition: all 0.3s ease;
@@ -955,7 +955,7 @@ span.right-part-numericdata {
     align-items: center;
     padding: 5px 5px !important;
     color: var(--body-color);
-    background-color: var(--gray-color);
+    background-color: #c10202;
     border: none;
     border-radius: 6px !important;
     -webkit-transition: all 0.3s ease;
@@ -1067,7 +1067,7 @@ span.right-part-numericdata {
     align-items: center;
     padding: 5px 5px !important;
     color: var(--body-color);
-    background-color: var(--gray-color);
+    background-color: #c10202;
     border: none;
     border-radius: 6px !important;
     -webkit-transition: all 0.3s ease;

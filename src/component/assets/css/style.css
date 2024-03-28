@@ -1785,7 +1785,7 @@ blockquote span:before {
   align-items: center;
   padding: 10px 10px;
   color: var(--body-color);
-  background-color: var(--gray-color);
+  background-color: #c10202;
   border: none;
   border-radius: 12px;
   -webkit-transition: all 0.3s ease;
@@ -1795,7 +1795,7 @@ blockquote span:before {
 .geex-btn.active,
 .geex-btn:hover {
   color: var(--white-color);
-  background-color: var(--primary-color);
+  background-color: #c10202;
 }
 
 @media only screen and (max-width: 1440px) {
@@ -2112,6 +2112,7 @@ blockquote span:before {
   height: auto;
   background-color: #fdfdfd;
   border-radius: 10px;
+  z-index: 999;
 }
 
 @media only screen and (max-width: 991px) {
@@ -2837,7 +2838,8 @@ blockquote span:before {
 
 @media only screen and (max-width: 479px) {
   .geex-content__section {
-    padding: 30px 20px;
+    /* padding: 30px 20px; */
+    padding: 0
   }
 }
 

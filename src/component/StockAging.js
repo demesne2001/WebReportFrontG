@@ -52,68 +52,68 @@ export default function StockAging() {
 	}
 	function format(val) {
 		if (filter.Thousand === 'k') {
-		  return ((((val / 1000).toFixed(1)).toString()) + "K");
+			return ((((val / 1000).toFixed(1)).toString()) + "K");
 		} else if (filter.Thousand === 'l') {
-		  return ((((val / 100000).toFixed(1)).toString()) + "L");
+			return ((((val / 100000).toFixed(1)).toString()) + "L");
 		} else if (filter.Thousand === 'm') {
-		  return ((((val / 1000000).toFixed(1)).toString()) + "M");
+			return ((((val / 1000000).toFixed(1)).toString()) + "M");
 		} else if (filter.Thousand === 'c') {
 			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
-		}else if (filter.Thousand === 'b') {
+		} else if (filter.Thousand === 'b') {
 			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
 		} else {
-		  return val;
+			return val;
 		}
-	  }
-	  function format_responsive(val) {
+	}
+	function format_responsive(val) {
 		if (filter.Thousand === 'k') {
-		  return ((((val / 1000).toFixed(1)).toString()) + "K");
+			return ((((val / 1000).toFixed(1)).toString()) + "K");
 		} else if (filter.Thousand === 'l') {
-		  return ((((val / 100000).toFixed(1)).toString()) + "L");
+			return ((((val / 100000).toFixed(1)).toString()) + "L");
 		} else if (filter.Thousand === 'm') {
-		  return ((((val / 1000000).toFixed(1)).toString()) + "M");
+			return ((((val / 1000000).toFixed(1)).toString()) + "M");
 		} else if (filter.Thousand === 'c') {
-		  return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
 		} else if (filter.Thousand === 'b') {
-		  return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
 		} else {
 			const arr = Amount2.map(Number)
 			// console.log(Math.max(...arr));
 			if (Math.max(...arr) < 1000000) {
-			  return ((((val / 1000).toFixed(1)).toString()) + "K")
+				return ((((val / 1000).toFixed(1)).toString()) + "K")
 			}
 			else {
-				
-			  if (Math.max(...arr) > 10000000) {
-				return ((((val / 10000000).toFixed(1)).toString()) + "CR")
-			  } else {
-	
-				return ((((val / 100000).toFixed(1)).toString()) + "L")
-			  }
+
+				if (Math.max(...arr) > 10000000) {
+					return ((((val / 10000000).toFixed(1)).toString()) + "CR")
+				} else {
+
+					return ((((val / 100000).toFixed(1)).toString()) + "L")
+				}
 			}
 		}
-	  }
-	  const makeSlabe = () => {
+	}
+	const makeSlabe = () => {
 		let numberArray = [];
 		// console.log(Amount1)
-		Amount1.forEach( ele => numberArray.push(+ele))
+		Amount1.forEach(ele => numberArray.push(+ele))
 		// console.log(numberArray)
 
-		slab = Math.ceil(parseInt(Math.max(...numberArray)/numberArray.length) / 10) * 10
+		slab = Math.ceil(parseInt(Math.max(...numberArray) / numberArray.length) / 10) * 10
 		return slab
-	  }
-	const series = [
-	{
-		name: 'Amount',
-		data: Amount2
-	},
-	{
-		name: 'Qty',
-		data: Amount1
 	}
+	const series = [
+		{
+			name: 'Amount',
+			data: Amount2
+		},
+		{
+			name: 'Qty',
+			data: Amount1
+		}
 	]
 	const options = {
-		colors:['#0d4876','#26e7a6'],
+		colors: ['#0d4876', '#26e7a6'],
 		annotations: {
 			//   points: [{
 			// 	x: 'Bananas',
@@ -182,13 +182,13 @@ export default function StockAging() {
 					formatter: function (val) {
 						let value = format(val)
 						return value
-					  },
+					},
 				},
 				title: {
 					text: "Amount",
 					style: {
 						color: '#008FFB',
-					}	
+					}
 				},
 				tooltip: {
 					enabled: true
@@ -221,10 +221,10 @@ export default function StockAging() {
 						color: '#00E396',
 					}
 				},
-				
+
 				// min: Math.min(...Amount1),
 				// max: Math.max(...Amount1),
-				
+
 			}
 		],
 		fill: {
@@ -244,63 +244,65 @@ export default function StockAging() {
 			breakpoint: 595,
 			options: {
 				tooltip: {
-					title:{
-					  formatter:function(val) {
-						return val
-					  }
+					title: {
+						formatter: function (val) {
+							return val
+						}
 					},
-							  y: {
-								  formatter:function(val) {
-									  return val;
-								  },
-							  }
-						  },
-				yaxis: 
-          [
-            {
-					labels: {
-						show: true,
-						formatter: function(value) { 
-							// console.log(value);
-							return format_responsive(value); },
+					y: {
+						formatter: function (val) {
+							return val;
+						},
 					}
-
-
-        },
-        {
-			seriesName: 'Qty',
-			stepsize: makeSlabe(),
-			opposite: true,
-			axisTicks: {
-				show: true,
-			},
-			axisBorder: {
-				show: true,
-				color: '#00E396'
-			},
-			labels: {
-				style: {
-					colors: '#00E396',
 				},
-				formatter: function (val) {
-					return val.toFixed(0);
-				},
-			},
-			title: {
-				text: "Qty",
-				style: {
-					color: '#00E396',
-				}
-			},
-			
-			// min: Math.min(...Amount1),
-			// max: Math.max(...Amount1),
-			
-		}
+				yaxis:
+					[
+						{
+							labels: {
+								show: true,
+								formatter: function (value) {
+									// console.log(value);
+									return format_responsive(value);
+								},
+							}
 
-          ]
+
+						},
+						{
+							seriesName: 'Qty',
+							stepsize: makeSlabe(),
+							opposite: true,
+							axisTicks: {
+								show: true,
+							},
+							axisBorder: {
+								show: true,
+								color: '#00E396'
+							},
+							labels: {
+								style: {
+									colors: '#00E396',
+								},
+								formatter: function (val) {
+									console.log(val);
+									return ((((val / 1000).toFixed(1)).toString()) + "K")
+								},
+							},
+							title: {
+								text: "Qty",
+								style: {
+									color: '#00E396',
+								}
+							},
+
+							// min: Math.min(...Amount1),
+							// max: Math.max(...Amount1),
+
+						}
+
+					]
 				,
-        // xaxis: {
+				// xaxis: {
 				// 	labels: {
 				// 		show: true,
 				// 		formatter: function(value) { 
@@ -309,7 +311,7 @@ export default function StockAging() {
 				// 	}
 				// }
 			}
-			}]
+		}]
 	}
 	// console.log(options.yaxis[1])
 	return (

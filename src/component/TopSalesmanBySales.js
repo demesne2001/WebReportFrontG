@@ -61,6 +61,7 @@ export default function TopSalesmanBySales() {
     plotOptions: {
       bar: {
         borderRadius: 10,
+        columnWidth: '60%',
         dataLabels: {
           position: 'top', // top, center, bottom
           formatter: function (val) {

@@ -78,7 +78,8 @@ select {
   background-color: rgb(224, 224, 224);
   border-radius: 10px;
   padding: 20px;
-  height: 400px;
+  height: 60vh;
+  /* height: 400px; */
   overflow-y: scroll;
   /* box-shadow: 20px 20px 50px rgb(204, 204, 204); */
 
@@ -138,9 +139,6 @@ select {
   border-radius: 5px;
 }
 
-.cancel-button:hover {
-  background-color: rgb(255, 0, 0);
-}
 @media only screen and (max-width: 600px) {
   .selected-label {
     border: 1px solid;
@@ -152,7 +150,7 @@ select {
   }
   .cancel-button {
     margin-left: 10px;
-    background-color: rgb(255, 73, 73);
+    background-color: #c10202;
     height: 19px;
     color: white;
     font-size: 9px;
