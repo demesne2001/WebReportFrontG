@@ -333,18 +333,31 @@ export default function Header() {
 				setMethod(Dept)
 			})
 		} else {
-			await post(FilterInput, api, {}, "post").then((res) => {
-				let Dept = []
-				let jsonTemp = {}
-				res.data.lstResult.forEach(element => {
-					jsonTemp = {}
-					jsonTemp['value'] = element[id]
-					jsonTemp['label'] = element[name]
-					Dept.push(jsonTemp)
-
-				});
-				setMethod(Dept)
-			})
+			if (name !== 'DayBookName') {
+				await post(FilterInput, api, {}, "post").then((res) => {
+					let Dept = []
+					let jsonTemp = {}
+					res.data.lstResult.forEach(element => {
+						jsonTemp = {}
+						jsonTemp['value'] = element[id]
+						jsonTemp['label'] = element[name]
+						Dept.push(jsonTemp)
+					});
+					setMethod(Dept)
+				})
+			} else {
+				await post(FilterInput, api, {}, "post").then((res) => {
+					let Dept = [{'value':"", 'label':'NONE'}]
+					let jsonTemp = {}
+					res.data.lstResult.forEach(element => {
+						jsonTemp = {}
+						jsonTemp['value'] = element[id]
+						jsonTemp['label'] = element[name]
+						Dept.push(jsonTemp)
+					});
+					setMethod(Dept)
+				})
+			}
 		}
 
 	}
@@ -792,7 +805,7 @@ export default function Header() {
 																</div>
 															</div>
 
-															<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+															<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																<div class="card-filter-contain">
 																	<form class="from-group">
 																		<label for="sel1" class="form-label">Company </label>
@@ -823,7 +836,7 @@ export default function Header() {
 																	</form>
 																</div>
 															</div>
-															<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+															<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																<div class="card-filter-contain">
 																	<form>
 																		<label for="sel1" class="form-label">Branch </label>
@@ -834,7 +847,8 @@ export default function Header() {
 																	</form>
 																</div>
 															</div>
-															<div class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
+															<br/>
+															<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
 																<div class="card-filter-contain">
 																	<form>
 																		<label for="sel1" class="form-label">Chart Shown As </label>
