@@ -740,10 +740,10 @@ export default function Header() {
 							<ul class="geex-content__header__quickaction">
 
 								<li class="geex-content__header__quickaction__item" style={{ width: 150 }}  >
-									<a class="geex-content__header__quickaction__link  geex-btn__customizer" onClick={handledropdownMenu} >
-										<img src={rupee} className='dropbtn'  />
+									 {/* <a class="geex-content__header__quickaction__link  geex-btn__customizer" onClick={handledropdownMenu} > */}
+										{/* <img src={rupee} className='dropbtn'  /> */}
 										{/* {localStorage.getItem('value') === '' || localStorage.getItem('value') === "undefined"?<img src={change} className='dropbtn' />:<p>{localStorage.getItem("value")}</p>} */}
-									</a>
+									{/* </a> */}
 
 									<div id="myDropdown" class="dropdown-content">
 										<a id='default' onClick={() => handleThousand("")}>Default</a><hr className='custom-hr' />
@@ -753,13 +753,13 @@ export default function Header() {
 										<a id='crore' onClick={() => handleThousand("c")}>Crores</a><hr className='custom-hr' />
 										<a id='billion' onClick={() => handleThousand("b")}>Billions</a>
 									</div>
-									{localStorage.getItem('value') === ''? <a className='dropbtn currancy-label' style={{color:'#0d4876'}}  onClick={handledropdownMenu}>Default</a> :null}
-									{localStorage.getItem('value') === 'undefined'? <a className='dropbtn currancy-label' style={{color:'#0d4876'}}  onClick={handledropdownMenu}>Default</a> :null}
-									{localStorage.getItem("value") === 'k' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}>Thousands</a> : null}
-									{localStorage.getItem("value") === 'l' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}>Lakhs</a> : null}
-									{localStorage.getItem("value") === 'm' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}>Millions</a> : null}
-									{localStorage.getItem("value") === 'c' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}>Crores</a> : null}
-									{localStorage.getItem("value") === 'b' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}>Billions</a> : null}
+									{localStorage.getItem('value') === ''? <a className='dropbtn currancy-label' style={{color:'#0d4876'}}  onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Default</a> :null}
+									{localStorage.getItem('value') === 'undefined'? <a className='dropbtn currancy-label' style={{color:'#0d4876'}}  onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Default</a> :null}
+									{localStorage.getItem("value") === 'k' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Thousands</a> : null}
+									{localStorage.getItem("value") === 'l' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Lakhs</a> : null}
+									{localStorage.getItem("value") === 'm' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Millions</a> : null}
+									{localStorage.getItem("value") === 'c' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Crores</a> : null}
+									{localStorage.getItem("value") === 'b' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Billions</a> : null}
 								</li>
 
 

@@ -242,3 +242,15 @@ select {
   font-weight: bold;
   color: #0d4876;
 }
+
+ul.geex-content__header__quickaction img.dropbtn {
+  width: 22px;
+}
+li.geex-content__header__quickaction__item a {
+  width: 45px;
+  height: 45px;
+  line-height: 60px;
+}
+li.geex-content__header__quickaction__item:nth-child(1) a {
+  width: auto;
+}
