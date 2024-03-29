@@ -1,4 +1,5 @@
 import crowded from './assets/font/svg/crowded.svg'
+import deal from './assets/font/svg/deal.svg'
 import trend from './assets/font/svg/trend.svg'
 import React, { useContext, useState, useEffect } from 'react';
 import shopping from './assets/font/svg/shopping-cart.svg'
@@ -63,7 +64,7 @@ export default function ProfitCard() {
                 <div class="main-color-card-contain">
                     <div class="left-part">
                         <div class="main-icon">
-                            <img src={crowded} />
+                            <img src={deal} />
                         </div>
 						<p class="card-top-main-title">Profit % : <span class="card-top-main-amount1">{ProfitPrc}%</span></p>
                         <p class="card-top-main-title">Profit Amt : <span class="card-top-main-amount1">₹{format(ProfitAmount)}</span></p>
