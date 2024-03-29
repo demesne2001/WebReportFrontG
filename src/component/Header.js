@@ -752,7 +752,8 @@ export default function Header() {
 										<a id='crore' onClick={() => handleThousand("c")}>Crores</a><hr className='custom-hr' />
 										<a id='billion' onClick={() => handleThousand("b")}>Billions</a>
 									</div>
-									{localStorage.getItem('value') === '' ? <p className='currancy-label'>Default</p> : null}
+									{localStorage.getItem('value') === ''? <p className='currancy-label'>Default</p> :null}
+									{localStorage.getItem('value') === 'undefined'? <p className='currancy-label'>Default</p> :null}
 									{localStorage.getItem("value") === 'k' ? <p className='currancy-label'>Thousands</p> : null}
 									{localStorage.getItem("value") === 'l' ? <p className='currancy-label'>Lakhs</p> : null}
 									{localStorage.getItem("value") === 'm' ? <p className='currancy-label'>Millions</p> : null}

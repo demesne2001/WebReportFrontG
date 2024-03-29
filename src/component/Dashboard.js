@@ -53,7 +53,7 @@ export default function Dashboard() {
         //         pdf.save("download");
         //     })
         const options = {
-            margin: 3,
+            margin: 2.80,
             filename: "Chart(html2pdf)ld.pdf",
             image: { type: "jpeg", quality: 1 },
             html2canvas: { scale: 2 },
@@ -119,6 +119,7 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             </div>
+                            <br></br>
                             <div id='pdf-div'><FilterPrint /></div>
                         </div>
                     </div>

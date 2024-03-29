@@ -22,8 +22,8 @@ export default function FilterPrint() {
             {filter.CommanFilter['ChartValueOption'] === ''?<tr><td>ChartValueOption</td><td>'AMTWITHTAX'</td></tr>:<tr><td>ChartValueOption</td><td>{filter.CommanFilter['ChartValueOption']}</td></tr>}
             {filter.CommanFilter['strDepartmentID'] !== ''?<tr><td>Department Name</td><td>{filter.CommanNameFilter['strDepartmentID']}</td></tr>: null}
             {filter.CommanFilter['strBrandID'] !== ''?<tr><td>Brand Name</td><td>{filter.CommanNameFilter['strBrandID']}</td></tr>: null}
-            {filter.CommanFilter['strProductID'] !== ''?<tr><td>Brand Name</td><td>{filter.CommanNameFilter['strProductID']}</td></tr>: null}
-            {filter.CommanFilter['strBrandID'] !== ''?<tr><td>Product Name</td><td>{filter.CommanNameFilter['strBrandID']}</td></tr>: null}
+            {filter.CommanFilter['strProductID'] !== ''?<tr><td>Product Name</td><td>{filter.CommanNameFilter['strProductID']}</td></tr>: null}
+            {/* {filter.CommanFilter['strBrandID'] !== ''?<tr><td>Product Name</td><td>{filter.CommanNameFilter['strBrandID']}</td></tr>: null} */}
             {filter.CommanFilter['strItemGroupID'] !== ''?<tr><td>Item-Group Name </td><td>{filter.CommanNameFilter['strItemGroupID']}</td></tr>: null}
             {filter.CommanFilter['strItemID'] !== ''?<tr><td>Item Name </td><td>{filter.CommanNameFilter['strItemID']}</td></tr>: null}
             {filter.CommanFilter['strColorID'] !== ''?<tr><td>Color Name </td><td>{filter.CommanNameFilter['strColorID']}</td></tr>: null}
