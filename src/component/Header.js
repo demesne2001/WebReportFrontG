@@ -626,7 +626,7 @@ export default function Header() {
 		document.getElementById("myDropdown").style.display === "block" ? document.getElementById("myDropdown").style.display = "none" : document.getElementById("myDropdown").style.display = "block";
 	}
 	window.onclick = function (event) {
-		if (!event.target.matches('.dropbtn') && !event.target.matches('#default') && !event.target.matches('#lakh') && !event.target.matches('#million') && !event.target.matches('#thousand') && !event.target.matches('#crore') && !event.target.matches('#billion')) {
+		if (!event.target.matches('.dropbtn')) {
 			// console.log("hii");
 			if (document.getElementsByClassName("dropdown-content")[0] !== undefined) {
 				document.getElementsByClassName("dropdown-content")[0].style.display = "none";
