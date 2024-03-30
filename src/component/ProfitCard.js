@@ -67,7 +67,9 @@ export default function ProfitCard() {
                             <img src={deal} />
                         </div>
 						<p class="card-top-main-title">Profit % : <span class="card-top-main-amount1">{ProfitPrc}%</span></p>
-                        <p class="card-top-main-title">Profit Amt : <span class="card-top-main-amount1">₹{format(ProfitAmount)}</span></p>
+                        <p class="card-top-main-title">Profit Amt : <span class="card-top-main-amount1">₹{Number(parseFloat(format(ProfitAmount))).toLocaleString('en', {
+    minimumFractionDigits: 0
+})}</span></p>
 						{/* <p>ProfitPrc : <span class="right-part-numericdata">{ProfitPrc}%</span></p> */}
                     </div>
                     <div class="line middle-color-cardline"></div>

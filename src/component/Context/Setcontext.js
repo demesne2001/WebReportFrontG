@@ -37,6 +37,43 @@ export default function Setcontext(props) {
       "strPurchaseAccountID": "",
       "strStyleID": ""
     }
+
+    const TempcommanFilterDefault = {
+      "ChartValueOption": "",
+      "strCompanyID": "",
+      "strBranchID": "",
+      "FromDate": "",
+      "ToDate": "",
+      "strDepartmentID": "",
+      "strBrandID": "",
+      "strProductID": "",
+      "strItemGroupID": "",
+      "strItemID": "",
+      "strColorID": "",
+      "strSeasonID": "",
+      "strSalesmanID": "",
+      "strDesignID": "",
+      "strSubCategory1ID": "",
+      "strSubCategory2ID": "",
+      "strSubCategory3ID": "",
+      "strSubCategory4ID": "",
+      "strSubCategory5ID": "",
+      "strSubCategory6ID": "",
+      "strSubCategory7ID": "",
+      "strSubCategory8ID": "",
+      "strSubCategory9ID": "",
+      "strSubCategory10ID": "",
+      "strDayBookID": "",
+      "ExtraVar": "H",
+      "strLotNo": "",
+      "strCity": "",
+      "strState": "",
+      "strRegionID": "",
+      "strSalesAccountID": "",
+      "strPurchaseAccountID": "",
+      "strStyleID": "",
+      "FilterIndex":""
+    }
     
 
     const commsnChildFilterDefault = {

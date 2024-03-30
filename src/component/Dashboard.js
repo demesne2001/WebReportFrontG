@@ -84,6 +84,7 @@ export default function Dashboard() {
                     <div class="geex-content">
                         <Header />
                         <div id='rootElementId'>
+                        <div id='pdf-div'><FilterPrint /></div>
                             <div class="geex-content__wrapper">
                                 <div class="geex-content__section-wrapper">
                                     <div class="top-main-section mb-20">
@@ -120,7 +121,7 @@ export default function Dashboard() {
                                 </div>
                             </div>
                             <br></br>
-                            <div id='pdf-div'><FilterPrint /></div>
+                           
                         </div>
                     </div>
 
