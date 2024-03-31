@@ -254,3 +254,8 @@ li.geex-content__header__quickaction__item a {
 li.geex-content__header__quickaction__item:nth-child(1) a {
   width: auto;
 }
+
+.commonmodal-input {
+  border: 1px solid #cccccc;
+  height: 45px;
+}

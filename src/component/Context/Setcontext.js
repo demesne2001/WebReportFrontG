@@ -108,16 +108,20 @@ export default function Setcontext(props) {
       "strBrandID": "",
       "strProductID": "",
       "strItemGroupID": "",
-      "PageSize": 0,
-      "PageNo": 0,
+      "PageSize": 9999,
+      "PageNo": 1,
       "strItemID": "",
       "strDesignID": "",
-      "SubCategoryNo": 0
+      "SubCategoryNo": 1,
+      "strCity": "",
+      "strState": "",
+      "strRegionID": "",
+      "strStyleID": ""
     }
 
     const[CommanFilter,SetCommanFilter]=useState(commanFilterDefault);
     const[CommanNameFilter,SetCommanNameFilter]=useState(commanFilterDefault);
-    const[TempCommanFilter,SetTempCommanFilter]=useState(commanFilterDefault);
+    const[TempCommanFilter,SetTempCommanFilter]=useState(TempcommanFilterDefault);
     const[TempCommanNameFilter,SetTempCommanNameFilter]=useState(commanFilterDefault);
     const[CommanChildFilter,SetCommanChildFilter]=useState(commsnChildFilterDefault);
     const [childFilterShow, setchildFilterShow] = useState(false);

@@ -34,20 +34,7 @@ import Commonmodel from './CommanModal';
 
 
 export default function Header() {
-	const FilterInput = {
-		"search": "",
-		"strCompanyID": "",
-		"strBranchID": "",
-		"strDepartmentID": "",
-		"strBrandID": "",
-		"strProductID": "",
-		"strItemGroupID": "",
-		"PageSize": 9999,
-		"PageNo": 0,
-		"strItemID": "",
-		"strDesignID": "",
-		"SubCategoryNo": 0
-	}
+	
 	const [fullscreen, setFullScreen] = useState(false);
 	const DepartmentRef = useRef();
 	const ItemGrRef = useRef();
@@ -179,6 +166,24 @@ export default function Header() {
 	// 	"strSubCategory2ID": "",
 	// 	"strSubCategory3ID": ""
 	// });
+	let FilterInput ={
+		"search": "",
+		"strCompanyID": "",
+		"strBranchID": "",
+		"strDepartmentID": FilterContext.TempCommanFilter['strDepartmentID'] ,
+		"strBrandID":  FilterContext.TempCommanFilter['strBrandID'],
+		"strProductID":  FilterContext.TempCommanFilter['strProductID'],
+		"strItemGroupID":  FilterContext.TempCommanFilter['strItemGroupID'],
+		"PageSize": 9999,
+		"PageNo": 1,
+		"strItemID":  FilterContext.TempCommanFilter['strItemID'],
+		"strDesignID":  FilterContext.TempCommanFilter['strDesignID'],
+		"SubCategoryNo": 1,
+		"strCity":  FilterContext.TempCommanFilter['strCity'],
+		"strState":  FilterContext.TempCommanFilter['strState'],
+		"strRegionID":  FilterContext.TempCommanFilter['strRegionID'],
+		"strStyleID":  FilterContext.TempCommanFilter['strStyleID']
+	  }
 	let FilterData = {
 		...FilterContext.TempCommanFilter,
 		['strDepartmentID']: FilterContext.TempCommanFilter['strDepartmentID'],
@@ -192,11 +197,10 @@ export default function Header() {
 		['strProductID']: FilterContext.TempCommanFilter['strProductID'],
 		['strItemGroupID']: FilterContext.TempCommanFilter['strItemGroupID'],
 		['strItemID']: FilterContext.TempCommanFilter['strItemID'],
-		['strSeasonID']: FilterContext.TempCommanFilter['strSeasonID'].slice(0, -1),
 		['strSalesmanID']: FilterContext.TempCommanFilter['strSalesmanID'],
-		['strDesignID']: FilterContext.TempCommanFilter['strDesignID'].slice(0, -1),
-		['strSalesAccountID']: FilterContext.TempCommanFilter['strSalesAccountID'].slice(0, -1),
-		['strPurchaseAccountID']: FilterContext.TempCommanFilter['strPurchaseAccountID'].slice(0, -1),
+		['strDesignID']: FilterContext.TempCommanFilter['strDesignID'],
+		['strSalesAccountID']: FilterContext.TempCommanFilter['strSalesAccountID'],
+		['strPurchaseAccountID']: FilterContext.TempCommanFilter['strPurchaseAccountID'],
 		['strColorID']: FilterContext.TempCommanFilter['strColorID'],
 		['strStyleID']: FilterContext.TempCommanFilter['strStyleID'],
 		['strRegionID']: FilterContext.TempCommanFilter['strRegionID'],
@@ -322,6 +326,7 @@ export default function Header() {
 	const [Segment, setSegment] = useState([]);
 	const [defaultSegment, setDefaultSegment] = useState([]);
 	const [demo, setdemo] = useState([])
+	const [demoName, setdemoName] = useState([])
 	const ChartValueOption = [
 		{ value: 'AMTWITHTAX', label: 'AMTWITHTAX' }, { value: 'TAXABLEAMT', label: 'TAXABLEAMT' }]
 	const [defaultChartValueOption, setDefaultChartValueOption] = useState(ChartValueOption[0]);
@@ -332,11 +337,11 @@ export default function Header() {
 	// const [ComList, setComList] = useState([])
 	// const [ComList, setComList] = useState([])
 	let Companylst = []
-	
+
 
 	useEffect(() => {
 		console.log("useEffet2");
-
+		console.log("hii",FilterContext.TempCommanFilter);
 		setFilterTempData(FilterContext.CommanFilter)
 		GetCompanyData()
 		getCommonParam()
@@ -372,7 +377,7 @@ export default function Header() {
 		console.log("useEffet1");
 		console.log(Findex);
 		if (Findex !== "undefined") {
-			if (Findex > 1 && Findex < 9) {
+			if (Findex >= 1 && Findex < 9) {
 				for (let index = Findex; index < 10; ++index) {
 					if (FilterContext.TempCommanFilter[dependentfilter[index][0]].length > 0) {
 						FetchDataDependentAPI(FilterInput, index)
@@ -399,8 +404,9 @@ export default function Header() {
 	}, [FilterContext.TempCommanFilter.strBranchID, FilterContext.TempCommanFilter.CompanyID])
 
 	function FetchDataDependentAPI(input, FilterIndex) {
+		console.log(dependentfilter[FilterIndex][1], 'input');
 		post(input, dependentfilter[FilterIndex][1], [], 'post').then((res) => {
-
+			console.log("response",res.data.lstresult[0]['TotalCount']);
 			var TempDataID = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][0]].split(',')
 			var TempDataValue = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][3]].split(',')
 			var resultID = res.lstResult.map(Item => Item[dependentfilter[FilterIndex][2]])
@@ -413,6 +419,7 @@ export default function Header() {
 					delete TempDataValue[index]
 				}
 			}
+			console.log("");
 			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [dependentfilter[FilterIndex][0]]: TempDataID.toString(), [dependentfilter[FilterIndex][3]]: TempDataValue.toString() })
 
 		})
@@ -564,40 +571,64 @@ export default function Header() {
 	// }
 	function HandleOnClickComman(IndexNo) {
 		let myvalue = FilterContext.TempCommanFilter[dependentfilter[IndexNo][0]]
-
+		let myvalueName = FilterContext.TempCommanFilter[dependentfilter[IndexNo][4]]
+		console.log("myval", FilterContext.TempCommanFilter);
 		let demoo = []
+		let demooName = []
 		demoo.push(myvalue.split(','))
-
+		demooName.push(myvalueName.split(','))
+		console.log("DEMOOOOO", dependentfilter[IndexNo][0]);
 		let newarr = []
+		let newarrName = []
 
-
-		for (let index = 0; index < demoo[0].length; index++) {
-			if (demoo[0].indexOf("") === -1) {
-				newarr.push(parseInt(demoo[0][index]))
+		if (dependentfilter[IndexNo][0] !== 'strState' && dependentfilter[IndexNo][0] !== 'strCity') {
+			for (let index = 0; index < demoo[0].length; index++) {
+				if (demoo[0].indexOf("") === -1) {
+					console.log((demoo[0][index]));
+					newarr.push(parseInt(demoo[0][index]))
+					newarrName.push((demooName[0][index]))
+				}
+			}
+		} else{
+			for (let index = 0; index < demoo[0].length; index++) {
+				if (demoo[0].indexOf("") === -1) {
+					console.log((demoo[0][index]));
+					newarr.push((demoo[0][index]))
+					newarrName.push((demooName[0][index]))
+				}
 			}
 		}
 		setdemo(newarr)
+		setdemoName(newarrName)
+		console.log(demoName, "demo");
 		setprops1({ 'api': dependentfilter[IndexNo][1], 'labelname': dependentfilter[IndexNo][0], 'id': dependentfilter[IndexNo][2], 'name': dependentfilter[IndexNo][3], 'LabelValue': dependentfilter[IndexNo][4], 'FilterIndex': IndexNo })
 		FilterContext.setchildFilterShow(true);
 	}
 
 	function HandleOnClickSubCatComman(IndexNo) {
-		let myvalue = FilterContext.TempCommanFilter['strSubCategory' + IndexNo.toString + 'ID']
+		let myvalue = FilterContext.TempCommanFilter['strSubCategory' + IndexNo.toString() + 'ID']
+		let myvalueName = FilterContext.TempCommanFilter['strSubCategory' + IndexNo.toString() + 'Value']
+
 		if (myvalue !== undefined) {
 			let demoo = []
-		demoo.push(myvalue.split(','))
+			let demooName = []
+			demoo.push(myvalue.split(','))
+			demooName.push(myvalueName.split(','))
 
-		let newarr = []
+			let newarr = []
+			let newarrName = []
 
 
-		for (let index = 0; index < demoo[0].length; index++) {
-			if (demoo[0].indexOf("") === -1) {
-				newarr.push(parseInt(demoo[0][index]))
+			for (let index = 0; index < demoo[0].length; index++) {
+				if (demoo[0].indexOf("") === -1) {
+					newarr.push(parseInt(demoo[0][index]))
+					newarrName.push(parseInt(demooName[0][index]))
+				}
 			}
+			setdemo(newarr)
+			setdemoName(newarrName)
 		}
-		setdemo(newarr)	
-		}
-		
+		console.log(demoName);
 		setprops1({ 'api': API.GetSubCategory, 'labelname': 'strSubCategory' + IndexNo.toString() + 'ID', 'id': 'SubCategory' + IndexNo.toString() + 'ID', 'name': 'SubCategory' + IndexNo.toString() + 'Name', 'LabelValue': 'strSubCategory' + IndexNo.toString() + 'Value', 'FilterIndex': IndexNo })
 		FilterContext.setchildFilterShow(true);
 	}
@@ -660,8 +691,9 @@ export default function Header() {
 	}
 	function handleReset() {
 		try {
-			FilterContext.TempCommanFilter = comman
-			FilterContext.TempCommanNameFilter = comman
+			FilterContext.SetTempCommanFilter(comman)
+			// document.querySelector('input').value = ''
+			// FilterContext.SetTempCommanNameFilter = comman
 			// FilterContext.SetCommanFilter(comman)
 			FilterData = FilterContext.TempCommanFilter
 			// FilterNameData = FilterContext.TempCommanFilter
@@ -830,9 +862,19 @@ export default function Header() {
 			ele.requestFullscreen()
 		}
 	}
+
+	function formatedValue(str) {
+		if (str !== undefined) {
+			if (str === '' || str.split(',').length === 1) {
+				return str
+			} else {
+				return str.split(',')[0].toString() + ' ' + (str.split(',').length - 1).toString() + '+'
+			}
+		}
+	}
 	return (
 		<>
-			{FilterContext.childFilterShow === true ? <Commonmodel modelprops={props1} prdemo={demo} /> :
+			{FilterContext.childFilterShow === true ? <Commonmodel modelprops={props1} prdemo={demo} prdemoName={demoName} /> :
 				<div class="geex-content__header">
 					<div class="geex-content__header__content">
 						<div class="geex-content__header__customizer">
@@ -1023,7 +1065,7 @@ export default function Header() {
 																						}),
 																					}}
 																				/> */}
-																				<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDepartmentID'].slice(0, -1)} onClick={()=>HandleOnClickComman(1)} />
+																				<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strDepartmentValue'])} onClick={() => HandleOnClickComman(1)}/>
 																			</div>
 																			{/* </div> */}
 																		</form>
@@ -1036,7 +1078,7 @@ export default function Header() {
 																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
 																					src={option} />
 																				<label for="sel1" class="form-label">Style</label>
-																				<input type='text' class="col-12 form-inpur" aria-label="Default select example" onClick={()=>{HandleOnClickComman(5)}} />
+																				<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strStyleValue'])} onClick={() => { HandleOnClickComman(5) }} />
 																			</div>
 
 																			{/* <Select
@@ -1054,7 +1096,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			
+
 																		</form>
 																	</div>
 																</div>
@@ -1082,7 +1124,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strColorID'].slice(0, -1)} onClick={() => {HandleOnClickComman(9)}} />
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strColorValue'])} onClick={() => { HandleOnClickComman(9) }} />
 
 																		</form>
 																	</div>
@@ -1096,7 +1138,7 @@ export default function Header() {
 																				<label for="sel1" class="form-label">Purchase Party </label>
 																			</div>
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strPurchaseAccountID'].slice(0, -1)} onClick={() => {HandleOnClickComman(13)}} />
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strPurchaseAccountValue'])} onClick={() => { HandleOnClickComman(13) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1124,7 +1166,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={() =>{HandleOnClickComman(2)}} />
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strItemGroupValue'])} onClick={() => { HandleOnClickComman(2) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1151,7 +1193,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(6)}} />
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strItemValue'])} onClick={() => { HandleOnClickComman(6) }} />
 																			{/*</InfiniteScroll> */}
 
 
@@ -1183,7 +1225,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(10)}} />
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strState'])} onClick={() => { HandleOnClickComman(10) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1196,7 +1238,7 @@ export default function Header() {
 																				<label for="sel1" class="form-label">Sale Party </label>
 																			</div>
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesAccountID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(14)}}/>
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} placeholder={'Select...'}  class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSalesAccountValue'])} onClick={() => { HandleOnClickComman(14) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1224,7 +1266,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strProductID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(3)}} />
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strProductValue'])} onClick={() => { HandleOnClickComman(3) }} />
 
 																		</form>
 																	</div>
@@ -1239,7 +1281,7 @@ export default function Header() {
 																			</div>
 
 
-																			<input type='text' style={{ border: '1px solid #cccccc', height: '45px', }} placeholder='Select...' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDesignID'].slice(0, -1)}onClick={()=>{HandleOnClickComman(7)}}/>
+																			<input type='text'  placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strDesignValue'])} onClick={() => { HandleOnClickComman(7) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1267,7 +1309,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(11)}} />
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strCity'])} onClick={() => { HandleOnClickComman(11) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1295,7 +1337,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesmanID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(15)}} />
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSalesmanValue'])} onClick={() => { HandleOnClickComman(15) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1323,7 +1365,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strBrandID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(4)}}/>
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strBrandValue'])} onClick={() => { HandleOnClickComman(4) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1351,7 +1393,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" onClick={()=>{HandleOnClickComman(8)}} />
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strLotNo'])} onClick={() => { HandleOnClickComman(8) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1379,7 +1421,7 @@ export default function Header() {
 																					}),
 																				}}
 																			/> */}
-																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strRegionID'].slice(0, -1)} onClick={()=>HandleOnClickComman(12)} />
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strRegionValue'])} onClick={() => HandleOnClickComman(12)} />
 																		</form>
 																	</div>
 																</div>
@@ -1412,7 +1454,7 @@ export default function Header() {
 																							}),
 																						}}
 																					/> */}
-																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={() => HandleOnClickSubCatComman(1)} />
+																					<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSubCategory1Value'])} onClick={() => HandleOnClickSubCatComman(1)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1440,7 +1482,7 @@ export default function Header() {
 																							}),
 																						}}
 																					/> */}
-																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory2ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(2)} />
+																					<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSubCategory2Value'])} onClick={() => HandleOnClickSubCatComman(2)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1468,7 +1510,7 @@ export default function Header() {
 																							}),
 																						}}
 																					/> */}
-																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory3ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(3)} />
+																					<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSubCategory3Value'])} onClick={() => HandleOnClickSubCatComman(3)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1496,7 +1538,7 @@ export default function Header() {
 																							}),
 																						}}
 																					/> */}
-																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory4ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(4)} />
+																					<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSubCategory4Value'])} onClick={() => HandleOnClickSubCatComman(4)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1524,7 +1566,7 @@ export default function Header() {
 																							}),
 																						}}
 																					/> */}
-																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory5ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(5)} />
+																					<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSubCategory5Value'])} onClick={() => HandleOnClickSubCatComman(5)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1552,7 +1594,7 @@ export default function Header() {
 																							}),
 																						}}
 																					/> */}
-																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory6ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(6)} />
+																					<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSubCategory6Value'])} onClick={() => HandleOnClickSubCatComman(6)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1580,7 +1622,7 @@ export default function Header() {
 																							}),
 																						}}
 																					/> */}
-																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory7ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(7)} />
+																					<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSubCategory7Value'])} onClick={() => HandleOnClickSubCatComman(7)} />
 																				</form>
 																			</div>
 																		</div> : null}

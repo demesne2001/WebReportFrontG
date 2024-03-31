@@ -7,6 +7,7 @@ import CreatContext from './Context/CreateContext';
 import axios from 'axios';
 import search_icon from './assets/font/svg/search.svg';
 import spinear from './assets/font/svg/spinar.svg'
+import { Table } from 'react-bootstrap';
 
 
 function Commonmodel(props) {
@@ -24,11 +25,12 @@ function Commonmodel(props) {
     const [searchProcess, setSearchProcess] = useState(false);
 
     let updatedList = [...props.prdemo];
-
+    let updatelistName = [...props.prdemoName]
     useEffect(() => {
         console.log(props);
         setPage(2)
         setmulticheck(updatedList)
+        setmulticheckName(updatelistName);
         setSearch(contextSetparam.CommanChildFilter)
         fetchItemdata()
         fetchAllData()
@@ -70,25 +72,22 @@ function Commonmodel(props) {
     }
 
     function handleCheck(e) {
-        
         let value
         let finalcheck = e.target.checked;
-        console.log('val',props.modelprops['labelname'].indexOf('State'))
-        if(props.modelprops['labelname'].indexOf('State') > 0 || props.modelprops['labelname'].indexOf('City') > 0)
-        {
+        console.log('val', props.modelprops['labelname'].indexOf('State'))
+        if (props.modelprops['labelname'].indexOf('State') > 0 || props.modelprops['labelname'].indexOf('City') > 0) {
             value = e.target.value.toString()
-            console.log(value,'value')
+            console.log(value, 'value')
         }
-        else
-        {
-             value = parseInt(e.target.value)
+        else {
+            value = parseInt(e.target.value)
 
         }
         let name = e.target.name;
-        
 
         if (finalcheck) {
             setmulticheck([...multicheck, value])
+            console.log(name);
             setmulticheckName([...multicheckName, name])
         }
         else {
@@ -103,7 +102,7 @@ function Commonmodel(props) {
                 })
             })
         }
-        console.log('multicheck',multicheck)
+        console.log('multicheck', multicheck)
     }
 
 
@@ -111,12 +110,18 @@ function Commonmodel(props) {
     const handlesavefilter = () => {
         var stringConvert = multicheck.toString()
         var stringNameConvert = multicheckName.toString()
+        console.log(props.modelprops['LabelValue'], stringNameConvert);
+        console.log(props.modelprops['labelname'], stringConvert);
         // props.setvalues({ ...props.valuesform, [props.modelprops.labelname]: stringConvert })
-        contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert })
-        if (props.modelprops['labelname'].indexOf('SubCategory') > 0) {
-            contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, ['FilterIndex']: props.modelprops.FilterIndex })
+        contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert, [props.modelprops['LabelValue']]: stringNameConvert })
+
+        if (props.modelprops['labelname'].indexOf('SubCategory') < 0) {
+            contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert, [props.modelprops['LabelValue']]: stringNameConvert, ['FilterIndex']: props.modelprops.FilterIndex })
+        } else {
+            contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert, [props.modelprops['LabelValue']]: stringNameConvert })
         }
-        contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: stringNameConvert })
+        console.log(contextSetparam.TempCommanFilter);
+        // contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: stringNameConvert })
         contextSetparam.setchildFilterShow(false)
 
         setmulticheck([])
@@ -131,8 +136,8 @@ function Commonmodel(props) {
         }
         setmulticheck([])
         setmulticheckName([])
-        contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: "" })
-        contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: "" })
+        contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: '', [props.modelprops['LabelValue']]: '' })
+        // contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: "" })
     }
     const handleScroll = (event) => {
         console.log(finalitem.length)
@@ -281,25 +286,59 @@ function Commonmodel(props) {
 
                                     <div id="scrollbar" className='style-2' onScroll={handleScroll}>
 
-                                        {finalitem.map((ele, i) =>
-                                        (
+                                        {props.modelprops.id === 'AccountID' ?
+                                            
+                                                <Table striped bordered hover>
+                                                    <thead>
+                                                        <th></th>
+                                                        <th>ACCOUNTID</th>
+                                                        <th>ACCOUNTNAME</th>
+                                                    </thead>
+                                                    <tbody>{
+                                                        finalitem.map((ele, i) =>
+                                                        (
+                                                            <tr>
+                                                                <td>
+                                                                    <Form.Check
+                                                                        ref={(element) => { ref.current[i] = element }}
+                                                                        type='checkbox'
+                                                                        id={ele[props.modelprops.id]}
+                                                                        value={ele[props.modelprops.id]}
+                                                                        name={ele[props.modelprops.name] === null ? 'null' : ele[props.modelprops.name]}
+                                                                        onChange={handleCheck}
+                                                                        checked={multicheck.includes(ele[props.modelprops.id])}
+                                                                    />
+                                                                </td>
+                                                                <td>{ele[props.modelprops.id]}</td>
+                                                                <td>{ele[props.modelprops.name]}</td>
+                                                            </tr>
 
-                                            <div className="mb-3" key={i}>
-                                                <div className='inner-div-check'>
-                                                    <Form.Check
-                                                        ref={(element) => { ref.current[i] = element }}
-                                                        type='checkbox'
-                                                        id={ele[props.modelprops.id]}
-                                                        value={ele[props.modelprops.id]}
-                                                        name={ele[props.modelprops.name]}
-                                                        label={ele[props.modelprops.name]}
-                                                        onChange={handleCheck}
-                                                        checked={multicheck.includes(ele[props.modelprops.id])}
-                                                    />
+                                                        )
+                                                        )}
+                                                    </tbody>
+                                                </Table>
+                                       
+                                            :
+                                            finalitem.map((ele, i) =>
+                                            (
+
+                                                <div className="mb-3" key={i}>
+                                                    <div className='inner-div-check'>
+                                                        <Form.Check
+                                                            ref={(element) => { ref.current[i] = element }}
+                                                            type='checkbox'
+                                                            id={ele[props.modelprops.id]}
+                                                            value={ele[props.modelprops.id]}
+                                                            name={ele[props.modelprops.name] === null ? 'null' : ele[props.modelprops.name]}
+                                                            label={ele[props.modelprops.name] === null ? 'null' : ele[props.modelprops.name]}
+                                                            onChange={handleCheck}
+                                                            checked={multicheck.includes(ele[props.modelprops.id])}
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                        )
+                                            )
+                                            )
+
                                         }
                                     </div>
                                 </Form>

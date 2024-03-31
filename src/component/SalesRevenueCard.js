@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import CreatContext from './Context/CreateContext';
 import API from './Utility/API';
 import post from './Utility/APIHandle';
+import loader from './assets/font/svg/loader.svg';
 export default function SalesRevenueCard() {
 	const filter = useContext(CreatContext);
 	const [NoOfBill, setNoOfBill] = useState();
@@ -48,7 +49,7 @@ export default function SalesRevenueCard() {
 				setAvgSale(response.data.lstResult[0]['AvgSale'].toFixed(2))
 				setNoOfBill(response.data.lstResult[0]['NoOfBill'])
 				setSalesAmount(response.data.lstResult[0]['SalesAmount'].toFixed(2))
-				setSalesQty(response.data.lstResult[0]['SalesQty'].toFixed(2))
+				setSalesQty(response.data.lstResult[0]['SalesQty'])
 			}
 
 
@@ -63,7 +64,7 @@ export default function SalesRevenueCard() {
 							<img src={trend} />
 						</div>
 						<p class="card-top-main-title">Sales Revenue</p>
-						<p class="card-top-main-amount">₹{format(SalesAmount)}</p>
+						<p class="card-top-main-amount">₹{format(SalesAmount) === NaN? <img src={loader}/> : format(SalesAmount)}</p>
 					</div>
 					<div class="line middle-color-cardline"></div>
 					<div class="right-part">
