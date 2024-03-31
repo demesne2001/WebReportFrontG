@@ -4,6 +4,7 @@ import CreateContext from './CreateContext'
 export default function Setcontext(props) {
     const commanFilterDefault = {
       "ChartValueOption": "",
+      "strDayBookID": "",
       "strCompanyID": "",
       "strBranchID": "",
       "FromDate": "",
@@ -26,8 +27,7 @@ export default function Setcontext(props) {
       "strSubCategory7ID": "",
       "strSubCategory8ID": "",
       "strSubCategory9ID": "",
-      "strSubCategory10ID": "",
-      "strDayBookID": "",
+      "strSubCategory10ID": "",      
       "ExtraVar": "H",
       "strLotNo": "",
       "strCity": "",
@@ -72,7 +72,31 @@ export default function Setcontext(props) {
       "strSalesAccountID": "",
       "strPurchaseAccountID": "",
       "strStyleID": "",
-      "FilterIndex":""
+      "FilterIndex":"",
+      "strDepartmentValue": "",
+      "strBrandValue": "",
+      "strProductValue": "",
+      "strItemGroupValue": "",
+      "strItemValue": "",
+      "strColorValue": "",
+      "strSeasonValue": "",
+      "strSalesmanValue": "",
+      "strDesignValue": "",
+      "strRegionValue": "",
+      "strSalesAccountValue": "",
+      "strPurchaseAccountValue": "",
+      "strStyleValue": "",
+      "strSubCategory1Value": "",
+      "strSubCategory2Value": "",
+      "strSubCategory3Value": "",
+      "strSubCategory4Value": "",
+      "strSubCategory5Value": "",
+      "strSubCategory6Value": "",
+      "strSubCategory7Value": "",
+      "strSubCategory8Value": "",
+      "strSubCategory9Value": "",
+      "strSubCategory10Value": ""
+
     }
     
 

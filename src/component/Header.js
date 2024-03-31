@@ -32,21 +32,22 @@ import ChildHeader from './ChildHeader';
 import axios from "axios"
 import Commonmodel from './CommanModal';
 
-const FilterInput = {
-	"search": "",
-	"strCompanyID": "",
-	"strBranchID": "",
-	"strDepartmentID": "",
-	"strBrandID": "",
-	"strProductID": "",
-	"strItemGroupID": "",
-	"PageSize": 999,
-	"PageNo": 0,
-	"strItemID": "",
-	"strDesignID": "",
-	"SubCategoryNo": 0
-}
+
 export default function Header() {
+	const FilterInput = {
+		"search": "",
+		"strCompanyID": "",
+		"strBranchID": "",
+		"strDepartmentID": "",
+		"strBrandID": "",
+		"strProductID": "",
+		"strItemGroupID": "",
+		"PageSize": 9999,
+		"PageNo": 0,
+		"strItemID": "",
+		"strDesignID": "",
+		"SubCategoryNo": 0
+	}
 	const [fullscreen, setFullScreen] = useState(false);
 	const DepartmentRef = useRef();
 	const ItemGrRef = useRef();
@@ -109,7 +110,32 @@ export default function Header() {
 		"strRegionID": "",
 		"strSalesAccountID": "",
 		"strPurchaseAccountID": "",
-		"strStyleID": ""
+		"strStyleID": "",
+		"FilterIndex": "",
+		"strDepartmentValue": "",
+		"strBrandValue": "",
+		"strProductValue": "",
+		"strItemGroupValue": "",
+		"strItemValue": "",
+		"strColorValue": "",
+		"strSeasonValue": "",
+		"strSalesmanValue": "",
+		"strDesignValue": "",
+		"strRegionValue": "",
+		"strSalesAccountValue": "",
+		"strPurchaseAccountValue": "",
+		"strStyleValue": "",
+		"strSubCategory1Value": "",
+		"strSubCategory2Value": "",
+		"strSubCategory3Value": "",
+		"strSubCategory4Value": "",
+		"strSubCategory5Value": "",
+		"strSubCategory6Value": "",
+		"strSubCategory7Value": "",
+		"strSubCategory8Value": "",
+		"strSubCategory9Value": "",
+		"strSubCategory10Value": ""
+
 	}
 	const [show, setshow] = useState(false);
 	const handleClose = () => {
@@ -117,7 +143,23 @@ export default function Header() {
 	}
 	const handleShow = () => setshow(true);
 	const FilterContext = useContext(CreateContext);
-
+	const dependentfilter = {
+		1: ["strDepartmentID", API.GetDepartment, "DepartmentID", "DepartmentName", "strDepartmentValue"],
+		2: ["strItemGroupID", API.GetItemGroup, "ItemGroupID", "ItemGroupName", "strItemGroupValue"],
+		3: ["strProductID", API.GetProduct, "ProductID", "ProductName", "strProductValue"],
+		4: ["strBrandID", API.GetBrand, "BrandID", "BrandName", "strBrandValue"],
+		5: ["strStyleID", API.GetStyle, "StyleID", "StyleName", "strStyleValue"],
+		6: ["strItemID", API.GetItemName, "ItemID", "ItemName", "strItemValue"],
+		7: ["strDesignID", API.GetDesign, "DesignID", "DesignNo", "strDesignValue"],
+		8: ["strLotNo", API.GetLotNo, "LotNo", "LotNo", "strLotNo"],
+		9: ["strColorID", API.GetColor, "ColorID", "ColorName", "strColorValue"],
+		10: ["strState", API.GetState, "statename", "statename", "strState"],
+		11: ["strCity", API.GetCity, "Cityname", "Cityname", "strCity"],
+		12: ["strRegionID", API.GetRegion, "RegionID", "RegionName", "strRegionValue"],
+		13: ["strPurchaseAccountID", API.GetPurchaseParty, "AccountID", "AccountName", "strPurchaseAccountValue"],
+		14: ["strSalesAccountID", API.GetSalesParty, "AccountID", "AccountName", "strSalesAccountValue"],
+		15: ["strSalesmanID", API.GetSalesman, "SalesmanID", "SalesmanName", "strSalesmanValue"],
+	}
 	// const [FilterData, SetFilterData] = useState({
 	// 	"ChartValueOption": "",
 	// 	"strCompanyID": "",
@@ -139,20 +181,13 @@ export default function Header() {
 	// });
 	let FilterData = {
 		...FilterContext.TempCommanFilter,
+		['strDepartmentID']: FilterContext.TempCommanFilter['strDepartmentID'],
 		['ToDate']: FilterContext.TempCommanFilter['ToDate'],
 		['FromDate']: FilterContext.TempCommanFilter['FromDate'],
-		['strSubCategory1ID']: FilterContext.TempCommanFilter['strSubCategory1ID'],
-		['strSubCategory2ID']: FilterContext.TempCommanFilter['strSubCategory2ID'],
-		['strSubCategory3ID']: FilterContext.TempCommanFilter['strSubCategory3ID'],
-		['strSubCategory4ID']: FilterContext.TempCommanFilter['strSubCategory4ID'],
-		['strSubCategory5ID']: FilterContext.TempCommanFilter['strSubCategory5ID'],
-		['strSubCategory6ID']: FilterContext.TempCommanFilter['strSubCategory6ID'],
-		['strSubCategory7ID']: FilterContext.TempCommanFilter['strSubCategory7ID'],
-		['strSubCategory8ID']: FilterContext.TempCommanFilter['strSubCategory8ID'],
-		['strSubCategory9ID']: FilterContext.TempCommanFilter['strSubCategory9ID'],
-		['strSubCategory10ID']: FilterContext.TempCommanFilter['strSubCategory10ID'],
-		['strDepartmentID']: FilterContext.TempCommanFilter['strDepartmentID'],
 		['strDayBookID']: FilterContext.TempCommanFilter['strDayBookID'],
+		['strCity']: FilterContext.TempCommanFilter['strCity'],
+		['strState']: FilterContext.TempCommanFilter['strState'],
+		['strLotNo']: FilterContext.TempCommanFilter['strLotNo'],
 		['strBrandID']: FilterContext.TempCommanFilter['strBrandID'],
 		['strProductID']: FilterContext.TempCommanFilter['strProductID'],
 		['strItemGroupID']: FilterContext.TempCommanFilter['strItemGroupID'],
@@ -163,44 +198,74 @@ export default function Header() {
 		['strSalesAccountID']: FilterContext.TempCommanFilter['strSalesAccountID'].slice(0, -1),
 		['strPurchaseAccountID']: FilterContext.TempCommanFilter['strPurchaseAccountID'].slice(0, -1),
 		['strColorID']: FilterContext.TempCommanFilter['strColorID'],
-		['strLotNo']: FilterContext.TempCommanFilter['strLotNo'],
 		['strStyleID']: FilterContext.TempCommanFilter['strStyleID'],
-		['strCity']: FilterContext.TempCommanFilter['strCity'],
-		['strState']: FilterContext.TempCommanFilter['strState'],
 		['strRegionID']: FilterContext.TempCommanFilter['strRegionID'],
 		['ChartValueOption']: FilterContext.TempCommanFilter['ChartValueOption'],
+		['strSubCategory1ID']: FilterContext.TempCommanFilter['strSubCategory1ID'],
+		['strSubCategory2ID']: FilterContext.TempCommanFilter['strSubCategory2ID'],
+		['strSubCategory3ID']: FilterContext.TempCommanFilter['strSubCategory3ID'],
+		['strSubCategory4ID']: FilterContext.TempCommanFilter['strSubCategory4ID'],
+		['strSubCategory5ID']: FilterContext.TempCommanFilter['strSubCategory5ID'],
+		['strSubCategory6ID']: FilterContext.TempCommanFilter['strSubCategory6ID'],
+		['strSubCategory7ID']: FilterContext.TempCommanFilter['strSubCategory7ID'],
+		['strSubCategory8ID']: FilterContext.TempCommanFilter['strSubCategory8ID'],
+		['strSubCategory9ID']: FilterContext.TempCommanFilter['strSubCategory9ID'],
+		['strSubCategory10ID']: FilterContext.TempCommanFilter['strSubCategory10ID'],
+		['strDepartmentValue']: FilterContext.TempCommanFilter['strDepartmentValue'],
+		['strBrandValue']: FilterContext.TempCommanFilter['strBrandValue'],
+		['strProductValue']: FilterContext.TempCommanFilter['strProductValue'],
+		['strItemGroupValue']: FilterContext.TempCommanFilter['strItemGroupValue'],
+		['strItemValue']: FilterContext.TempCommanFilter['strItemValue'],
+		['strSeasonValue']: FilterContext.TempCommanFilter['strSeasonValue'],
+		['strSalesmanValue']: FilterContext.TempCommanFilter['strSalesmanValue'],
+		['strDesignValue']: FilterContext.TempCommanFilter['strDesignValue'],
+		['strSalesAccountValue']: FilterContext.TempCommanFilter['strSalesAccountValue'],
+		['strPurchaseAccountValue']: FilterContext.TempCommanFilter['strPurchaseAccountValue'],
+		['strStyleValue']: FilterContext.TempCommanFilter['strStyleValue'],
+		['strColorValue']: FilterContext.TempCommanFilter['strColorValue'],
+		['strRegionValue']: FilterContext.TempCommanFilter['strRegionValue'],
+		['strSubCategory1Value']: FilterContext.TempCommanFilter['strSubCategory1Value'],
+		['strSubCategory2Value']: FilterContext.TempCommanFilter['strSubCategory2Value'],
+		['strSubCategory3Value']: FilterContext.TempCommanFilter['strSubCategory3Value'],
+		['strSubCategory4Value']: FilterContext.TempCommanFilter['strSubCategory4Value'],
+		['strSubCategory5Value']: FilterContext.TempCommanFilter['strSubCategory5Value'],
+		['strSubCategory6Value']: FilterContext.TempCommanFilter['strSubCategory6Value'],
+		['strSubCategory7Value']: FilterContext.TempCommanFilter['strSubCategory7Value'],
+		['strSubCategory8Value']: FilterContext.TempCommanFilter['strSubCategory8Value'],
+		['strSubCategory9Value']: FilterContext.TempCommanFilter['strSubCategory9Value'],
+		['strSubCategory10Value']: FilterContext.TempCommanFilter['strSubCategory10Value']
 	}
-	let FilterNameData = {
-		...FilterContext.TempCommanNameFilter,
-		['strLotNo']: FilterContext.TempCommanFilter['strLotNo'],
-		['ChartValueOption']: FilterContext.TempCommanFilter['ChartValueOption'],
-		['ToDate']: FilterContext.TempCommanFilter['ToDate'],
-		['FromDate']: FilterContext.TempCommanFilter['FromDate'],
-		['strSubCategory1ID']: FilterContext.TempCommanNameFilter['strSubCategory1ID'],
-		['strSubCategory2ID']: FilterContext.TempCommanNameFilter['strSubCategory2ID'],
-		['strSubCategory3ID']: FilterContext.TempCommanNameFilter['strSubCategory3ID'],
-		['strSubCategory4ID']: FilterContext.TempCommanNameFilter['strSubCategory4ID'],
-		['strSubCategory5ID']: FilterContext.TempCommanNameFilter['strSubCategory5ID'],
-		['strSubCategory6ID']: FilterContext.TempCommanNameFilter['strSubCategory6ID'],
-		['strSubCategory7ID']: FilterContext.TempCommanNameFilter['strSubCategory7ID'],
-		['strSubCategory8ID']: FilterContext.TempCommanNameFilter['strSubCategory8ID'],
-		['strSubCategory9ID']: FilterContext.TempCommanNameFilter['strSubCategory9ID'],
-		['strSubCategory10ID']: FilterContext.TempCommanNameFilter['strSubCategory10ID'],
-		['strDepartmentID']: FilterContext.TempCommanNameFilter['strDepartmentID'],
-		['strDayBookID']: FilterContext.TempCommanNameFilter['strDayBookID'],
-		['strBrandID']: FilterContext.TempCommanNameFilter['strBrandID'],
-		['strProductID']: FilterContext.TempCommanNameFilter['strProductID'],
-		['strItemGroupID']: FilterContext.TempCommanNameFilter['strItemGroupID'],
-		['strItemID']: FilterContext.TempCommanNameFilter['strItemID'],
-		['strSeasonID']: FilterContext.TempCommanNameFilter['strSeasonID'],
-		['strSalesmanID']: FilterContext.TempCommanNameFilter['strSalesmanID'],
-		['strDesignID']: FilterContext.TempCommanNameFilter['strDesignID'],
-		['strStyleID']: FilterContext.TempCommanNameFilter['strStyleID'],
-		['strCity']: FilterContext.TempCommanNameFilter['strCity'],
-		['strState']: FilterContext.TempCommanNameFilter['strState'],
-		['strRegionID']: FilterContext.TempCommanNameFilter['strRegionID'],
-		['strColorID']: FilterContext.TempCommanNameFilter['strColorID'],
-	}
+	// let FilterNameData = {
+	// 	...FilterContext.TempCommanNameFilter,
+	// 	['strLotNo']: FilterContext.TempCommanFilter['strLotNo'],
+	// 	['ChartValueOption']: FilterContext.TempCommanFilter['ChartValueOption'],
+	// 	['ToDate']: FilterContext.TempCommanFilter['ToDate'],
+	// 	['FromDate']: FilterContext.TempCommanFilter['FromDate'],
+	// 	['strSubCategory1ID']: FilterContext.TempCommanNameFilter['strSubCategory1ID'],
+	// 	['strSubCategory2ID']: FilterContext.TempCommanNameFilter['strSubCategory2ID'],
+	// 	['strSubCategory3ID']: FilterContext.TempCommanNameFilter['strSubCategory3ID'],
+	// 	['strSubCategory4ID']: FilterContext.TempCommanNameFilter['strSubCategory4ID'],
+	// 	['strSubCategory5ID']: FilterContext.TempCommanNameFilter['strSubCategory5ID'],
+	// 	['strSubCategory6ID']: FilterContext.TempCommanNameFilter['strSubCategory6ID'],
+	// 	['strSubCategory7ID']: FilterContext.TempCommanNameFilter['strSubCategory7ID'],
+	// 	['strSubCategory8ID']: FilterContext.TempCommanNameFilter['strSubCategory8ID'],
+	// 	['strSubCategory9ID']: FilterContext.TempCommanNameFilter['strSubCategory9ID'],
+	// 	['strSubCategory10ID']: FilterContext.TempCommanNameFilter['strSubCategory10ID'],
+	// 	['strDepartmentID']: FilterContext.TempCommanNameFilter['strDepartmentID'],
+	// 	['strDayBookID']: FilterContext.TempCommanNameFilter['strDayBookID'],
+	// 	['strBrandID']: FilterContext.TempCommanNameFilter['strBrandID'],
+	// 	['strProductID']: FilterContext.TempCommanNameFilter['strProductID'],
+	// 	['strItemGroupID']: FilterContext.TempCommanNameFilter['strItemGroupID'],
+	// 	['strItemID']: FilterContext.TempCommanNameFilter['strItemID'],
+	// 	['strSeasonID']: FilterContext.TempCommanNameFilter['strSeasonID'],
+	// 	['strSalesmanID']: FilterContext.TempCommanNameFilter['strSalesmanID'],
+	// 	['strDesignID']: FilterContext.TempCommanNameFilter['strDesignID'],
+	// 	['strStyleID']: FilterContext.TempCommanNameFilter['strStyleID'],
+	// 	['strCity']: FilterContext.TempCommanNameFilter['strCity'],
+	// 	['strState']: FilterContext.TempCommanNameFilter['strState'],
+	// 	['strRegionID']: FilterContext.TempCommanNameFilter['strRegionID'],
+	// 	['strColorID']: FilterContext.TempCommanNameFilter['strColorID'],
+	// }
 	const [FilterTempData, setFilterTempData] = useState(FilterContext.CommanFilter)
 	const [Department, setDepartment] = useState([]);
 	const [fromdate, setfromdate] = useState();
@@ -267,39 +332,91 @@ export default function Header() {
 	// const [ComList, setComList] = useState([])
 	// const [ComList, setComList] = useState([])
 	let Companylst = []
-
+	
 
 	useEffect(() => {
+		console.log("useEffet2");
+
 		setFilterTempData(FilterContext.CommanFilter)
 		GetCompanyData()
 		getCommonParam()
-		fetchData(API.GetDepartment, 'DepartmentName', 'DepartmentID', setDepartment)
-		fetchData(API.GetItemGroup, 'ItemGroupName', 'ItemGroupID', setItemGroup)
-		fetchData(API.GetColor, 'ColorName', 'ColorID', setColor)
-		fetchData(API.GetBrand, 'BrandName', 'BrandID', setBrand)
-		fetchData(API.GetItemName, 'ItemName', 'ItemID', setItemName)
-		fetchData(API.GetProduct, 'ProductName', 'ProductID', setProduct)
-		fetchData(API.GetLotNo, 'LotNoName', 'LotNoID', setLotNo)
-		fetchData(API.GetSalesman, 'SalesmanName', 'SalesmanID', setSalesman)
-		fetchData(API.GetSubCategory, 'SubCategory1Name', 'SubCategory1ID', setSubCatogory1, 1)
-		fetchData(API.GetSubCategory, 'SubCategory2Name', 'SubCategory2ID', setSubCatogory2, 2)
-		fetchData(API.GetSubCategory, 'SubCategory3Name', 'SubCategory3ID', setSubCatogory3, 3)
-		fetchData(API.GetSubCategory, 'SubCategory4Name', 'SubCategory4ID', setSubCatogory4, 4)
-		fetchData(API.GetSubCategory, 'SubCategory5Name', 'SubCategory5ID', setSubCatogory5, 5)
-		fetchData(API.GetSubCategory, 'SubCategory6Name', 'SubCategory6ID', setSubCatogory6, 6)
-		fetchData(API.GetSubCategory, 'SubCategory7Name', 'SubCategory7ID', setSubCatogory7, 7)
-		fetchData(API.GetSubCategory, 'SubCategory8Name', 'SubCategory8ID', setSubCatogory8, 8)
-		fetchData(API.GetSubCategory, 'SubCategory9Name', 'SubCategory9ID', setSubCatogory9, 9)
-		fetchData(API.GetSubCategory, 'SubCategory10Name', 'SubCategory10ID', setSubCatogory10, 10)
-		fetchData(API.GetDayBook, 'DayBookName', 'DayBookID', setDayBook)
-		fetchCityName()
-		fetchStateName()
-		fetchRegionName()
-		fetchStyle()
+		// fetchData(API.GetDepartment, 'DepartmentName', 'DepartmentID', setDepartment)
+		// fetchData(API.GetItemGroup, 'ItemGroupName', 'ItemGroupID', setItemGroup)
+		// fetchData(API.GetColor, 'ColorName', 'ColorID', setColor)
+		// fetchData(API.GetBrand, 'BrandName', 'BrandID', setBrand)
+		// fetchData(API.GetItemName, 'ItemName', 'ItemID', setItemName)
+		// fetchData(API.GetProduct, 'ProductName', 'ProductID', setProduct)
+		// fetchData(API.GetLotNo, 'LotNoName', 'LotNoID', setLotNo)
+		// fetchData(API.GetSalesman, 'SalesmanName', 'SalesmanID', setSalesman)
+		// fetchData(API.GetSubCategory, 'SubCategory1Name', 'SubCategory1ID', setSubCatogory1, 1)
+		// fetchData(API.GetSubCategory, 'SubCategory2Name', 'SubCategory2ID', setSubCatogory2, 2)
+		// fetchData(API.GetSubCategory, 'SubCategory3Name', 'SubCategory3ID', setSubCatogory3, 3)
+		// fetchData(API.GetSubCategory, 'SubCategory4Name', 'SubCategory4ID', setSubCatogory4, 4)
+		// fetchData(API.GetSubCategory, 'SubCategory5Name', 'SubCategory5ID', setSubCatogory5, 5)
+		// fetchData(API.GetSubCategory, 'SubCategory6Name', 'SubCategory6ID', setSubCatogory6, 6)
+		// fetchData(API.GetSubCategory, 'SubCategory7Name', 'SubCategory7ID', setSubCatogory7, 7)
+		// fetchData(API.GetSubCategory, 'SubCategory8Name', 'SubCategory8ID', setSubCatogory8, 8)
+		// fetchData(API.GetSubCategory, 'SubCategory9Name', 'SubCategory9ID', setSubCatogory9, 9)
+		// fetchData(API.GetSubCategory, 'SubCategory10Name', 'SubCategory10ID', setSubCatogory10, 10)
+		// fetchData(API.GetDayBook, 'DayBookName', 'DayBookID', setDayBook)
+		// fetchCityName()
+		// fetchStateName()
+		// fetchRegionName()
+		// fetchStyle()
 		// console.log("daybook", DayBook);
 		handleThousand()
-		setColorOfDropDown()
+
 	}, [])
+	useEffect(() => {
+		var Findex = FilterContext.TempCommanFilter.FilterIndex
+		console.log("useEffet1");
+		console.log(Findex);
+		if (Findex !== "undefined") {
+			if (Findex > 1 && Findex < 9) {
+				for (let index = Findex; index < 10; ++index) {
+					if (FilterContext.TempCommanFilter[dependentfilter[index][0]].length > 0) {
+						FetchDataDependentAPI(FilterInput, index)
+					}
+				}
+			}
+			else if (Findex > 9 && Findex < 13) {
+				for (let index = Findex; index < 16; ++index) {
+					if (FilterContext.TempCommanFilter[dependentfilter[index][0]].length > 0) {
+						FetchDataDependentAPI(FilterInput, index)
+					}
+				}
+			}
+		}
+	}, [FilterContext.TempCommanFilter.FilterIndex])
+
+	useEffect(() => {
+		console.log("useEffet3");
+
+		for (let index = 1; index <= dependentfilter.length; index++) {
+			FetchDataDependentAPI(FilterInput, index)
+		}
+
+	}, [FilterContext.TempCommanFilter.strBranchID, FilterContext.TempCommanFilter.CompanyID])
+
+	function FetchDataDependentAPI(input, FilterIndex) {
+		post(input, dependentfilter[FilterIndex][1], [], 'post').then((res) => {
+
+			var TempDataID = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][0]].split(',')
+			var TempDataValue = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][3]].split(',')
+			var resultID = res.lstResult.map(Item => Item[dependentfilter[FilterIndex][2]])
+			// var resultValue=res.lstResult.map(Item=>Item[dependentfilter[FilterIndex][4]])
+			console.log('TempData', TempDataID)
+			console.log('resultID', resultID)
+			for (let index = 0; index < TempDataID.length; index++) {
+				if (resultID.indexOf(TempDataID[index]) < 0) {
+					delete TempDataID[index]
+					delete TempDataValue[index]
+				}
+			}
+			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [dependentfilter[FilterIndex][0]]: TempDataID.toString(), [dependentfilter[FilterIndex][3]]: TempDataValue.toString() })
+
+		})
+	}
 
 	async function getCommonParam() {
 		await axios.post("http://192.168.1.208:7000/Comman/ParmCaption").then((response) => {
@@ -318,155 +435,135 @@ export default function Header() {
 		})
 	}
 
-	async function fetchData(api, name, id, setMethod, bol = 0) {
-		let input = {}
-		if (bol !== 0) {
-			input = { ...FilterInput, ['SubCategoryNo']: bol.toString() }
-			await post(input, api, {}, "post").then((res) => {
-				let Dept = []
-				let jsonTemp = {}
-				res.data.lstResult.forEach(element => {
-					jsonTemp = {}
-					jsonTemp['value'] = element[id]
-					jsonTemp['label'] = element[name]
-					Dept.push(jsonTemp)
+	// async function fetchData(api, name, id, setMethod, bol = 0) {
+	// 	let input = {}
+	// 	if (bol !== 0) {
+	// 		input = { ...FilterInput, ['SubCategoryNo']: bol.toString() }
+	// 		await post(input, api, {}, "post").then((res) => {
+	// 			let Dept = []
+	// 			let jsonTemp = {}
+	// 			res.data.lstResult.forEach(element => {
+	// 				jsonTemp = {}
+	// 				jsonTemp['value'] = element[id]
+	// 				jsonTemp['label'] = element[name]
+	// 				Dept.push(jsonTemp)
 
-				});
-				setMethod(Dept)
-			})
-		} else {
-			if (name !== 'DayBookName') {
-				await post(FilterInput, api, {}, "post").then((res) => {
-					let Dept = []
-					let jsonTemp = {}
-					res.data.lstResult.forEach(element => {
-						jsonTemp = {}
-						jsonTemp['value'] = element[id]
-						jsonTemp['label'] = element[name]
-						Dept.push(jsonTemp)
-					});
-					setMethod(Dept)
-				})
-			} else {
-				await post(FilterInput, api, {}, "post").then((res) => {
-					let Dept = [{ 'value': "", 'label': 'NONE' }]
-					let jsonTemp = {}
-					res.data.lstResult.forEach(element => {
-						jsonTemp = {}
-						jsonTemp['value'] = element[id]
-						jsonTemp['label'] = element[name]
-						Dept.push(jsonTemp)
-					});
-					setMethod(Dept)
-				})
-			}
-		}
+	// 			});
+	// 			setMethod(Dept)
+	// 		})
+	// 	} else {
+	// 		if (name !== 'DayBookName') {
+	// 			await post(FilterInput, api, {}, "post").then((res) => {
+	// 				let Dept = []
+	// 				let jsonTemp = {}
+	// 				res.data.lstResult.forEach(element => {
+	// 					jsonTemp = {}
+	// 					jsonTemp['value'] = element[id]
+	// 					jsonTemp['label'] = element[name]
+	// 					Dept.push(jsonTemp)
+	// 				});
+	// 				setMethod(Dept)
+	// 			})
+	// 		} else {
+	// 			await post(FilterInput, api, {}, "post").then((res) => {
+	// 				let Dept = [{ 'value': "", 'label': 'NONE' }]
+	// 				let jsonTemp = {}
+	// 				res.data.lstResult.forEach(element => {
+	// 					jsonTemp = {}
+	// 					jsonTemp['value'] = element[id]
+	// 					jsonTemp['label'] = element[name]
+	// 					Dept.push(jsonTemp)
+	// 				});
+	// 				setMethod(Dept)
+	// 			})
+	// 		}
+	// 	}
 
-	}
+	// }
 
-	async function fetchCityName() {
-		await axios.post(API.GetCity).then((response) => {
-			// setcity(response.data.lstResult)
-			let Dept = []
-			let jsonTemp = {}
-			let count = 0
-			response.data.lstResult.forEach(element => {
-				jsonTemp = {}
-				jsonTemp['value'] = count
-				jsonTemp['label'] = element['Cityname']
-				count++;
-				Dept.push(jsonTemp)
-			});
-			setcity(Dept)
-		})
-	}
+	// async function fetchCityName() {
+	// 	await axios.post(API.GetCity).then((response) => {
+	// 		// setcity(response.data.lstResult)
+	// 		let Dept = []
+	// 		let jsonTemp = {}
+	// 		let count = 0
+	// 		response.data.lstResult.forEach(element => {
+	// 			jsonTemp = {}
+	// 			jsonTemp['value'] = count
+	// 			jsonTemp['label'] = element['Cityname']
+	// 			count++;
+	// 			Dept.push(jsonTemp)
+	// 		});
+	// 		setcity(Dept)
+	// 	})
+	// }
 
-	async function fetchStateName() {
-		await axios.post(API.GetState).then((response) => {
-			let Dept = []
-			let jsonTemp = {}
-			let count = 0
-			response.data.lstResult.forEach(element => {
-				jsonTemp = {}
-				jsonTemp['value'] = count
-				jsonTemp['label'] = element['statename']
-				count++;
-				Dept.push(jsonTemp)
-			});
-			setstate(Dept)
-		})
-	}
+	// async function fetchStateName() {
+	// 	await axios.post(API.GetState).then((response) => {
+	// 		let Dept = []
+	// 		let jsonTemp = {}
+	// 		let count = 0
+	// 		response.data.lstResult.forEach(element => {
+	// 			jsonTemp = {}
+	// 			jsonTemp['value'] = count
+	// 			jsonTemp['label'] = element['statename']
+	// 			count++;
+	// 			Dept.push(jsonTemp)
+	// 		});
+	// 		setstate(Dept)
+	// 	})
+	// }
 
-	async function fetchRegionName() {
-		await axios.post(API.GetRegion).then((response) => {
-			let Dept = []
-			let jsonTemp = {}
-			let count = 0
-			response.data.lstResult.forEach(element => {
-				jsonTemp = {}
-				jsonTemp['value'] = element['RegionID']
-				jsonTemp['label'] = element['RegionName']
-				count++;
-				Dept.push(jsonTemp)
-			});
-			setregion(Dept)
-		})
-	}
+	// async function fetchRegionName() {
+	// 	await axios.post(API.GetRegion).then((response) => {
+	// 		let Dept = []
+	// 		let jsonTemp = {}
+	// 		let count = 0
+	// 		response.data.lstResult.forEach(element => {
+	// 			jsonTemp = {}
+	// 			jsonTemp['value'] = element['RegionID']
+	// 			jsonTemp['label'] = element['RegionName']
+	// 			count++;
+	// 			Dept.push(jsonTemp)
+	// 		});
+	// 		setregion(Dept)
+	// 	})
+	// }
 
-	async function fetchStyle() {
-		await axios.post(API.GetStyle).then((response) => {
-			let Dept = []
-			let jsonTemp = {}
-			response.data.lstResult.forEach(element => {
-				jsonTemp = {}
-				jsonTemp['value'] = element['StyleID']
-				jsonTemp['label'] = element['StyleName']
-				Dept.push(jsonTemp)
-			});
-			setstyle(Dept)
-		})
-	}
+	// async function fetchStyle() {
+	// 	await axios.post(API.GetStyle).then((response) => {
+	// 		let Dept = []
+	// 		let jsonTemp = {}
+	// 		response.data.lstResult.forEach(element => {
+	// 			jsonTemp = {}
+	// 			jsonTemp['value'] = element['StyleID']
+	// 			jsonTemp['label'] = element['StyleName']
+	// 			Dept.push(jsonTemp)
+	// 		});
+	// 		setstyle(Dept)
+	// 	})
+	// }
 
-	function handleOnClickDesign() {
-		let myvalue = FilterContext.TempCommanFilter['strDesignID']
+	// function handleOnClickDesign() {
+	// 	let myvalue = FilterContext.TempCommanFilter['strDesignID']
 
-		let demoo = []
-		demoo.push(myvalue.split(','))
+	// 	let demoo = []
+	// 	demoo.push(myvalue.split(','))
 
-		let newarr = []
-
-
-		for (let index = 0; index < demoo[0].length; index++) {
-			if (demoo[0].indexOf("") === -1) {
-				newarr.push(parseInt(demoo[0][index]))
-			}
-		}
-		setdemo(newarr)
-		setprops1({ 'api': API.GetDesign, 'labelname': 'strDesignID', 'id': 'DesignID', 'name': 'DesignNo' })
-		FilterContext.setchildFilterShow(true);
-	}
-
-	function handleOnClickPurchase() {
-		let myvalue = FilterContext.TempCommanFilter['strPurchaseAccountID']
-
-		let demoo = []
-		demoo.push(myvalue.split(','))
-
-		let newarr = []
+	// 	let newarr = []
 
 
-		for (let index = 0; index < demoo[0].length; index++) {
-			if (demoo[0].indexOf("") === -1) {
-				newarr.push(parseInt(demoo[0][index]))
-			}
-		}
-		setdemo(newarr)
-		setprops1({ 'api': API.GetPurchaseParty, 'labelname': 'strPurchaseAccountID', 'id': 'AccountID', 'name': 'AccountName' })
-		FilterContext.setchildFilterShow(true);
-	}
-
-	function handleOnClickSalesParty() {
-		let myvalue = FilterContext.TempCommanFilter['strSalesAccountID']
+	// 	for (let index = 0; index < demoo[0].length; index++) {
+	// 		if (demoo[0].indexOf("") === -1) {
+	// 			newarr.push(parseInt(demoo[0][index]))
+	// 		}
+	// 	}
+	// 	setdemo(newarr)
+	// 	setprops1({ 'api': API.GetDesign, 'labelname': 'strDesignID', 'id': 'DesignID', 'name': 'DesignNo','LabelValue':'strDesignValue' })
+	// 	FilterContext.setchildFilterShow(true);
+	// }
+	function HandleOnClickComman(IndexNo) {
+		let myvalue = FilterContext.TempCommanFilter[dependentfilter[IndexNo][0]]
 
 		let demoo = []
 		demoo.push(myvalue.split(','))
@@ -480,15 +577,74 @@ export default function Header() {
 			}
 		}
 		setdemo(newarr)
-		setprops1({ 'api': API.GetSalesParty, 'labelname': 'strSalesAccountID', 'id': 'AccountID', 'name': 'AccountName' })
+		setprops1({ 'api': dependentfilter[IndexNo][1], 'labelname': dependentfilter[IndexNo][0], 'id': dependentfilter[IndexNo][2], 'name': dependentfilter[IndexNo][3], 'LabelValue': dependentfilter[IndexNo][4], 'FilterIndex': IndexNo })
 		FilterContext.setchildFilterShow(true);
 	}
+
+	function HandleOnClickSubCatComman(IndexNo) {
+		let myvalue = FilterContext.TempCommanFilter['strSubCategory' + IndexNo.toString + 'ID']
+		if (myvalue !== undefined) {
+			let demoo = []
+		demoo.push(myvalue.split(','))
+
+		let newarr = []
+
+
+		for (let index = 0; index < demoo[0].length; index++) {
+			if (demoo[0].indexOf("") === -1) {
+				newarr.push(parseInt(demoo[0][index]))
+			}
+		}
+		setdemo(newarr)	
+		}
+		
+		setprops1({ 'api': API.GetSubCategory, 'labelname': 'strSubCategory' + IndexNo.toString() + 'ID', 'id': 'SubCategory' + IndexNo.toString() + 'ID', 'name': 'SubCategory' + IndexNo.toString() + 'Name', 'LabelValue': 'strSubCategory' + IndexNo.toString() + 'Value', 'FilterIndex': IndexNo })
+		FilterContext.setchildFilterShow(true);
+	}
+
+	// function handleOnClickPurchase() {
+	// 	let myvalue = FilterContext.TempCommanFilter['strPurchaseAccountID']
+
+	// 	let demoo = []
+	// 	demoo.push(myvalue.split(','))
+
+	// 	let newarr = []
+
+
+	// 	for (let index = 0; index < demoo[0].length; index++) {
+	// 		if (demoo[0].indexOf("") === -1) {
+	// 			newarr.push(parseInt(demoo[0][index]))
+	// 		}
+	// 	}
+	// 	setdemo(newarr)
+	// 	setprops1({ 'api': API.GetPurchaseParty, 'labelname': 'strPurchaseAccountID', 'id': 'AccountID', 'name': 'AccountName','LabelValue':'strPurchaseAccountValue' })
+	// 	FilterContext.setchildFilterShow(true);
+	// }
+
+	// function handleOnClickSalesParty() {
+	// 	let myvalue = FilterContext.TempCommanFilter['strSalesAccountID']
+
+	// 	let demoo = []
+	// 	demoo.push(myvalue.split(','))
+
+	// 	let newarr = []
+
+
+	// 	for (let index = 0; index < demoo[0].length; index++) {
+	// 		if (demoo[0].indexOf("") === -1) {
+	// 			newarr.push(parseInt(demoo[0][index]))
+	// 		}
+	// 	}
+	// 	setdemo(newarr)
+	// 	setprops1({ 'api': API.GetSalesParty, 'labelname': 'strSalesAccountID', 'id': 'AccountID', 'name': 'AccountName','LabelValue':'strSalesAccountValue' })
+	// 	FilterContext.setchildFilterShow(true);
+	// }
 
 	function handleApply() {
-		console.log("name", FilterNameData, FilterContext.TempCommanNameFilter);
+		// console.log("name", FilterNameData, FilterContext.TempCommanNameFilter);
 		if (JSON.stringify(FilterData) !== JSON.stringify(FilterContext.CommanFilter)) {
 			FilterContext.SetCommanFilter(FilterData);
-			FilterContext.SetCommanNameFilter(FilterNameData);
+			// FilterContext.SetCommanNameFilter(FilterNameData);
 			// console.log(FilterContext.CommanFilter, "after set comman filter");
 			handleClose()
 		} else {
@@ -508,31 +664,31 @@ export default function Header() {
 			FilterContext.TempCommanNameFilter = comman
 			// FilterContext.SetCommanFilter(comman)
 			FilterData = FilterContext.TempCommanFilter
-			FilterNameData = FilterContext.TempCommanFilter
-			ChartRef.current.clearValue();
-			styleRef.current.clearValue();
-			stateRef.current.clearValue();
-			cityRef.current.clearValue();
-			DepartmentRef.current.clearValue();
-			ColorRef.current.clearValue();
-			BrandRef.current.clearValue();
-			ItemGrRef.current.clearValue();
-			ItemNameRef.current.clearValue();
-			ProductRef.current.clearValue();
-			LotNoRef.current.clearValue();
-			SalesManRef.current.clearValue();
-			regionRef.current.clearValue();
-			SubCategory1Ref.current.clearValue();
-			SubCategory2Ref.current.clearValue();
-			SubCategory3Ref.current.clearValue();
-			SubCategory4Ref.current.clearValue();
-			SubCategory5Ref.current.clearValue();
-			SubCategory6Ref.current.clearValue();
-			SubCategory7Ref.current.clearValue();
-			SubCategory8Ref.current.clearValue();
-			SubCategory9Ref.current.clearValue();
-			SubCategory10Ref.current.clearValue();
-			DaybookRef.current.clearValue();
+			// FilterNameData = FilterContext.TempCommanFilter
+			// ChartRef.current.clearValue();
+			// styleRef.current.clearValue();
+			// stateRef.current.clearValue();
+			// cityRef.current.clearValue();
+			// DepartmentRef.current.clearValue();
+			// ColorRef.current.clearValue();
+			// BrandRef.current.clearValue();
+			// ItemGrRef.current.clearValue();
+			// ItemNameRef.current.clearValue();
+			// ProductRef.current.clearValue();
+			// LotNoRef.current.clearValue();
+			// SalesManRef.current.clearValue();
+			// regionRef.current.clearValue();
+			// SubCategory1Ref.current.clearValue();
+			// SubCategory2Ref.current.clearValue();
+			// SubCategory3Ref.current.clearValue();
+			// SubCategory4Ref.current.clearValue();
+			// SubCategory5Ref.current.clearValue();
+			// SubCategory6Ref.current.clearValue();
+			// SubCategory7Ref.current.clearValue();
+			// SubCategory8Ref.current.clearValue();
+			// SubCategory9Ref.current.clearValue();
+			// SubCategory10Ref.current.clearValue();
+			// DaybookRef.current.clearValue();
 			FilterContext.setThousand("");
 		} catch (error) {
 
@@ -540,34 +696,34 @@ export default function Header() {
 
 	}
 
-	function navigationShow() {
-		if (FilterContext.MenuShow === true) {
-			FilterContext.setMenuShow(false);
-		} else {
-			FilterContext.setMenuShow(true);
-		}
-	}
+	// function navigationShow() {
+	// 	if (FilterContext.MenuShow === true) {
+	// 		FilterContext.setMenuShow(false);
+	// 	} else {
+	// 		FilterContext.setMenuShow(true);
+	// 	}
+	// }
 
-	function handleSelect(e, key, setMethod) {
-		setMethod(e)
-		let inputString = ""
-		let inputstringName = ""
+	// function handleSelect(e, key, setMethod) {
+	// 	setMethod(e)
+	// 	let inputString = ""
+	// 	let inputstringName = ""
 
-		if (e.length > 0) {
-			for (let i = 0; i < e.length; i++) {
-				if (i === e.length - 1) {
-					inputString = inputString + e[i].value;
-					inputstringName = inputstringName + e[i].label;
-				} else {
-					inputString = inputString + e[i].value + ','
-					inputstringName = inputstringName + e[i].label + ',';
-				}
-			}
-		}
-		console.log(key, "hii");
-		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [key]: inputString })
-		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, [key]: inputstringName })
-	}
+	// 	if (e.length > 0) {
+	// 		for (let i = 0; i < e.length; i++) {
+	// 			if (i === e.length - 1) {
+	// 				inputString = inputString + e[i].value;
+	// 				inputstringName = inputstringName + e[i].label;
+	// 			} else {
+	// 				inputString = inputString + e[i].value + ','
+	// 				inputstringName = inputstringName + e[i].label + ',';
+	// 			}
+	// 		}
+	// 	}
+	// 	console.log(key, "hii");
+	// 	FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [key]: inputString })
+	// 	FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, [key]: inputstringName })
+	// }
 	function handleSelectDayBook(e) {
 		setDefaultDayBook(e)
 		// console.log(e);
@@ -576,40 +732,40 @@ export default function Header() {
 		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strDayBookID']: e.label.toString() })
 	}
 
-	function handleSelectState(e) {
-		setDefaultstate(e)
-		// console.log(e);
-		let inputString = ""
-		let inputstringName = ""
-		for (let i = 0; i < e.length; i++) {
-			if (i === e.length - 1) {
-				inputString = inputString + e[i].label;
-				inputstringName = inputstringName + e[i].label;
-			} else {
-				inputString = inputString + e[i].label + ','
-				inputstringName = inputstringName + e[i].label + ',';
-			}
-		}
-		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strState']: inputString })
-		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strState']: inputString })
-	}
+	// function handleSelectState(e) {
+	// 	setDefaultstate(e)
+	// 	// console.log(e);
+	// 	let inputString = ""
+	// 	let inputstringName = ""
+	// 	for (let i = 0; i < e.length; i++) {
+	// 		if (i === e.length - 1) {
+	// 			inputString = inputString + e[i].label;
+	// 			inputstringName = inputstringName + e[i].label;
+	// 		} else {
+	// 			inputString = inputString + e[i].label + ','
+	// 			inputstringName = inputstringName + e[i].label + ',';
+	// 		}
+	// 	}
+	// 	FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strState']: inputString })
+	// 	FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strState']: inputString })
+	// }
 
-	function handleSelectCity(e) {
-		setDefaultcity(e)
-		let inputString = ""
-		let inputstringName = ""
-		for (let i = 0; i < e.length; i++) {
-			if (i === e.length - 1) {
-				inputString = inputString + e[i].label;
-				inputstringName = inputstringName + e[i].label;
-			} else {
-				inputString = inputString + e[i].label + ','
-				inputstringName = inputstringName + e[i].label + ',';
-			}
-		}
-		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strCity']: inputString })
-		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strCity']: inputstringName })
-	}
+	// function handleSelectCity(e) {
+	// 	setDefaultcity(e)
+	// 	let inputString = ""
+	// 	let inputstringName = ""
+	// 	for (let i = 0; i < e.length; i++) {
+	// 		if (i === e.length - 1) {
+	// 			inputString = inputString + e[i].label;
+	// 			inputstringName = inputstringName + e[i].label;
+	// 		} else {
+	// 			inputString = inputString + e[i].label + ','
+	// 			inputstringName = inputstringName + e[i].label + ',';
+	// 		}
+	// 	}
+	// 	FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strCity']: inputString })
+	// 	FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strCity']: inputstringName })
+	// }
 
 	function handleChartValueOption(e) {
 		if (e !== null) {
@@ -621,7 +777,7 @@ export default function Header() {
 
 		localStorage.setItem("value", n)
 		FilterContext.setThousand(n)
-		setColorOfDropDown()
+
 	}
 	function handledropdownMenu() {
 		document.getElementById("myDropdown").style.display === "block" ? document.getElementById("myDropdown").style.display = "none" : document.getElementById("myDropdown").style.display = "block";
@@ -674,47 +830,6 @@ export default function Header() {
 			ele.requestFullscreen()
 		}
 	}
-
-	function setColorOfDropDown() {
-		// console.log(localStorage.getItem('value'), "n")
-		// if (localStorage.getItem('value') === "k") {
-		// 	document.getElementById("thousand").style.color = "white"
-		// 	document.getElementById("thousand").style.backgroundColor = "#2269a0"
-		// 	document.getElementById("lakh").style.color = "#0d4876"
-		// 	document.getElementById("lakh").style.backgroundColor = "#cfdbe3"
-		// 	document.getElementById("million").style.color = "#0d4876"
-		// 	document.getElementById("million").style.backgroundColor = "#cfdbe3"
-		// 	document.getElementById("default").style.color = "#0d4876"
-		// 	document.getElementById("default").style.backgroundColor = "#cfdbe3"
-		// } else if (localStorage.getItem('value') === "l") {
-		// 	document.getElementById("lakh").style.color = "white"
-		// 	document.getElementById("lakh").style.backgroundColor = "#2269a0"
-		// 	document.getElementById("million").style.color = "#0d4876"
-		// 	document.getElementById("million").style.backgroundColor = "#cfdbe3"
-		// 	document.getElementById("default").style.color = "#0d4876"
-		// 	document.getElementById("default").style.backgroundColor = "#cfdbe3"
-		// 	document.getElementById("thousand").style.color = "#0d4876"
-		// 	document.getElementById("thousand").style.backgroundColor = "#cfdbe3"
-		// } else if (localStorage.getItem('value') === "m") {
-		// 	document.getElementById("lakh").style.color = "#0d4876"
-		// 	document.getElementById("lakh").style.backgroundColor = "#cfdbe3"
-		// 	document.getElementById("million").style.color = "white"
-		// 	document.getElementById("million").style.backgroundColor = "#2269a0"
-		// 	document.getElementById("default").style.color = "#0d4876"
-		// 	document.getElementById("default").style.backgroundColor = "#cfdbe3"
-		// 	document.getElementById("thousand").style.color = "#0d4876"
-		// 	document.getElementById("thousand").style.backgroundColor = "#cfdbe3"
-		// } else {
-		// 	document.getElementById("thousand").style.color = "#0d4876"
-		// 	document.getElementById("thousand").style.backgroundColor = "#cfdbe3"
-		// 	document.getElementById("default").style.color = "white"
-		// 	document.getElementById("default").style.backgroundColor = "#2269a0"
-		// 	document.getElementById("lakh").style.color = "#0d4876"
-		// 	document.getElementById("lakh").style.backgroundColor = "#cfdbe3"
-		// 	document.getElementById("million").style.color = "#0d4876"
-		// 	document.getElementById("million").style.backgroundColor = "#cfdbe3"
-		// }
-	}
 	return (
 		<>
 			{FilterContext.childFilterShow === true ? <Commonmodel modelprops={props1} prdemo={demo} /> :
@@ -740,9 +855,9 @@ export default function Header() {
 							<ul class="geex-content__header__quickaction">
 
 								<li class="geex-content__header__quickaction__item" style={{ width: 150 }}  >
-									 {/* <a class="geex-content__header__quickaction__link  geex-btn__customizer" onClick={handledropdownMenu} > */}
-										{/* <img src={rupee} className='dropbtn'  /> */}
-										{/* {localStorage.getItem('value') === '' || localStorage.getItem('value') === "undefined"?<img src={change} className='dropbtn' />:<p>{localStorage.getItem("value")}</p>} */}
+									{/* <a class="geex-content__header__quickaction__link  geex-btn__customizer" onClick={handledropdownMenu} > */}
+									{/* <img src={rupee} className='dropbtn'  /> */}
+									{/* {localStorage.getItem('value') === '' || localStorage.getItem('value') === "undefined"?<img src={change} className='dropbtn' />:<p>{localStorage.getItem("value")}</p>} */}
 									{/* </a> */}
 
 									<div id="myDropdown" class="dropdown-content">
@@ -753,13 +868,13 @@ export default function Header() {
 										<a id='crore' onClick={() => handleThousand("c")}>Crores</a><hr className='custom-hr' />
 										<a id='billion' onClick={() => handleThousand("b")}>Billions</a>
 									</div>
-									{localStorage.getItem('value') === ''? <a className='dropbtn currancy-label' style={{color:'#0d4876'}}  onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Default</a> :null}
-									{localStorage.getItem('value') === 'undefined'? <a className='dropbtn currancy-label' style={{color:'#0d4876'}}  onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Default</a> :null}
-									{localStorage.getItem("value") === 'k' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Thousands</a> : null}
-									{localStorage.getItem("value") === 'l' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Lakhs</a> : null}
-									{localStorage.getItem("value") === 'm' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Millions</a> : null}
-									{localStorage.getItem("value") === 'c' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Crores</a> : null}
-									{localStorage.getItem("value") === 'b' ? <a className='dropbtn currancy-label' style={{color:'#0d4876'}} onClick={handledropdownMenu}><img src={rupee} className='dropbtn'  /> Billions</a> : null}
+									{localStorage.getItem('value') === '' ? <a className='dropbtn currancy-label' style={{ color: '#0d4876' }} onClick={handledropdownMenu}><img src={rupee} className='dropbtn' /> Default</a> : null}
+									{localStorage.getItem('value') === 'undefined' ? <a className='dropbtn currancy-label' style={{ color: '#0d4876' }} onClick={handledropdownMenu}><img src={rupee} className='dropbtn' /> Default</a> : null}
+									{localStorage.getItem("value") === 'k' ? <a className='dropbtn currancy-label' style={{ color: '#0d4876' }} onClick={handledropdownMenu}><img src={rupee} className='dropbtn' /> Thousands</a> : null}
+									{localStorage.getItem("value") === 'l' ? <a className='dropbtn currancy-label' style={{ color: '#0d4876' }} onClick={handledropdownMenu}><img src={rupee} className='dropbtn' /> Lakhs</a> : null}
+									{localStorage.getItem("value") === 'm' ? <a className='dropbtn currancy-label' style={{ color: '#0d4876' }} onClick={handledropdownMenu}><img src={rupee} className='dropbtn' /> Millions</a> : null}
+									{localStorage.getItem("value") === 'c' ? <a className='dropbtn currancy-label' style={{ color: '#0d4876' }} onClick={handledropdownMenu}><img src={rupee} className='dropbtn' /> Crores</a> : null}
+									{localStorage.getItem("value") === 'b' ? <a className='dropbtn currancy-label' style={{ color: '#0d4876' }} onClick={handledropdownMenu}><img src={rupee} className='dropbtn' /> Billions</a> : null}
 								</li>
 
 
@@ -814,29 +929,13 @@ export default function Header() {
 																	<form class="from-group">
 																		<label for="sel1" class="form-label">Company </label>
 																		<select name='strCompanyID' onChange={handleOnInputChange} class="form-select form-control" aria-label="Default select example">
-																			{/* <option selected>Select Company</option>
-																	<option value="1">One</option>
-																	<option value="2">Two</option>*/}
-																			{/* <option value="2">Two</option> */}
+
 																			{ComList.map((res) => (
 																				<option key={res.CompanyID} value={res.CompanyID}>
 																					{res.CompanyName}
 																				</option>
 																			))}
-
 																		</select>
-																		{/* <input list='Company'  onChange={GetCompanyData}></input>
-																<datalist id="Company" class="form-select form-control" aria-label="Default select example" value={strCompanyID} onClick={SelectCompanyID}>
-																	{optionList.map((Companylst) => (
-																		<option key={Companylst.CompanyID} value={Companylst.CompanyID}>
-																			{Companylst.CompanyName}
-																		</option>
-																	))}
-
-																</datalist> */}
-
-
-
 																	</form>
 																</div>
 															</div>
@@ -856,10 +955,6 @@ export default function Header() {
 																<div class="card-filter-contain">
 																	<form>
 																		<label for="sel1" class="form-label">Chart Shown As </label>
-																		{/* <select class="form-select form-control" aria-label="Default select example" onChange={handleChartValueOption}>
-																			<option value="AMTWITHTAX">AMTWITHTAX</option>
-																			<option value="TAXABLEAMT">TAXABLEAMT</option>
-																		</select> */}
 																		<Select
 																			ref={ChartRef}
 																			closeMenuOnSelect={false}
@@ -882,13 +977,8 @@ export default function Header() {
 																<div class="card-filter-contain">
 																	<form>
 																		<label for="sel1" class="form-label">DayBook </label>
-																		{/* <select class="form-select form-control" aria-label="Default select example" onChange={handleChartValueOption}>
-																			<option value="AMTWITHTAX">AMTWITHTAX</option>
-																			<option value="TAXABLEAMT">TAXABLEAMT</option>
-																		</select> */}
 																		<Select
 																			ref={DaybookRef}
-
 																			closeMenuOnSelect={false}
 																			components={animatedComponents}
 																			defaultValue={defaultDayBook}
@@ -918,35 +1008,7 @@ export default function Header() {
 																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
 																					src={department} />
 																				<label for="sel1" class="form-label">Department </label>
-
-																				{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Department - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
 																				{/* <Select
-																				closeMenuOnSelect={false}
-																				components={animatedComponents}
-																				defaultValue={Department}
-																				isMulti
-																				options={Department}
-																			/> */}
-																				{/* <div className="card flex justify-content-center"> */}
-																				{/* <MultiSelect value={strDepartmentID} onChange={(e) => setstrDepartmentID(e.value)} options={Department} optionLabel="name"
-																				filter placeholder="Select Departments" maxSelectedLabels={3} className="w-full md:w-20rem" /> */}
-
-																				{/* <MultiSelect
-																						value={selectedCities}
-																						onChange={(e) => setSelectedCities(e.value)}
-																						options={cities}
-																						optionLabel="name"
-																						filter
-																						placeholder="Select Cities"
-																						maxSelectedLabels={3}
-																						className="w-full md:w-20rem"
-																					/> */}
-																				<Select
 																					ref={DepartmentRef}
 																					closeMenuOnSelect={false}
 																					components={animatedComponents}
@@ -960,9 +1022,9 @@ export default function Header() {
 																							height: '45px',
 																						}),
 																					}}
-																				/>
+																				/> */}
+																				<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDepartmentID'].slice(0, -1)} onClick={()=>HandleOnClickComman(1)} />
 																			</div>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDepartmentID'].slice(0, -1)} onClick={handleOnClickDepartmentId} /> */}
 																			{/* </div> */}
 																		</form>
 																	</div>
@@ -974,14 +1036,10 @@ export default function Header() {
 																				<img class="filter-icon" width="25" height="25" viewBox="0 0 20 20"
 																					src={option} />
 																				<label for="sel1" class="form-label">Style</label>
+																				<input type='text' class="col-12 form-inpur" aria-label="Default select example" onClick={()=>{HandleOnClickComman(5)}} />
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Lot No - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
+
+																			{/* <Select
 																				ref={styleRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -995,8 +1053,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" onClick={handleOnClickLotNo} /> */}
+																			/> */}
+																			
 																		</form>
 																	</div>
 																</div>
@@ -1008,13 +1066,8 @@ export default function Header() {
 																					src={palette} />
 																				<label for="sel1" class="form-label">Color </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Color - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
+
+																			{/* <Select
 																				ref={ColorRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -1028,8 +1081,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strColorID'].slice(0, -1)} onClick={handleOnClickColor} /> */}
+																			/> */}
+																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strColorID'].slice(0, -1)} onClick={() => {HandleOnClickComman(9)}} />
 
 																		</form>
 																	</div>
@@ -1042,14 +1095,8 @@ export default function Header() {
 																					src={design} />
 																				<label for="sel1" class="form-label">Purchase Party </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Design - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strPurchaseAccountID'].slice(0, -1)} onClick={handleOnClickPurchase} />
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strPurchaseAccountID'].slice(0, -1)} onClick={() => {HandleOnClickComman(13)}} />
 																		</form>
 																	</div>
 																</div>
@@ -1061,13 +1108,8 @@ export default function Header() {
 																					src={option} />
 																				<label for="sel1" class="form-label">Item Group </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Item Group - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
+
+																			{/* <Select
 																				ref={ItemGrRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -1081,8 +1123,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
+																			/> */}
+																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={() =>{HandleOnClickComman(2)}} />
 																		</form>
 																	</div>
 																</div>
@@ -1094,21 +1136,7 @@ export default function Header() {
 																					src={product} />
 																				<label for="sel1" class="form-label">Item Name </label>
 																			</div>
-
-																			{/* <InfiniteScroll
-																			dataLength={ItemList.length} //This is important field to render the next data
-																			next={getItemName}
-																			hasMore={hasMore}
-																			loader={<p>Loading................</p>}
-																		> */}
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				{ItemList.map((ItemNamelst) => (
-																					<option value={ItemNamelst.ItemID}>
-																						{ItemNamelst.ItemName}
-																					</option>
-																				))}
-																			</select> */}
-																			<Select
+																			{/* <Select
 																				ref={ItemNameRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -1122,8 +1150,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemID'].slice(0, -1)} onClick={handleOnClickItemID} /> */}
+																			/> */}
+																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(6)}} />
 																			{/*</InfiniteScroll> */}
 
 
@@ -1139,13 +1167,8 @@ export default function Header() {
 																					src={option} />
 																				<label for="sel1" class="form-label">State </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Item Group - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
+
+																			{/* <Select
 																				ref={stateRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -1159,8 +1182,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
+																			/> */}
+																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(10)}} />
 																		</form>
 																	</div>
 																</div>
@@ -1172,14 +1195,8 @@ export default function Header() {
 																					src={design} />
 																				<label for="sel1" class="form-label">Sale Party </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Design - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesAccountID'].slice(0, -1)} onClick={handleOnClickSalesParty} />
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesAccountID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(14)}}/>
 																		</form>
 																	</div>
 																</div>
@@ -1191,13 +1208,8 @@ export default function Header() {
 																					src={product} />
 																				<label for="sel1" class="form-label">Product </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Product - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
+
+																			{/* <Select
 																				ref={ProductRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -1211,8 +1223,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strProductID'].slice(0, -1)} onClick={handleOnClickProduct} /> */}
+																			/> */}
+																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strProductID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(3)}} />
 
 																		</form>
 																	</div>
@@ -1225,14 +1237,9 @@ export default function Header() {
 																					src={design} />
 																				<label for="sel1" class="form-label">Design </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Design - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
 
-																			<input type='text' style={{ border: '1px solid #cccccc', height: '45px', }} placeholder='Select...' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDesignID'].slice(0, -1)} onClick={handleOnClickDesign} />
+
+																			<input type='text' style={{ border: '1px solid #cccccc', height: '45px', }} placeholder='Select...' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strDesignID'].slice(0, -1)}onClick={()=>{HandleOnClickComman(7)}}/>
 																		</form>
 																	</div>
 																</div>
@@ -1244,13 +1251,8 @@ export default function Header() {
 																					src={option} />
 																				<label for="sel1" class="form-label"> City </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Item Group - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
+
+																			{/* <Select
 																				ref={cityRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -1264,8 +1266,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
+																			/> */}
+																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(11)}} />
 																		</form>
 																	</div>
 																</div>
@@ -1277,13 +1279,8 @@ export default function Header() {
 																					src={salesman} />
 																				<label for="sel1" class="form-label">Salesman </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Salesman - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
+
+																			{/* <Select
 																				ref={SalesManRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -1297,8 +1294,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesmanID'].slice(0, -1)} onClick={handleOnClickSalesMan} /> */}
+																			/> */}
+																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSalesmanID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(15)}} />
 																		</form>
 																	</div>
 																</div>
@@ -1310,13 +1307,8 @@ export default function Header() {
 																					src={brand} />
 																				<label for="sel1" class="form-label">Brand </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Brand - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
+
+																			{/* <Select
 																				ref={BrandRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -1330,8 +1322,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strBrandID'].slice(0, -1)} onClick={handleOnClickBrand} /> */}
+																			/> */}
+																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strBrandID'].slice(0, -1)} onClick={()=>{HandleOnClickComman(4)}}/>
 																		</form>
 																	</div>
 																</div>
@@ -1343,13 +1335,8 @@ export default function Header() {
 																					src={number} />
 																				<label for="sel1" class="form-label">Lot No</label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Lot No - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
+
+																			{/* <Select
 																				ref={LotNoRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -1363,8 +1350,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" onClick={handleOnClickLotNo} /> */}
+																			/> */}
+																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" onClick={()=>{HandleOnClickComman(8)}} />
 																		</form>
 																	</div>
 																</div>
@@ -1376,13 +1363,8 @@ export default function Header() {
 																					src={option} />
 																				<label for="sel1" class="form-label">Region </label>
 																			</div>
-																			{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Item Group - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																			<Select
+
+																			{/* <Select
 																				ref={regionRef}
 																				closeMenuOnSelect={false}
 																				components={animatedComponents}
@@ -1396,8 +1378,8 @@ export default function Header() {
 																						height: '45px',
 																					}),
 																				}}
-																			/>
-																			{/* <input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strItemGroupID'].slice(0, -1)} onClick={handleOnClickItemGroup} /> */}
+																			/> */}
+																			<input type='text' class="col-12 form-inpur" aria-label="Default select example" value={FilterContext.TempCommanFilter['strRegionID'].slice(0, -1)} onClick={()=>HandleOnClickComman(12)} />
 																		</form>
 																	</div>
 																</div>
@@ -1414,13 +1396,8 @@ export default function Header() {
 																							src={seasonal} />
 																						<label for="sel1" class="form-label">{CommonParam[0]['caption']} </label>
 																					</div>
-																					{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Season - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																					<Select
+
+																					{/* <Select
 																						ref={SubCategory1Ref}
 																						closeMenuOnSelect={false}
 																						components={animatedComponents}
@@ -1434,8 +1411,8 @@ export default function Header() {
 																								height: '45px',
 																							}),
 																						}}
-																					/>
-																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
+																					/> */}
+																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={() => HandleOnClickSubCatComman(1)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1447,13 +1424,8 @@ export default function Header() {
 																							src={seasonal} />
 																						<label for="sel1" class="form-label">{CommonParam[1]['caption']} </label>
 																					</div>
-																					{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Season - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																					<Select
+
+																					{/* <Select
 																						ref={SubCategory2Ref}
 																						closeMenuOnSelect={false}
 																						components={animatedComponents}
@@ -1467,8 +1439,8 @@ export default function Header() {
 																								height: '45px',
 																							}),
 																						}}
-																					/>
-																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
+																					/> */}
+																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory2ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(2)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1480,13 +1452,8 @@ export default function Header() {
 																							src={seasonal} />
 																						<label for="sel1" class="form-label">{CommonParam[2]['caption']} </label>
 																					</div>
-																					{/* <select class="col form-select" aria-label="Default select example">
-																				<option selected>- - Select Season - -</option>
-																				<option value="1">One</option>
-																				<option value="2">Two</option>
-																				<option value="3">Three</option>
-																			</select> */}
-																					<Select
+
+																					{/* <Select
 																						ref={SubCategory3Ref}
 																						closeMenuOnSelect={false}
 																						components={animatedComponents}
@@ -1500,8 +1467,8 @@ export default function Header() {
 																								height: '45px',
 																							}),
 																						}}
-																					/>
-																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
+																					/> */}
+																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory3ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(3)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1514,7 +1481,7 @@ export default function Header() {
 																						<label for="sel1" class="form-label">{CommonParam[3]['caption']} </label>
 																					</div>
 
-																					<Select
+																					{/* <Select
 																						ref={SubCategory4Ref}
 																						closeMenuOnSelect={false}
 																						components={animatedComponents}
@@ -1528,8 +1495,8 @@ export default function Header() {
 																								height: '45px',
 																							}),
 																						}}
-																					/>
-																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
+																					/> */}
+																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory4ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(4)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1542,7 +1509,7 @@ export default function Header() {
 																						<label for="sel1" class="form-label">{CommonParam[4]['caption']} </label>
 																					</div>
 
-																					<Select
+																					{/* <Select
 																						ref={SubCategory5Ref}
 																						closeMenuOnSelect={false}
 																						components={animatedComponents}
@@ -1556,8 +1523,8 @@ export default function Header() {
 																								height: '45px',
 																							}),
 																						}}
-																					/>
-																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
+																					/> */}
+																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory5ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(5)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1570,7 +1537,7 @@ export default function Header() {
 																						<label for="sel1" class="form-label">{CommonParam[5]['caption']} </label>
 																					</div>
 
-																					<Select
+																					{/* <Select
 																						ref={SubCategory6Ref}
 																						closeMenuOnSelect={false}
 																						components={animatedComponents}
@@ -1584,8 +1551,8 @@ export default function Header() {
 																								height: '45px',
 																							}),
 																						}}
-																					/>
-																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
+																					/> */}
+																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory6ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(6)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1598,7 +1565,7 @@ export default function Header() {
 																						<label for="sel1" class="form-label">{CommonParam[6]['caption']} </label>
 																					</div>
 
-																					<Select
+																					{/* <Select
 																						ref={SubCategory7Ref}
 																						closeMenuOnSelect={false}
 																						components={animatedComponents}
@@ -1612,8 +1579,8 @@ export default function Header() {
 																								height: '45px',
 																							}),
 																						}}
-																					/>
-																					{/* <input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory1ID'].slice(0, -1)} onClick={handleOnClickSeason} /> */}
+																					/> */}
+																					<input type='text' class="col-12 form-input" aria-label="Default select example" value={FilterContext.TempCommanFilter['strSubCategory7ID'].slice(0, -1)} onClick={() =>HandleOnClickSubCatComman(7)} />
 																				</form>
 																			</div>
 																		</div> : null}
@@ -1639,7 +1606,7 @@ export default function Header() {
 								</li>
 								<li class="geex-content__header__quickaction__item">
 									<a href="#" class="geex-content__header__quickaction__link">
-										<img src={refresh}  />
+										<img src={refresh} />
 									</a>
 								</li>
 								<li class="geex-content__header__quickaction__item">

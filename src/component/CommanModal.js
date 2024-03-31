@@ -26,6 +26,7 @@ function Commonmodel(props) {
     let updatedList = [...props.prdemo];
 
     useEffect(() => {
+        console.log(props);
         setPage(2)
         setmulticheck(updatedList)
         setSearch(contextSetparam.CommanChildFilter)
@@ -40,15 +41,28 @@ function Commonmodel(props) {
     }, [search])
 
     const fetchAllData = () => {
-        var input = { ...search, ['PageSize']: 13540 }
-        if (props.modelprops.api !== undefined) {
-            // console.log("search", search)
-            axios.post(props.modelprops.api, input)
-                .then((response) => {
-                    // console.log(response);
-                    setfinalAllitem(response.data.lstResult)
-                })
-                .catch(error => console.error(error))
+        var input = { ...search, ['PageSize']: 9999 }
+        if (props.modelprops['labelname'].indexOf('SubCategory') > 0) {
+            var subinput = { ...input, ['SubCategoryNo']: props.modelprops.FilterIndex }
+            if (props.modelprops.api !== undefined) {
+                // console.log("search", search)
+                axios.post(props.modelprops.api, subinput)
+                    .then((response) => {
+                        // console.log(response);
+                        setfinalAllitem(response.data.lstResult)
+                    })
+                    .catch(error => console.error(error))
+            }
+        } else {
+            if (props.modelprops.api !== undefined) {
+                // console.log("search", search)
+                axios.post(props.modelprops.api, input)
+                    .then((response) => {
+                        // console.log(response);
+                        setfinalAllitem(response.data.lstResult)
+                    })
+                    .catch(error => console.error(error))
+            }
         }
     }
     const handleClose = () => {
@@ -56,9 +70,22 @@ function Commonmodel(props) {
     }
 
     function handleCheck(e) {
+        
+        let value
         let finalcheck = e.target.checked;
-        let value = parseInt(e.target.value)
+        console.log('val',props.modelprops['labelname'].indexOf('State'))
+        if(props.modelprops['labelname'].indexOf('State') > 0 || props.modelprops['labelname'].indexOf('City') > 0)
+        {
+            value = e.target.value.toString()
+            console.log(value,'value')
+        }
+        else
+        {
+             value = parseInt(e.target.value)
+
+        }
         let name = e.target.name;
+        
 
         if (finalcheck) {
             setmulticheck([...multicheck, value])
@@ -76,6 +103,7 @@ function Commonmodel(props) {
                 })
             })
         }
+        console.log('multicheck',multicheck)
     }
 
 
@@ -85,9 +113,12 @@ function Commonmodel(props) {
         var stringNameConvert = multicheckName.toString()
         // props.setvalues({ ...props.valuesform, [props.modelprops.labelname]: stringConvert })
         contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert })
-        contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: stringNameConvert})
+        if (props.modelprops['labelname'].indexOf('SubCategory') > 0) {
+            contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, ['FilterIndex']: props.modelprops.FilterIndex })
+        }
+        contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: stringNameConvert })
         contextSetparam.setchildFilterShow(false)
-        
+
         setmulticheck([])
         setmulticheckName([])
     }
@@ -103,57 +134,75 @@ function Commonmodel(props) {
         contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: "" })
         contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: "" })
     }
-
-
-
     const handleScroll = (event) => {
-
-        const { scrollTop, scrollHeight, clientHeight } = event.target;
-        const scrollRatio = scrollTop / (scrollHeight - clientHeight);
-
-        setScrollTop(scrollRatio);
-
-        if (scrollRatio === 1) {
-            setPage(page + 1);
-            var input = { ...search, ['PageNo']: page, ['PageSize']: 10 }
-
-            axios.post(props.modelprops.api, input)
-                .then(response => {
-                    setfinalitem([...finalitem, ...response.data.lstResult])
-                })
-                .catch(error => console.error(error))
+        console.log(finalitem.length)
+        if (finalitem.length > 9) {
+            const { scrollTop, scrollHeight, clientHeight } = event.target;
+            const scrollRatio = scrollTop / (scrollHeight - clientHeight);
+            setScrollTop(scrollRatio);
+            if (scrollRatio === 1) {
+                setPage(page + 1);
+                var input = { ...search, ['PageNo']: page, ['PageSize']: 10 }
+                if (props.modelprops['labelname'].indexOf('SubCategory') > 0) {
+                    var subinput = { ...input, ['SubCategoryNo']: props.modelprops.FilterIndex }
+                    axios.post(props.modelprops.api, subinput)
+                        .then(response => {
+                            setfinalitem([...finalitem, ...response.data.lstResult])
+                        })
+                        .catch(error => console.error(error))
+                }
+                else {
+                    axios.post(props.modelprops.api, input)
+                        .then(response => {
+                            setfinalitem([...finalitem, ...response.data.lstResult])
+                        })
+                        .catch(error => console.error(error))
+                }
+            }
         }
     }
 
-
-
     const fetchItemdata = () => {
         var input = { ...search, ['PageSize']: 10 }
-        if (props.modelprops.api !== undefined) {
-            // console.log("search", search)
-            axios.post(props.modelprops.api, input)
-                .then((response) => {
-                    // console.log(response);
-                    setfinalitem(response.data.lstResult)
-                })
-                .catch(error => console.error(error))
+        if (props.modelprops['labelname'].indexOf('SubCategory') > 0) {
+            var subinput = { ...input, ['SubCategoryNo']: props.modelprops.FilterIndex }
+            if (props.modelprops.api !== undefined) {
+                // console.log("search", search)
+                axios.post(props.modelprops.api, subinput)
+                    .then((response) => {
+                        console.log(response);
+                        setfinalitem(response.data.lstResult)
+                    })
+                    .catch(error => console.error(error))
+            }
+        } else {
+            if (props.modelprops.api !== undefined) {
+                // console.log("search", search)
+                axios.post(props.modelprops.api, input)
+                    .then((response) => {
+                        console.log(response);
+                        setfinalitem(response.data.lstResult)
+                    })
+                    .catch(error => console.error(error))
+            }
         }
     }
 
 
     const handleSearch = (event) => {
         setsearchValue(event.target.value)
+        setSearch({ ...search, ["search"]: event.target.value })
     }
 
-    const handleSearchClick = async () => {
-        setSearchProcess(true)
-        setTimeout(() => {
-            setSearch({ ...search, ["search"]: searchValue })
-            setSearchProcess(false)
-        }, 1000);
+    // const handleSearchClick = async () => {
+    //     setSearchProcess(true)
+    //     setTimeout(() => {
+    //         setSearch({ ...search, ["search"]: searchValue })
+    //         setSearchProcess(false)
+    //     }, 1000);
 
 
-    }
+    // }
 
     const cancelbutton = (e, name) => {
         setmulticheck((prevData) => {
@@ -167,7 +216,7 @@ function Commonmodel(props) {
             })
         })
     }
-    
+
     return (
         <>
             {
@@ -191,7 +240,7 @@ function Commonmodel(props) {
                                         >
                                         </Form.Control>
                                         <InputGroup.Text id="basic-addon1">
-                                        <i class="fa fa-spinner fa-spin" style={{fontSize:20, color:'#0d4876'}}></i>
+                                            <i class="fa fa-spinner fa-spin" style={{ fontSize: 20, color: '#0d4876' }}></i>
                                         </InputGroup.Text>
                                     </InputGroup><br></br></> : <><InputGroup >
                                         <Form.Control
@@ -202,7 +251,7 @@ function Commonmodel(props) {
                                             aria-describedby="basic-addon1"
                                             onChange={handleSearch}
                                         />
-                                        <InputGroup.Text id="basic-addon1"><img height={20} src={search_icon} style={{ cursor: 'pointer' }} onClick={handleSearchClick} /></InputGroup.Text>
+                                        <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
                                     </InputGroup><br></br></>}
                                     {/* <InputGroup >
                                         <Form.Control
