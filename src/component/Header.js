@@ -372,13 +372,17 @@ export default function Header() {
 		handleThousand()
 
 	}, [])
+	useEffect(()=>{
+		FilterContext.SetCommanChildFilter(FilterInput)
+	},[FilterContext.TempCommanFilter])
 	useEffect(() => {
 		var Findex = FilterContext.TempCommanFilter.FilterIndex
 		console.log("useEffet1");
-		console.log(Findex);
-		if (Findex !== "undefined") {
+		
+		if (Findex !== "undefined" && Findex !== 0) {
 			if (Findex >= 1 && Findex < 9) {
-				for (let index = Findex; index < 10; ++index) {
+				for (let index = Findex+1; index < 10; index++) {
+					console.log(index,'indexno')
 					if (FilterContext.TempCommanFilter[dependentfilter[index][0]].length > 0) {
 						FetchDataDependentAPI(FilterInput, index)
 					}
@@ -404,24 +408,39 @@ export default function Header() {
 	}, [FilterContext.TempCommanFilter.strBranchID, FilterContext.TempCommanFilter.CompanyID])
 
 	function FetchDataDependentAPI(input, FilterIndex) {
-		console.log(dependentfilter[FilterIndex][1], 'input');
+		console.log("FetchDataDependentAPI",FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]]);
 		post(input, dependentfilter[FilterIndex][1], [], 'post').then((res) => {
-			console.log("response",res.data.lstresult[0]['TotalCount']);
+			console.log("response",res);
+			console.log("index",FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]])
 			var TempDataID = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][0]].split(',')
-			var TempDataValue = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][3]].split(',')
-			var resultID = res.lstResult.map(Item => Item[dependentfilter[FilterIndex][2]])
+			var TempDataValue = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]].split(',')
+			var resultID = res.data.lstResult.map(Item => Item[dependentfilter[FilterIndex][2]].toString())
 			// var resultValue=res.lstResult.map(Item=>Item[dependentfilter[FilterIndex][4]])
-			console.log('TempData', TempDataID)
+			console.log('TempDatabefore', TempDataID)
 			console.log('resultID', resultID)
+			console.log("FilterContext.TempCommanFilter before",FilterContext.TempCommanFilter);
+			var temarrayID=[]
+			var temparryValue=[]
 			for (let index = 0; index < TempDataID.length; index++) {
-				if (resultID.indexOf(TempDataID[index]) < 0) {
-					delete TempDataID[index]
-					delete TempDataValue[index]
+				console.log('delete before log',resultID.indexOf(TempDataID[index]),TempDataID[index])
+				if (resultID.indexOf(TempDataID[index]) >= 0) {	
+					console.log('delete index',TempDataID[index])
+					// TempDataID.splice(TempDataID.indexOf(TempDataID[index]),1)
+					// TempDataValue.splice(TempDataValue.indexOf(TempDataValue[index]),1)
+					// delete TempDataID[index]
+					// delete TempDataValue[index]
+					temparryValue.push(TempDataValue[index])
+					temarrayID.push(TempDataID[index])
 				}
 			}
-			console.log("");
-			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [dependentfilter[FilterIndex][0]]: TempDataID.toString(), [dependentfilter[FilterIndex][3]]: TempDataValue.toString() })
-
+			
+			
+			console.log('TempData After', temarrayID)			
+			
+			
+			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [dependentfilter[FilterIndex][0]]: temarrayID.toString(), [dependentfilter[FilterIndex][4]]: temparryValue.toString(),['FilterIndex']:0 })
+			console.log("FilterContext.TempCommanFilter After ",FilterContext.TempCommanFilter);
+			
 		})
 	}
 

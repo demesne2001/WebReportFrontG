@@ -14,7 +14,7 @@ export default function StockAging() {
 	let slab = 0
 	useEffect(() => {
 		if (inputdata) {
-			console.log('StockAging')
+			
 			// setapiInputdata(inputdata);
 			fetchData();
 			// console.log("slabe", slab);
@@ -284,7 +284,7 @@ export default function StockAging() {
 									colors: '#00E396',
 								},
 								formatter: function (val) {
-									console.log(val);
+									
 									return ((((val / 1000).toFixed(1)).toString()) + "K")
 								},
 							},

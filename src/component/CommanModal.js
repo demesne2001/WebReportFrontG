@@ -169,6 +169,7 @@ function Commonmodel(props) {
 
     const fetchItemdata = () => {
         var input = { ...search, ['PageSize']: 10 }
+        console.log('input',input)
         if (props.modelprops['labelname'].indexOf('SubCategory') > 0) {
             var subinput = { ...input, ['SubCategoryNo']: props.modelprops.FilterIndex }
             if (props.modelprops.api !== undefined) {
