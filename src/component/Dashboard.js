@@ -53,7 +53,7 @@ export default function Dashboard() {
         //     })
         const options = {
             margin: 2.80,
-            filename: "Chart(html2pdf)ld.pdf",
+            filename: "Dashboard.pdf",
             image: { type: "jpeg", quality: 1 },
             html2canvas: { scale: 2 },
             jsPDF: { orientation: "p", unit: "in", format: "a1" },

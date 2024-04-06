@@ -34,7 +34,7 @@ function Commonmodel(props) {
         setSearch(contextSetparam.CommanChildFilter)
         fetchItemdata()
         fetchAllData()
-    }, [contextSetparam.CommanChildFilter, props.modelprops])
+    }, [props.modelprops])
 
 
 
@@ -169,7 +169,7 @@ function Commonmodel(props) {
 
     const fetchItemdata = () => {
         var input = { ...search, ['PageSize']: 10 }
-        console.log('input',input)
+        console.log('input', input)
         if (props.modelprops['labelname'].indexOf('SubCategory') > 0) {
             var subinput = { ...input, ['SubCategoryNo']: props.modelprops.FilterIndex }
             if (props.modelprops.api !== undefined) {
@@ -222,74 +222,74 @@ function Commonmodel(props) {
             })
         })
     }
+    if (finalitem.length !== 0) {
+        return (
+            <>
+                {
+                    contextSetparam.childFilterShow ?
+                        <>
+                            <Modal show={contextSetparam.childFilterShow} onHide={handleClose} >
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Filter</Modal.Title>
+                                </Modal.Header>
 
-    return (
-        <>
-            {
-                contextSetparam.childFilterShow ?
-                    <>
-                        <Modal show={contextSetparam.childFilterShow} onHide={handleClose} >
-                            <Modal.Header closeButton>
-                                <Modal.Title>Filter</Modal.Title>
-                            </Modal.Header>
+                                <Modal.Body className='modal-body' modal-dialog-scrollable style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>
+                                    <Form className='comman-modal-form'>
+                                        {searchProcess === true ? <><InputGroup >
+                                            <Form.Control
+                                                placeholder='Search here...'
+                                                style={{ border: '1px solid' }}
+                                                aria-label="Search"
+                                                name='Search'
+                                                aria-describedby="basic-addon1"
+                                                onChange={handleSearch}
+                                            >
+                                            </Form.Control>
+                                            <InputGroup.Text id="basic-addon1">
+                                                <i class="fa fa-spinner fa-spin" style={{ fontSize: 20, color: '#0d4876' }}></i>
+                                            </InputGroup.Text>
+                                        </InputGroup><br></br></> : <><InputGroup >
+                                            <Form.Control
+                                                placeholder='Search here...'
+                                                style={{ border: '1px solid' }}
+                                                aria-label="Search"
+                                                name='Search'
+                                                aria-describedby="basic-addon1"
+                                                onChange={handleSearch}
+                                            />
+                                            <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
+                                        </InputGroup><br></br></>}
+                                        {/* <InputGroup >
+                                            <Form.Control
+                                                placeholder='Search here...'
+                                                style={{ border: '1px solid' }}
+                                                aria-label="Search"
+                                                name='Search'
+                                                aria-describedby="basic-addon1"
+                                                onChange={handleSearch}
+                                            />
+                                            <InputGroup.Text id="basic-addon1"><img height={20} src={search_icon} style={{cursor:'pointer'}} onClick={handleSearchClick}/></InputGroup.Text>
+                                        </InputGroup><br></br> */}
 
-                            <Modal.Body className='modal-body' modal-dialog-scrollable style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>
-                                <Form className='comman-modal-form'>
-                                    {searchProcess === true ? <><InputGroup >
-                                        <Form.Control
-                                            placeholder='Search here...'
-                                            style={{ border: '1px solid' }}
-                                            aria-label="Search"
-                                            name='Search'
-                                            aria-describedby="basic-addon1"
-                                            onChange={handleSearch}
-                                        >
-                                        </Form.Control>
-                                        <InputGroup.Text id="basic-addon1">
-                                            <i class="fa fa-spinner fa-spin" style={{ fontSize: 20, color: '#0d4876' }}></i>
-                                        </InputGroup.Text>
-                                    </InputGroup><br></br></> : <><InputGroup >
-                                        <Form.Control
-                                            placeholder='Search here...'
-                                            style={{ border: '1px solid' }}
-                                            aria-label="Search"
-                                            name='Search'
-                                            aria-describedby="basic-addon1"
-                                            onChange={handleSearch}
-                                        />
-                                        <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
-                                    </InputGroup><br></br></>}
-                                    {/* <InputGroup >
-                                        <Form.Control
-                                            placeholder='Search here...'
-                                            style={{ border: '1px solid' }}
-                                            aria-label="Search"
-                                            name='Search'
-                                            aria-describedby="basic-addon1"
-                                            onChange={handleSearch}
-                                        />
-                                        <InputGroup.Text id="basic-addon1"><img height={20} src={search_icon} style={{cursor:'pointer'}} onClick={handleSearchClick}/></InputGroup.Text>
-                                    </InputGroup><br></br> */}
+                                        {multicheck.length !== 0 ?
+                                            <div className='selected-item style-3'>
 
-                                    {multicheck.length !== 0 ?
-                                        <div className='selected-item style-3'>
+                                                {finalAllitem.map((ele) => {
+                                                    if (multicheck.indexOf(ele[props.modelprops.id]) !== -1) {
+                                                        return <span>
+                                                            <label className='selected-label'>{ele[props.modelprops.name]}<button onClick={() => cancelbutton(ele[props.modelprops.id], ele[props.modelprops.name])} className='cancel-button'>X</button></label>
+                                                        </span>
+                                                    }
 
-                                            {finalAllitem.map((ele) => {
-                                                if (multicheck.indexOf(ele[props.modelprops.id]) !== -1) {
-                                                    return <span>
-                                                        <label className='selected-label'>{ele[props.modelprops.name]}<button onClick={() => cancelbutton(ele[props.modelprops.id], ele[props.modelprops.name])} className='cancel-button'>X</button></label>
-                                                    </span>
-                                                }
-
-                                            })}
-                                        </div> : null}
+                                                })}
+                                            </div> : null}
 
 
-                                    <div id="scrollbar" className='style-2' onScroll={handleScroll}>
+                                        <div id="scrollbar" className='style-2' onScroll={handleScroll}>
 
-                                        {props.modelprops.id === 'AccountID' ?
-                                            
-                                                <Table striped bordered hover>
+                                            {props.modelprops.id === 'AccountID' ?
+
+                                                <Table striped bordered hover  >
                                                     <thead>
                                                         <th></th>
                                                         <th>ACCOUNTID</th>
@@ -318,43 +318,78 @@ function Commonmodel(props) {
                                                         )}
                                                     </tbody>
                                                 </Table>
-                                       
-                                            :
-                                            finalitem.map((ele, i) =>
-                                            (
 
-                                                <div className="mb-3" key={i}>
-                                                    <div className='inner-div-check'>
-                                                        <Form.Check
-                                                            ref={(element) => { ref.current[i] = element }}
-                                                            type='checkbox'
-                                                            id={ele[props.modelprops.id]}
-                                                            value={ele[props.modelprops.id]}
-                                                            name={ele[props.modelprops.name] === null ? 'null' : ele[props.modelprops.name]}
-                                                            label={ele[props.modelprops.name] === null ? 'null' : ele[props.modelprops.name]}
-                                                            onChange={handleCheck}
-                                                            checked={multicheck.includes(ele[props.modelprops.id])}
-                                                        />
+                                                :
+                                                finalitem.map((ele, i) =>
+                                                (
+
+                                                    <div className="mb-3" key={i}>
+                                                        <div className='inner-div-check'>
+                                                            <Form.Check
+                                                                ref={(element) => { ref.current[i] = element }}
+                                                                type='checkbox'
+                                                                id={ele[props.modelprops.id]}
+                                                                value={ele[props.modelprops.id]}
+                                                                name={ele[props.modelprops.name] === null ? 'null' : ele[props.modelprops.name]}
+                                                                label={ele[props.modelprops.name] === null ? 'null' : ele[props.modelprops.name]}
+                                                                onChange={handleCheck}
+                                                                checked={multicheck.includes(ele[props.modelprops.id])}
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )
-                                            )
+                                                )
+                                                )
 
-                                        }
-                                    </div>
-                                </Form>
-                            </Modal.Body>
+                                            }
+                                        </div>
+                                    </Form>
+                                </Modal.Body>
 
-                            <Modal.Footer>
-                                <button class="btn showpreview-button" onClick={() => handlesavefilter()}>save Filter</button>
-                                <button class="btn close-button geex-btn__customizer-close" onClick={() => handleResetfilter()}>Reset</button>
-                            </Modal.Footer>
-                        </Modal>
-                    </>
-                    : null
-            }
-        </>
-    )
+                                <Modal.Footer>
+                                    <button class="btn showpreview-button" onClick={() => handlesavefilter()}>save Filter</button>
+                                    <button class="btn close-button geex-btn__customizer-close" onClick={() => handleResetfilter()}>Reset</button>
+                                </Modal.Footer>
+                            </Modal>
+                        </>
+                        : null
+                }
+            </>
+        )
+    }
+    else {
+        return (
+            <>
+                {
+                    contextSetparam.childFilterShow ?
+                        <>
+                            <Modal show={contextSetparam.childFilterShow} onHide={handleClose} >
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Filter</Modal.Title>
+                                </Modal.Header>
+
+                                <Modal.Body className='modal-body' modal-dialog-scrollable style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>
+                                    <Form className='comman-modal-form'>
+
+                                        <div className="mb-3">
+                                            <div className='selected-item'>
+                                                No Data Found
+                                            </div>
+                                        </div>
+                                    </Form>
+                                </Modal.Body>
+
+                                <Modal.Footer>
+                                    <button class="btn close-button geex-btn__customizer-close" onClick={() => handleClose()}>Close</button>
+                                    {/* <button class="btn close-button geex-btn__customizer-close" onClick={() => handleResetfilter()}>Reset</button> */}
+                                </Modal.Footer>
+                            </Modal>
+                        </>
+                        : null
+                }
+            </>
+        )
+    }
+
 }
 
 export default Commonmodel

@@ -52,19 +52,32 @@ export default function StockAging() {
 	}
 	function format(val) {
 		if (filter.Thousand === 'k') {
-			return ((((val / 1000).toFixed(1)).toString()) + "K");
+			return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "K");
 		} else if (filter.Thousand === 'l') {
-			return ((((val / 100000).toFixed(1)).toString()) + "L");
+			return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "L");
 		} else if (filter.Thousand === 'm') {
-			return ((((val / 1000000).toFixed(1)).toString()) + "M");
+			return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "M");
 		} else if (filter.Thousand === 'c') {
-			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+			return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "CR");
 		} else if (filter.Thousand === 'b') {
-			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+			return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "B");
 		} else {
-			return val;
+			return (Number(parseFloat(Math.floor(val))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}));
 		}
 	}
+
 	function format_responsive(val) {
 		if (filter.Thousand === 'k') {
 			return ((((val / 1000).toFixed(1)).toString()) + "K");
@@ -155,7 +168,10 @@ export default function StockAging() {
 		},
 		xaxis: {
 			labels: {
-				rotate: -45
+				rotate: -45,
+				style: {
+					fontSize: '13.5px'
+				},
 			},
 			categories: Name1,
 			tickPlacement: 'on'
@@ -178,6 +194,7 @@ export default function StockAging() {
 				labels: {
 					style: {
 						colors: '#008FFB',
+						fontSize: '13.5px'
 					},
 					formatter: function (val) {
 						let value = format(val)
@@ -210,6 +227,7 @@ export default function StockAging() {
 				labels: {
 					style: {
 						colors: '#00E396',
+						fontSize: '13.5px'
 					},
 					formatter: function (val) {
 						return val.toFixed(0);

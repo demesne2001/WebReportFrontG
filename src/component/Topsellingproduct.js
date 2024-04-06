@@ -35,7 +35,8 @@ export default function Topsellingproduct() {
 	const options = {
 		labels: Name,
 		dataLabels: {
-			enabled: true
+			enabled: true,
+			
 		  },
 		  plotOptions: {
 			pie: {
@@ -46,7 +47,11 @@ export default function Topsellingproduct() {
 
 						},
 						value: {
-
+							formatter:function(val){
+								return (Number(parseFloat(val)).toLocaleString('en', {
+									minimumFractionDigits: 0
+								  }))
+							}
 						}
 					}
 				}
@@ -58,6 +63,26 @@ export default function Topsellingproduct() {
 		},
 		colors: ['#008ffb', '#84caff', '#feb019', '#ffdb95', '#00e396', '#78ffd1', '#ff4560', '#ffa5b2', '#775dd0', '#a394d9'],
 		tooltip: {
+			x: {
+				// show: true,
+				// formatter:function(val) {
+				// 	console.log(val);
+				// 	return val
+				// },
+			},
+			x:{
+				show:false
+			},
+			z:{
+				show: false
+			},
+			y:{
+				formatter:function(val){ 
+					return  (Number(parseFloat(val)).toLocaleString('en', {
+						minimumFractionDigits: 0
+					  }))
+				}
+			},
 			fixed: {
 				enabled: true,
 				position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft

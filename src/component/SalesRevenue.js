@@ -162,59 +162,87 @@ export default function SalesRevenue() {
   //     }
   //   }
 
+
   function format(val) {
-      if (filter.Thousand === 'k') {
-        return ((((val / 1000).toFixed(1)).toString()) + "K");
-      } else if (filter.Thousand === 'l') {
-        return ((((val / 100000).toFixed(1)).toString()) + "L");
-      } else if (filter.Thousand === 'm') {
-        return ((((val / 1000000).toFixed(1)).toString()) + "M");
-      }else if (filter.Thousand === 'c') {
-        return ((((val / 10000000).toFixed(1)).toString()) + "CR");
-      }else if (filter.Thousand === 'b') {
-        return ((((val / 1000000000).toFixed(1)).toString()) + "B");
-      }  else {
-        return Math.floor(val);
+    if (filter.Thousand === 'k') {
+      return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }) + "K");
+    } else if (filter.Thousand === 'l') {
+      return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }) + "L");
+    } else if (filter.Thousand === 'm') {
+      return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }) + "M");
+    } else if (filter.Thousand === 'c') {
+      return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }) + "CR");
+    } else if (filter.Thousand === 'b') {
+      return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }) + "B");
+    } else {
+      return (Number(parseFloat(Math.floor(val))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }));
+    }
+  }
+  function format_responsive(val) {
+    if (filter.Thousand === 'k') {
+      return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }) + "K");
+    } else if (filter.Thousand === 'l') {
+      return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }) + "L");
+    } else if (filter.Thousand === 'm') {
+      return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }) + "M");
+    } else if (filter.Thousand === 'c') {
+      return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }) + "CR");
+    } else if (filter.Thousand === 'b') {
+      return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
+        minimumFractionDigits: 0
+      }) + "B");
+    } else {
+      const arr = Amount1.map(Number)
+      // console.log(Math.max(...arr));
+      if (Math.max(...arr) < 1000000) {
+        return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+          minimumFractionDigits: 0
+        }) + "K");
       }
-	  }
-    function format_responsive(val) {
-      if (filter.Thousand === 'k') {
-        return ((((val / 1000).toFixed(1)).toString()) + "K");
-      } else if (filter.Thousand === 'l') {
-        return ((((val / 100000).toFixed(1)).toString()) + "L");
-      } else if (filter.Thousand === 'm') {
-        return ((((val / 1000000).toFixed(1)).toString()) + "M");
-      } else if (filter.Thousand === 'c') {
-        return ((((val / 10000000).toFixed(1)).toString()) + "CR");
-      } else if (filter.Thousand === 'b') {
-        return ((((val / 1000000000).toFixed(1)).toString()) + "B");
-      } else {
-        const arr = Amount1.map(Number)
-        // console.log(Math.max(...arr));
-            if (Math.max(...arr) < 1000000) {
-              return ((((val / 1000).toFixed(1)).toString()) + "K")
-            }
-            else {
-          
-              if (Math.max(...arr) > 100000000) {
-                return ((((val / 10000000).toFixed(1)).toString()) + "CR")
-              } else {
-    
-                return ((((val / 100000).toFixed(1)).toString()) + "L")
-              }
-            }
+      else {
+
+        if (Math.max(...arr) > 100000000) {
+          return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+            minimumFractionDigits: 0
+          }) + "CR");
+        } else {
+          return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+            minimumFractionDigits: 0
+          }) + "L");
+        }
       }
     }
-    const makeSlabe = () => {
-      let slab = [];
-      let numberArray = [];
-      // console.log(Amount2)
-      Amount2.forEach( ele => numberArray.push(+ele))
-      // console.log(numberArray)
-  
-      slab = Math.ceil(parseInt(Math.max(...numberArray)/numberArray.length) / 10) * 10
-      return slab
-      }
+  }
+  const makeSlabe = () => {
+    let slab = [];
+    let numberArray = [];
+    // console.log(Amount2)
+    Amount2.forEach(ele => numberArray.push(+ele))
+    // console.log(numberArray)
+
+    slab = Math.ceil(parseInt(Math.max(...numberArray) / numberArray.length) / 10) * 10
+    return slab
+  }
   let options = {}
   const series = [{
     name: 'Amount',
@@ -235,13 +263,16 @@ export default function SalesRevenue() {
     dataLabels: {
       enabled: false
     },
-    colors:['#0d4876','#26e7a6'],
+    colors: ['#0d4876', '#26e7a6'],
     stroke: {
       width: [2, 4]
     },
     xaxis: {
       categories: Name1,
       labels: {
+        style:{
+					fontSize:'12px'
+				}
       },
     },
     yaxis: [
@@ -260,15 +291,18 @@ export default function SalesRevenue() {
           color: '#008FFB',
         },
         labels: {
-          formatter: (value) => { return format(value) }
-          },
-          style: {
-            colors: '#008FFB',
-          },
-          formatter: function (val) {
-            let value = format(val)
-            return value
-          },
+          formatter: (value) => { return format(value) },
+          style:{
+            fontSize:'13.5px'
+          }
+        },
+        style: {
+          colors: '#008FFB',
+        },
+        formatter: function (val) {
+          let value = format(val)
+          return value
+        },
         title: {
           text: "Amount",
           style: {
@@ -294,6 +328,7 @@ export default function SalesRevenue() {
         labels: {
           style: {
             colors: '#00E396',
+              fontSize:'13.5px'
           }
         },
         title: {
@@ -303,7 +338,7 @@ export default function SalesRevenue() {
           }
         },
         min: 0,
-        setpsize:makeSlabe()
+        setpsize: makeSlabe()
       }
     ],
     tooltip: {
@@ -319,76 +354,78 @@ export default function SalesRevenue() {
       offsetX: 40
     },
     responsive: [{
-			breakpoint: 595,
-			options: {
+      breakpoint: 595,
+      options: {
         tooltip: {
-          title:{
-            formatter:function(val) {
+          title: {
+            formatter: function (val) {
               return val
             }
           },
-					y: {
-						formatter:function(val) {
-							return val;
-						},
+          y: {
+            formatter: function (val) {
+              return val;
+            },
 
-					}
-				},
-				yaxis: 
+          }
+        },
+        yaxis:
           [
             {
-					labels: {
-						show: true,
-              formatter: function(value) { 
-                // console.log(value);
-                return format_responsive(value); },
-            
-					}
-        },
-        {
-        seriesName: 'Qty',
-        opposite: true,
-        axisTicks: {
-          show: true,
-        },
-        axisBorder: {
-          show: true,
-          color: '#00E396',
-        },
-        labels: {
-          style: {
-            colors: '#00E396',
-          }
-        },
-        labels: {
-          show: true,
-            formatter: function(val) { 
-              
-              return ((((val / 1000).toFixed(1)).toString()) + "K") },
-          
-        },
-        title: {
-          text: "Qty",
-          style: {
-            color: '#00E396',
-          }
-        },
-        min: 0,
-        setpsize:makeSlabe()
-      }
+              labels: {
+                show: true,
+                formatter: function (value) {
+                  // console.log(value);
+                  return format_responsive(value);
+                },
+
+              }
+            },
+            {
+              seriesName: 'Qty',
+              opposite: true,
+              axisTicks: {
+                show: true,
+              },
+              axisBorder: {
+                show: true,
+                color: '#00E396',
+              },
+              labels: {
+                style: {
+                  colors: '#00E396',
+                }
+              },
+              labels: {
+                show: true,
+                formatter: function (val) {
+
+                  return ((((val / 1000).toFixed(1)).toString()) + "K")
+                },
+
+              },
+              title: {
+                text: "Qty",
+                style: {
+                  color: '#00E396',
+                }
+              },
+              min: 0,
+              setpsize: makeSlabe()
+            }
 
           ]
-				,
+        ,
         // xaxis: {
-				// 	labels: {
-				// 		show: true,
-				// 		formatter: function(value) { 
-				// 			console.log(value);
-				// 			return ((((value / 1000).toFixed(1)).toString()) + "K"); },
-				// 	}
-				// }
-			}
-			}]
+        // 	labels: {
+        // 		show: true,
+        // 		formatter: function(value) { 
+        // 			console.log(value);
+        // 			return ((((value / 1000).toFixed(1)).toString()) + "K"); },
+        // 	}
+        // }
+      }
+    }]
   }
 
   return (

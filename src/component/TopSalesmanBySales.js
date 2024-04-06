@@ -87,7 +87,14 @@ export default function TopSalesmanBySales() {
     tooltip:{
 			x:{formatter:function(val) {
 				return val
-			}}
+			}},
+      y:{
+				formatter:function(val){ 
+					return  (Number(parseFloat(val)).toLocaleString('en', {
+						minimumFractionDigits: 0
+					  }))
+				}
+			},
 		},
 
     xaxis: {

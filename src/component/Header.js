@@ -278,7 +278,7 @@ export default function Header() {
 	const [ItemGroup, setItemGroup] = useState([]);
 	const [defaultItemGroup, setDefaultItemGroup] = useState([]);
 	const [DayBook, setDayBook] = useState([]);
-	const [defaultDayBook, setDefaultDayBook] = useState([]);
+	const [defaultDayBook, setDefaultDayBook] = useState({ 'value': "", 'label': 'NONE' });
 	const [color, setColor] = useState([]);
 	const [defaultColor, setDefaultColor] = useState([]);
 	const [Brand, setBrand] = useState([]);
@@ -333,6 +333,7 @@ export default function Header() {
 	/* Filter Comman State*/
 	const [CommonParam, SetCommonParam] = useState([]);
 	const [ComList, setComList] = useState([])
+	const [BranchList, setBranchList] = useState([])
 	const [props1, setprops1] = useState({});
 	// const [ComList, setComList] = useState([])
 	// const [ComList, setComList] = useState([])
@@ -344,6 +345,7 @@ export default function Header() {
 		console.log("hii",FilterContext.TempCommanFilter);
 		setFilterTempData(FilterContext.CommanFilter)
 		GetCompanyData()
+		GetBranchData()
 		getCommonParam()
 		// fetchData(API.GetDepartment, 'DepartmentName', 'DepartmentID', setDepartment)
 		// fetchData(API.GetItemGroup, 'ItemGroupName', 'ItemGroupID', setItemGroup)
@@ -363,7 +365,7 @@ export default function Header() {
 		// fetchData(API.GetSubCategory, 'SubCategory8Name', 'SubCategory8ID', setSubCatogory8, 8)
 		// fetchData(API.GetSubCategory, 'SubCategory9Name', 'SubCategory9ID', setSubCatogory9, 9)
 		// fetchData(API.GetSubCategory, 'SubCategory10Name', 'SubCategory10ID', setSubCatogory10, 10)
-		// fetchData(API.GetDayBook, 'DayBookName', 'DayBookID', setDayBook)
+		fetchData(API.GetDayBook, 'DayBookName', 'DayBookID', setDayBook)
 		// fetchCityName()
 		// fetchStateName()
 		// fetchRegionName()
@@ -414,6 +416,7 @@ export default function Header() {
 			console.log("index",FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]])
 			var TempDataID = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][0]].split(',')
 			var TempDataValue = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]].split(',')
+			console.log("hii", res.data.lstResult);
 			var resultID = res.data.lstResult.map(Item => Item[dependentfilter[FilterIndex][2]].toString())
 			// var resultValue=res.lstResult.map(Item=>Item[dependentfilter[FilterIndex][4]])
 			console.log('TempDatabefore', TempDataID)
@@ -454,58 +457,30 @@ export default function Header() {
 		})
 	}
 	async function GetCompanyData() {
-
 		await post(FilterInput, API.GetCompany, [], 'post').then((res) => {
 			Companylst.push(res.data.lstResult)
 			setComList(res.data.lstResult)
 		})
 	}
-
-	// async function fetchData(api, name, id, setMethod, bol = 0) {
-	// 	let input = {}
-	// 	if (bol !== 0) {
-	// 		input = { ...FilterInput, ['SubCategoryNo']: bol.toString() }
-	// 		await post(input, api, {}, "post").then((res) => {
-	// 			let Dept = []
-	// 			let jsonTemp = {}
-	// 			res.data.lstResult.forEach(element => {
-	// 				jsonTemp = {}
-	// 				jsonTemp['value'] = element[id]
-	// 				jsonTemp['label'] = element[name]
-	// 				Dept.push(jsonTemp)
-
-	// 			});
-	// 			setMethod(Dept)
-	// 		})
-	// 	} else {
-	// 		if (name !== 'DayBookName') {
-	// 			await post(FilterInput, api, {}, "post").then((res) => {
-	// 				let Dept = []
-	// 				let jsonTemp = {}
-	// 				res.data.lstResult.forEach(element => {
-	// 					jsonTemp = {}
-	// 					jsonTemp['value'] = element[id]
-	// 					jsonTemp['label'] = element[name]
-	// 					Dept.push(jsonTemp)
-	// 				});
-	// 				setMethod(Dept)
-	// 			})
-	// 		} else {
-	// 			await post(FilterInput, api, {}, "post").then((res) => {
-	// 				let Dept = [{ 'value': "", 'label': 'NONE' }]
-	// 				let jsonTemp = {}
-	// 				res.data.lstResult.forEach(element => {
-	// 					jsonTemp = {}
-	// 					jsonTemp['value'] = element[id]
-	// 					jsonTemp['label'] = element[name]
-	// 					Dept.push(jsonTemp)
-	// 				});
-	// 				setMethod(Dept)
-	// 			})
-	// 		}
-	// 	}
-
-	// }
+	async function GetBranchData() {
+		await post(FilterInput, API.GetBranch, [], 'post').then((res) =>{
+			setBranchList(res.data.lstResult)
+		})
+	}
+	async function fetchData(api, name, id, setMethod, bol = 0) {
+		await post(FilterInput, api, {}, "post").then((res) => {
+			let Dept = [{ 'value': "", 'label': 'NONE' }]
+			let jsonTemp = {}
+			res.data.lstResult.forEach(element => {
+				jsonTemp = {}
+				jsonTemp['value'] = element[id]
+				jsonTemp['label'] = element[name]
+				Dept.push(jsonTemp)
+			});
+			setMethod(Dept)
+		})
+	}
+		
 
 	// async function fetchCityName() {
 	// 	await axios.post(API.GetCity).then((response) => {
@@ -716,7 +691,7 @@ export default function Header() {
 			// FilterContext.SetCommanFilter(comman)
 			FilterData = FilterContext.TempCommanFilter
 			// FilterNameData = FilterContext.TempCommanFilter
-			// ChartRef.current.clearValue();
+			ChartRef.current.clearValue();
 			// styleRef.current.clearValue();
 			// stateRef.current.clearValue();
 			// cityRef.current.clearValue();
@@ -739,7 +714,7 @@ export default function Header() {
 			// SubCategory8Ref.current.clearValue();
 			// SubCategory9Ref.current.clearValue();
 			// SubCategory10Ref.current.clearValue();
-			// DaybookRef.current.clearValue();
+			DaybookRef.current.clearValue();
 			FilterContext.setThousand("");
 		} catch (error) {
 
@@ -1005,7 +980,11 @@ export default function Header() {
 																	<form>
 																		<label for="sel1" class="form-label">Branch </label>
 																		<select class="form-select form-control" name='strBranchID' onChange={handleOnInputChange} aria-label="Default select example">
-																			<option value="Ho">Ho</option>
+																		{BranchList.map((res) => (
+																				<option key={res.BranchID} value={res.BranchID}>
+																					{res.BranchName}
+																				</option>
+																			))}
 																		</select>
 
 																	</form>

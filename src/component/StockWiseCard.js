@@ -21,20 +21,32 @@ export default function StockWiseCard() {
     }, [inputdata]);
     let defaulres = {}
     function format(val) {
-		if (filter.Thousand === 'k') {
-			return ((((val / 1000).toFixed(1)).toString()) + "K");
-		} else if (filter.Thousand === 'l') {
-			return ((((val / 100000).toFixed(1)).toString()) + "L");
-		} else if (filter.Thousand === 'm') {
-			return ((((val / 1000000).toFixed(1)).toString()) + "M");
-		} else if (filter.Thousand === 'c') {
-			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
-		}else if (filter.Thousand === 'b') {
-			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
-		} else {
-			return Math.floor(val);;
-		}
-	}
+        if (filter.Thousand === 'k') {
+            return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "K");
+        } else if (filter.Thousand === 'l') {
+            return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "L");
+        } else if (filter.Thousand === 'm') {
+            return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "M");
+        } else if (filter.Thousand === 'c') {
+            return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "CR");
+        } else if (filter.Thousand === 'b') {
+            return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "B");
+        } else {
+            return (Number(parseFloat(Math.floor(val))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }));
+        }
+    }
     function fetchData() {
 
         post(inputdata, API.GetStockCard, defaulres, 'post').then((response) => {
@@ -60,7 +72,7 @@ export default function StockWiseCard() {
                 } else {
                     setPurcAmt(0.00)
                 }
-                
+
                 // setStockAmt(response.data.lstResult[0]['StockAmt'].toFixed(2))
                 //setPurcQty(response.data.lstResult[0]['PurcQty'].toFixed(2))
                 //setPurcAmt(response.data.lstResult[0]['PurcAmt'].toFixed(2))

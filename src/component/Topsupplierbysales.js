@@ -49,28 +49,28 @@ export default function Topsupplierbysales() {
 	}
 	function format_responsive(val) {
 		if (filter.Thousand === 'k') {
-		  return ((((val / 1000).toFixed(1)).toString()) + "K");
+			return ((((val / 1000).toFixed(1)).toString()) + "K");
 		} else if (filter.Thousand === 'l') {
-		  return ((((val / 100000).toFixed(1)).toString()) + "L");
+			return ((((val / 100000).toFixed(1)).toString()) + "L");
 		} else if (filter.Thousand === 'm') {
-		  return ((((val / 1000000).toFixed(1)).toString()) + "M");
+			return ((((val / 1000000).toFixed(1)).toString()) + "M");
 		} else if (filter.Thousand === 'c') {
-		  return ((((val / 10000000).toFixed(1)).toString()) + "CR");
+			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
 		} else if (filter.Thousand === 'b') {
-		  return ((((val / 1000000000).toFixed(1)).toString()) + "B");
+			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
 		} else {
-		  if (Math.max(Amount) < 1000000) {
-			return ((((val / 1000).toFixed(1)).toString()) + "K")
-		  }
-		  else {
-			if (Math.max(Amount) < 100000000) {
-			  return ((((val / 10000000).toFixed(1)).toString()) + "CR")
-			} else {
-			  return ((((val / 100000).toFixed(1)).toString()) + "L")
+			if (Math.max(Amount) < 1000000) {
+				return ((((val / 1000).toFixed(1)).toString()) + "K")
 			}
-		  }
+			else {
+				if (Math.max(Amount) < 100000000) {
+					return ((((val / 10000000).toFixed(1)).toString()) + "CR")
+				} else {
+					return ((((val / 100000).toFixed(1)).toString()) + "L")
+				}
+			}
 		}
-	  }
+	}
 	const series = [{
 		name: 'Amount',
 		data: Amount
@@ -95,7 +95,13 @@ export default function Topsupplierbysales() {
 				formatter: function (val) {
 					return val
 				}
-			}
+			}, y: {
+				formatter: function (val) {
+					return (Number(parseFloat(val)).toLocaleString('en', {
+						minimumFractionDigits: 0
+					}))
+				}
+			},
 		},
 		plotOptions: {
 			bar: {
@@ -107,12 +113,17 @@ export default function Topsupplierbysales() {
 		},
 		xaxis: {
 			categories: Name,
+			labels: {
+				style: {
+					fontSize: '13.5px'
+				}
+			},
 		},
 		grid: {
 			xaxis: {
 				lines: {
 					show: true
-				}
+				},
 			}
 		},
 		yaxis: {
@@ -121,6 +132,8 @@ export default function Topsupplierbysales() {
 				show: true
 			},
 			labels: {
+				
+				
 				formatter: function (val) {
 
 					if (val.length > 7) {
@@ -151,7 +164,7 @@ export default function Topsupplierbysales() {
 					labels: {
 						show: true,
 						formatter: (value) => {
-								return format_responsive(value)
+							return format_responsive(value)
 
 						}
 					}

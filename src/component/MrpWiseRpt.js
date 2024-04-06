@@ -133,48 +133,60 @@ export default function MrpWiseRpt() {
 	// }
 	function format(val) {
 		if (filter.Thousand === 'k') {
+			return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "K");
+		} else if (filter.Thousand === 'l') {
+			return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "L");
+		} else if (filter.Thousand === 'm') {
+			return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "M");
+		} else if (filter.Thousand === 'c') {
+			return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "CR");
+		} else if (filter.Thousand === 'b') {
+			return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "B");
+		} else {
+			return (Number(parseFloat(Math.floor(val))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}));
+		}
+	}
+
+	function format_responsive(val) {
+		if (filter.Thousand === 'k') {
 			return ((((val / 1000).toFixed(1)).toString()) + "K");
 		} else if (filter.Thousand === 'l') {
 			return ((((val / 100000).toFixed(1)).toString()) + "L");
 		} else if (filter.Thousand === 'm') {
 			return ((((val / 1000000).toFixed(1)).toString()) + "M");
-		}else if (filter.Thousand === 'c') {
+		} else if (filter.Thousand === 'c') {
 			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
-		}else if (filter.Thousand === 'b') {
+		} else if (filter.Thousand === 'b') {
 			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
-		}  else {
-			return Math.floor(val);;
+		} else {
+			const arr = Amount2.map(Number)
+			// console.log(Math.max(...arr));
+			if (Math.max(...arr) < 1000000) {
+				return ((((val / 1000).toFixed(1)).toString()) + "K")
+			}
+			else {
+
+				if (Math.max(...arr) > 10000000) {
+					return ((((val / 10000000).toFixed(1)).toString()) + "CR")
+				} else {
+
+					return ((((val / 100000).toFixed(1)).toString()) + "L")
+				}
+			}
 		}
 	}
-
-	   function format_responsive(val) {
-      if (filter.Thousand === 'k') {
-        return ((((val / 1000).toFixed(1)).toString()) + "K");
-      } else if (filter.Thousand === 'l') {
-        return ((((val / 100000).toFixed(1)).toString()) + "L");
-      } else if (filter.Thousand === 'm') {
-        return ((((val / 1000000).toFixed(1)).toString()) + "M");
-      } else if (filter.Thousand === 'c') {
-        return ((((val / 10000000).toFixed(1)).toString()) + "CR");
-      } else if (filter.Thousand === 'b') {
-        return ((((val / 1000000000).toFixed(1)).toString()) + "B");
-      } else {
-		const arr = Amount2.map(Number)
-		// console.log(Math.max(...arr));
-        if (Math.max(...arr) < 1000000) {
-          return ((((val / 1000).toFixed(1)).toString()) + "K")
-        }
-        else {
-			
-          if (Math.max(...arr) > 10000000) {
-            return ((((val / 10000000).toFixed(1)).toString()) + "CR")
-          } else {
-
-            return ((((val / 100000).toFixed(1)).toString()) + "L")
-          }
-        }
-      }
-    }
 	const makeSlabe = () => {
 		let slab = 0
 		let numberArray = [];
@@ -196,7 +208,7 @@ export default function MrpWiseRpt() {
 		data: Amount1
 	}]
 	const options = {
-		colors:['#0d4876','#26e7a6'],
+		colors: ['#0d4876', '#26e7a6'],
 		chart: {
 			height: 350,
 			type: 'line',
@@ -216,7 +228,12 @@ export default function MrpWiseRpt() {
 		},
 		xaxis: {
 			categories: Name1,
-			
+			labels: {
+				style: {
+					fontSize: '11.4px'
+				}
+			},
+
 		},
 		yaxis: [
 			{
@@ -236,6 +253,7 @@ export default function MrpWiseRpt() {
 				labels: {
 					style: {
 						colors: '#008FFB',
+						fontSize: '13.5px'
 					},
 					formatter: function (val) {
 						let value = format(val)
@@ -268,6 +286,7 @@ export default function MrpWiseRpt() {
 				labels: {
 					style: {
 						colors: '#00E396',
+						fontSize: '13.5px'
 					},
 					formatter: function (val) {
 						return val.toFixed(0);
@@ -287,7 +306,7 @@ export default function MrpWiseRpt() {
 		responsive: [{
 			breakpoint: 595,
 			options: {
-				
+
 				tooltip: {
 					title: {
 						formatter: function (val) {
@@ -336,10 +355,11 @@ export default function MrpWiseRpt() {
 							},
 							labels: {
 								show: true,
-								  formatter: function(val) { 
-									
-									return ((((val / 1000).toFixed(1)).toString()) + "K") },
-								
+								formatter: function (val) {
+
+									return ((((val / 1000).toFixed(1)).toString()) + "K")
+								},
+
 							},
 							title: {
 								text: "Qty",

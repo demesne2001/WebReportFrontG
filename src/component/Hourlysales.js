@@ -35,44 +35,71 @@ export default function Hourlysales() {
 		})
 	}
 	function format(val) {
-		if (filter.Thousand === 'k') {
-			return ((((val / 1000).toFixed(1)).toString()) + "K");
-		} else if (filter.Thousand === 'l') {
-			return ((((val / 100000).toFixed(1)).toString()) + "L");
-		} else if (filter.Thousand === 'm') {
-			return ((((val / 1000000).toFixed(1)).toString()) + "M");
-		} else if (filter.Thousand === 'c') {
-			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
-		} else if (filter.Thousand === 'b') {
-			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
-		} else {
-			return Math.floor(val);
-		}
-	}
+        if (filter.Thousand === 'k') {
+            return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "K");
+        } else if (filter.Thousand === 'l') {
+            return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "L");
+        } else if (filter.Thousand === 'm') {
+            return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "M");
+        } else if (filter.Thousand === 'c') {
+            return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "CR");
+        } else if (filter.Thousand === 'b') {
+            return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "B");
+        } else {
+            return (Number(parseFloat(Math.floor(val))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }));
+        }
+    }
 	function format_responsive(val) {
 		if (filter.Thousand === 'k') {
-			return ((((val / 1000).toFixed(1)).toString()) + "K");
-		} else if (filter.Thousand === 'l') {
-			return ((((val / 100000).toFixed(1)).toString()) + "L");
-		} else if (filter.Thousand === 'm') {
-			return ((((val / 1000000).toFixed(1)).toString()) + "M");
-		} else if (filter.Thousand === 'c') {
-			return ((((val / 10000000).toFixed(1)).toString()) + "CR");
-		} else if (filter.Thousand === 'b') {
-			return ((((val / 1000000000).toFixed(1)).toString()) + "B");
-		} else {
+            return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "K");
+        } else if (filter.Thousand === 'l') {
+            return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "L");
+        } else if (filter.Thousand === 'm') {
+            return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "M");
+        } else if (filter.Thousand === 'c') {
+            return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "CR");
+        } else if (filter.Thousand === 'b') {
+            return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
+                minimumFractionDigits: 0
+            }) + "B");
+        } else {
 			const arr = Amount.map(Number)
 			// console.log(Math.max(...arr));
 			if (Math.max(...arr) < 1000000) {
-				return ((((val / 1000).toFixed(1)).toString()) + "K")
+				return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+					minimumFractionDigits: 0
+				}) + "K");
 			}
 			else {
 
 				if (Math.max(...arr) > 100000000) {
-					return ((((val / 10000000).toFixed(1)).toString()) + "CR")
+					return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+						minimumFractionDigits: 0
+					}) + "CR");
 				} else {
-
-					return ((((val / 100000).toFixed(1)).toString()) + "L")
+					return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+						minimumFractionDigits: 0
+					}) + "L");
 				}
 			}
 		}
@@ -126,6 +153,9 @@ export default function Hourlysales() {
 			categories: Name,
 			title: {
 				text: ''
+			},
+			style:{
+				fontSize:'15px'
 			}
 		},
 		yaxis: {
@@ -137,6 +167,9 @@ export default function Hourlysales() {
 					let value = format(val)
 					return value
 				},
+				style:{
+					fontSize:'13.5px'
+				}
 			},
 			min: Math.min(...Amount),
 			max: Math.max(...Amount)
