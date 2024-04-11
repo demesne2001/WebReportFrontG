@@ -41,6 +41,7 @@ export default function Dashboard() {
     //     document.getElementById('pdf-div').style.display = "none";
     // }, [res])
     async function downloadPdfDocument() {
+        
         document.getElementById('pdf-div').style.display = "block";
         const input = document.getElementById('rootElementId');
         console.log('input', input)
@@ -115,7 +116,7 @@ export default function Dashboard() {
                                         <Topsupplierbysales />
                                         <TopSalesmanBySales />
                                         <MrpWiseRpt />
-                                        <StockAging />
+                                        <StockAging   />
                                     </div>
                                 </div>
                             </div>
@@ -125,6 +126,7 @@ export default function Dashboard() {
                     </div>
 
                 </main>
+                
             </body>
         </>
 

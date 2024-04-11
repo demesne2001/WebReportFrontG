@@ -30,11 +30,11 @@ import post from './Utility/APIHandle'
 import Loader from './Loader';
 import ChildHeader from './ChildHeader';
 import axios from "axios"
-import Commonmodel from './CommanModal';
-
+// import Commonmodel from './CommanModal';
+import Commonmodel from './CommonModal1';
 
 export default function Header() {
-	
+
 	const [fullscreen, setFullScreen] = useState(false);
 	const DepartmentRef = useRef();
 	const ItemGrRef = useRef();
@@ -131,21 +131,21 @@ export default function Header() {
 	const handleShow = () => setshow(true);
 	const FilterContext = useContext(CreateContext);
 	const dependentfilter = {
-		1: ["strDepartmentID", API.GetDepartment, "DepartmentID", "DepartmentName", "strDepartmentValue"],
-		2: ["strItemGroupID", API.GetItemGroup, "ItemGroupID", "ItemGroupName", "strItemGroupValue"],
-		3: ["strProductID", API.GetProduct, "ProductID", "ProductName", "strProductValue"],
-		4: ["strBrandID", API.GetBrand, "BrandID", "BrandName", "strBrandValue"],
-		5: ["strStyleID", API.GetStyle, "StyleID", "StyleName", "strStyleValue"],
-		6: ["strItemID", API.GetItemName, "ItemID", "ItemName", "strItemValue"],
-		7: ["strDesignID", API.GetDesign, "DesignID", "DesignNo", "strDesignValue"],
-		8: ["strLotNo", API.GetLotNo, "LotNo", "LotNo", "strLotNo"],
-		9: ["strColorID", API.GetColor, "ColorID", "ColorName", "strColorValue"],
-		10: ["strState", API.GetState, "statename", "statename", "strState"],
-		11: ["strCity", API.GetCity, "Cityname", "Cityname", "strCity"],
-		12: ["strRegionID", API.GetRegion, "RegionID", "RegionName", "strRegionValue"],
-		13: ["strPurchaseAccountID", API.GetPurchaseParty, "AccountID", "AccountName", "strPurchaseAccountValue"],
-		14: ["strSalesAccountID", API.GetSalesParty, "AccountID", "AccountName", "strSalesAccountValue"],
-		15: ["strSalesmanID", API.GetSalesman, "SalesmanID", "SalesmanName", "strSalesmanValue"],
+		1: ["strDepartmentID", API.GetDepartment, "DepartmentID", "DepartmentName", "strDepartmentValue",1],
+		2: ["strItemGroupID", API.GetItemGroup, "ItemGroupID", "ItemGroupName", "strItemGroupValue",5],
+		3: ["strProductID", API.GetProduct, "ProductID", "ProductName", "strProductValue",9],
+		4: ["strBrandID", API.GetBrand, "BrandID", "BrandName", "strBrandValue",13],
+		5: ["strStyleID", API.GetStyle, "StyleID", "StyleName", "strStyleValue",2],
+		6: ["strItemID", API.GetItemName, "ItemID", "ItemName", "strItemValue",6],
+		7: ["strDesignID", API.GetDesign, "DesignID", "DesignNo", "strDesignValue",10],
+		8: ["strLotNo", API.GetLotNo, "LotNo", "LotNo", "strLotNo",14],
+		9: ["strColorID", API.GetColor, "ColorID", "ColorName", "strColorValue",3],
+		10: ["strState", API.GetState, "statename", "statename", "strState",7],
+		11: ["strCity", API.GetCity, "Cityname", "Cityname", "strCity",11],
+		12: ["strRegionID", API.GetRegion, "RegionID", "RegionName", "strRegionValue",15],
+		13: ["strPurchaseAccountID", API.GetPurchaseParty, "AccountID", "AccountName", "strPurchaseAccountValue",4],
+		14: ["strSalesAccountID", API.GetSalesParty, "AccountID", "AccountName", "strSalesAccountValue",8],
+		15: ["strSalesmanID", API.GetSalesman, "SalesmanID", "SalesmanName", "strSalesmanValue",12],
 	}
 	// const [FilterData, SetFilterData] = useState({
 	// 	"ChartValueOption": "",
@@ -166,24 +166,24 @@ export default function Header() {
 	// 	"strSubCategory2ID": "",
 	// 	"strSubCategory3ID": ""
 	// });
-	let FilterInput ={
+	let FilterInput = {
 		"search": "",
 		"strCompanyID": "",
 		"strBranchID": "",
-		"strDepartmentID": FilterContext.TempCommanFilter['strDepartmentID'] ,
-		"strBrandID":  FilterContext.TempCommanFilter['strBrandID'],
-		"strProductID":  FilterContext.TempCommanFilter['strProductID'],
-		"strItemGroupID":  FilterContext.TempCommanFilter['strItemGroupID'],
+		"strDepartmentID": FilterContext.TempCommanFilter['strDepartmentID'],
+		"strBrandID": FilterContext.TempCommanFilter['strBrandID'],
+		"strProductID": FilterContext.TempCommanFilter['strProductID'],
+		"strItemGroupID": FilterContext.TempCommanFilter['strItemGroupID'],
 		"PageSize": 9999,
 		"PageNo": 1,
-		"strItemID":  FilterContext.TempCommanFilter['strItemID'],
-		"strDesignID":  FilterContext.TempCommanFilter['strDesignID'],
+		"strItemID": FilterContext.TempCommanFilter['strItemID'],
+		"strDesignID": FilterContext.TempCommanFilter['strDesignID'],
 		"SubCategoryNo": 1,
-		"strCity":  FilterContext.TempCommanFilter['strCity'],
-		"strState":  FilterContext.TempCommanFilter['strState'],
-		"strRegionID":  FilterContext.TempCommanFilter['strRegionID'],
-		"strStyleID":  FilterContext.TempCommanFilter['strStyleID']
-	  }
+		"strCity": FilterContext.TempCommanFilter['strCity'],
+		"strState": FilterContext.TempCommanFilter['strState'],
+		"strRegionID": FilterContext.TempCommanFilter['strRegionID'],
+		"strStyleID": FilterContext.TempCommanFilter['strStyleID']
+	}
 	let FilterData = {
 		...FilterContext.TempCommanFilter,
 		['strDepartmentID']: FilterContext.TempCommanFilter['strDepartmentID'],
@@ -342,7 +342,7 @@ export default function Header() {
 
 	useEffect(() => {
 		console.log("useEffet2");
-		console.log("hii",FilterContext.TempCommanFilter);
+		console.log("hii", FilterContext.TempCommanFilter);
 		setFilterTempData(FilterContext.CommanFilter)
 		GetCompanyData()
 		GetBranchData()
@@ -374,17 +374,17 @@ export default function Header() {
 		handleThousand()
 
 	}, [])
-	useEffect(()=>{
+	useEffect(() => {
 		FilterContext.SetCommanChildFilter(FilterInput)
-	},[FilterContext.TempCommanFilter])
+	}, [FilterContext.TempCommanFilter])
 	useEffect(() => {
 		var Findex = FilterContext.TempCommanFilter.FilterIndex
 		console.log("useEffet1");
-		
+
 		if (Findex !== "undefined" && Findex !== 0) {
 			if (Findex >= 1 && Findex < 9) {
-				for (let index = Findex+1; index < 10; index++) {
-					console.log(index,'indexno')
+				for (let index = Findex + 1; index < 10; index++) {
+					console.log(index, 'indexno')
 					if (FilterContext.TempCommanFilter[dependentfilter[index][0]].length > 0) {
 						FetchDataDependentAPI(FilterInput, index)
 					}
@@ -410,10 +410,10 @@ export default function Header() {
 	}, [FilterContext.TempCommanFilter.strBranchID, FilterContext.TempCommanFilter.CompanyID])
 
 	function FetchDataDependentAPI(input, FilterIndex) {
-		console.log("FetchDataDependentAPI",FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]]);
+		console.log("FetchDataDependentAPI", FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]]);
 		post(input, dependentfilter[FilterIndex][1], [], 'post').then((res) => {
-			console.log("response",res);
-			console.log("index",FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]])
+			console.log("response", res);
+			console.log("index", FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]])
 			var TempDataID = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][0]].split(',')
 			var TempDataValue = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]].split(',')
 			console.log("hii", res.data.lstResult);
@@ -421,13 +421,13 @@ export default function Header() {
 			// var resultValue=res.lstResult.map(Item=>Item[dependentfilter[FilterIndex][4]])
 			console.log('TempDatabefore', TempDataID)
 			console.log('resultID', resultID)
-			console.log("FilterContext.TempCommanFilter before",FilterContext.TempCommanFilter);
-			var temarrayID=[]
-			var temparryValue=[]
+			console.log("FilterContext.TempCommanFilter before", FilterContext.TempCommanFilter);
+			var temarrayID = []
+			var temparryValue = []
 			for (let index = 0; index < TempDataID.length; index++) {
-				console.log('delete before log',resultID.indexOf(TempDataID[index]),TempDataID[index])
-				if (resultID.indexOf(TempDataID[index]) >= 0) {	
-					console.log('delete index',TempDataID[index])
+				console.log('delete before log', resultID.indexOf(TempDataID[index]), TempDataID[index])
+				if (resultID.indexOf(TempDataID[index]) >= 0) {
+					console.log('delete index', TempDataID[index])
 					// TempDataID.splice(TempDataID.indexOf(TempDataID[index]),1)
 					// TempDataValue.splice(TempDataValue.indexOf(TempDataValue[index]),1)
 					// delete TempDataID[index]
@@ -436,14 +436,14 @@ export default function Header() {
 					temarrayID.push(TempDataID[index])
 				}
 			}
-			
-			
-			console.log('TempData After', temarrayID)			
-			
-			
-			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [dependentfilter[FilterIndex][0]]: temarrayID.toString(), [dependentfilter[FilterIndex][4]]: temparryValue.toString(),['FilterIndex']:0 })
-			console.log("FilterContext.TempCommanFilter After ",FilterContext.TempCommanFilter);
-			
+
+
+			console.log('TempData After', temarrayID)
+
+
+			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [dependentfilter[FilterIndex][0]]: temarrayID.toString(), [dependentfilter[FilterIndex][4]]: temparryValue.toString(), ['FilterIndex']: 0 })
+			console.log("FilterContext.TempCommanFilter After ", FilterContext.TempCommanFilter);
+
 		})
 	}
 
@@ -451,9 +451,10 @@ export default function Header() {
 		await axios.post("http://192.168.1.208:7000/Comman/ParmCaption").then((response) => {
 			// console.log("response", response);
 			SetCommonParam(response.data.lstresult)
-			// console.log("caption", CommonParam);
+			console.log("caption", dateFormat(response.data.FromDate,"yyyy-dd-MM"));
 			setfromdate(response.data.FromDate)
 			settodate(response.data.ToDate)
+			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['ToDate']:dateFormat(response.data.ToDate,"yyyy-dd-MM"), ['FromDate']:dateFormat(response.data.FromDate,"yyyy-dd-MM")})
 		})
 	}
 	async function GetCompanyData() {
@@ -463,7 +464,7 @@ export default function Header() {
 		})
 	}
 	async function GetBranchData() {
-		await post(FilterInput, API.GetBranch, [], 'post').then((res) =>{
+		await post(FilterInput, API.GetBranch, [], 'post').then((res) => {
 			setBranchList(res.data.lstResult)
 		})
 	}
@@ -480,7 +481,7 @@ export default function Header() {
 			setMethod(Dept)
 		})
 	}
-		
+
 
 	// async function fetchCityName() {
 	// 	await axios.post(API.GetCity).then((response) => {
@@ -583,19 +584,25 @@ export default function Header() {
 					newarrName.push((demooName[0][index]))
 				}
 			}
-		} else{
+		} else {
 			for (let index = 0; index < demoo[0].length; index++) {
-				if (demoo[0].indexOf("") === -1) {
+				if (myvalueName[0] === ',') {
 					console.log((demoo[0][index]));
 					newarr.push((demoo[0][index]))
 					newarrName.push((demooName[0][index]))
+				} else {
+					if (demoo[0].indexOf("") === -1) {
+						console.log((demoo[0][index]));
+						newarr.push((demoo[0][index]))
+						newarrName.push((demooName[0][index]))
+					}
 				}
 			}
 		}
 		setdemo(newarr)
 		setdemoName(newarrName)
-		console.log(demoName, "demo");
-		setprops1({ 'api': dependentfilter[IndexNo][1], 'labelname': dependentfilter[IndexNo][0], 'id': dependentfilter[IndexNo][2], 'name': dependentfilter[IndexNo][3], 'LabelValue': dependentfilter[IndexNo][4], 'FilterIndex': IndexNo })
+		console.log(demoo, "demo");
+		setprops1({ 'api': dependentfilter[IndexNo][1], 'labelname': dependentfilter[IndexNo][0], 'id': dependentfilter[IndexNo][2], 'name': dependentfilter[IndexNo][3], 'LabelValue': dependentfilter[IndexNo][4], 'FilterIndex': IndexNo, 'grid': dependentfilter[IndexNo][5]})
 		FilterContext.setchildFilterShow(true);
 	}
 
@@ -623,7 +630,7 @@ export default function Header() {
 			setdemoName(newarrName)
 		}
 		console.log(demoName);
-		setprops1({ 'api': API.GetSubCategory, 'labelname': 'strSubCategory' + IndexNo.toString() + 'ID', 'id': 'SubCategory' + IndexNo.toString() + 'ID', 'name': 'SubCategory' + IndexNo.toString() + 'Name', 'LabelValue': 'strSubCategory' + IndexNo.toString() + 'Value', 'FilterIndex': IndexNo })
+		setprops1({ 'api': API.GetSubCategory, 'labelname': 'strSubCategory' + IndexNo.toString() + 'ID', 'id': 'SubCategory' + IndexNo.toString() + 'ID', 'name': 'SubCategory' + IndexNo.toString() + 'Name', 'LabelValue': 'strSubCategory' + IndexNo.toString() + 'Value', 'FilterIndex': IndexNo, 'grid':IndexNo + 15 })
 		FilterContext.setchildFilterShow(true);
 	}
 
@@ -866,6 +873,70 @@ export default function Header() {
 			}
 		}
 	}
+
+	function handleArrowLeft(str) {
+		if (FilterContext.TempCommanFilter[str] !== "") {
+			var ans = ""
+
+			const date = new Date(FilterContext.TempCommanFilter[str]);
+			var month = date.getMonth() + 1
+			console.log(date.getFullYear());
+			if (date.getDate() === 1) {
+				if (month === 1) {
+					ans = (date.getFullYear() - 1).toString() + "-12" + "-31"
+				} else {
+					ans = date.getFullYear().toString() + "-" + (month - 1).toString() + "-" + new Date(date.getFullYear(), month - 1, 0).getDate().toString()
+				}
+			} else {
+				ans = date.getFullYear().toString() + "-" + month.toString() + "-" + (date.getDate() - 1).toString()
+			}
+
+			var listarr = ans.split("-")
+			console.log(listarr);
+			if (listarr[1].length < 2) {
+				listarr[1] = "0" + listarr[1]
+			}
+			if (listarr[2].length < 2) {
+				listarr[2] = "0" + listarr[2]
+			}
+			console.log(listarr);
+			ans = listarr[0] + "-" + listarr[1] + "-" + listarr[2];
+			// document.getElementById("FromDate").value = ans;
+			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [str]: ans })
+		}
+
+	}
+	function handleArrowRight(str) {
+		if (FilterContext.TempCommanFilter[str] !== "") {
+			var ans = ""
+
+			const date = new Date(FilterContext.TempCommanFilter[str]);
+			var month = date.getMonth() + 1
+			console.log(date.getFullYear());
+			if (date.getDate() === new Date(date.getFullYear(), month, 0).getDate()) {
+				if (month === 12) {
+					ans = (date.getFullYear() + 1).toString() + "-01" + "-01"
+				} else {
+					ans = date.getFullYear().toString() + "-" + (month + 1).toString() + "-01"
+				}
+			} else {
+				ans = date.getFullYear().toString() + "-" + month.toString() + "-" + (date.getDate() + 1).toString()
+			}
+
+			var listarr = ans.split("-")
+			console.log(listarr);
+			if (listarr[1].length < 2) {
+				listarr[1] = "0" + listarr[1]
+			}
+			if (listarr[2].length < 2) {
+				listarr[2] = "0" + listarr[2]
+			}
+			console.log(listarr);
+			ans = listarr[0] + "-" + listarr[1] + "-" + listarr[2];
+			// document.getElementById("FromDate").value = ans;
+			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [str]: ans })
+		}
+	}
 	return (
 		<>
 			{FilterContext.childFilterShow === true ? <Commonmodel modelprops={props1} prdemo={demo} prdemoName={demoName} /> :
@@ -947,7 +1018,11 @@ export default function Header() {
 																<div class="card-filter-contain">
 																	<form class="form-group">
 																		<label for="sel1" class="form-label">From Date </label>
-																		<input onChange={handleOnInputChange} value={FilterContext.TempCommanFilter.FromDate} name='FromDate' class="form-control" type="date" />
+																		<div style={{ display: 'flex' }}>
+																			<i class="fa-solid fa-caret-left date-arrow-left" id="arrow-left" onClick={() => { handleArrowLeft('FromDate') }} />
+																			<input onChange={handleOnInputChange} value={FilterContext.TempCommanFilter['FromDate']} name='FromDate' class="form-control" type="date" />
+																			<i class="fa-solid fa-caret-right date-arrow-right" onClick={() => { handleArrowRight('FromDate') }} />
+																		</div>
 																	</form>
 																</div>
 															</div>
@@ -955,7 +1030,11 @@ export default function Header() {
 																<div class="card-filter-contain">
 																	<form class="form-group">
 																		<label for="sel1" class="form-label">To Date</label>
-																		<input onChange={handleOnInputChange} value={FilterContext.TempCommanFilter['ToDate']} name='ToDate' class="form-control" type="date" />
+																		<div style={{ display: 'flex' }}>
+																			<i class="fa-solid fa-caret-left date-arrow-left" id="arrow-left" onClick={() => { handleArrowLeft('ToDate') }} />
+																			<input onChange={handleOnInputChange} value={FilterContext.TempCommanFilter['ToDate']} name='ToDate' class="form-control" type="date" />
+																			<i class="fa-solid fa-caret-right date-arrow-right" onClick={() => { handleArrowRight('ToDate') }} />
+																		</div>
 																	</form>
 																</div>
 															</div>
@@ -980,7 +1059,7 @@ export default function Header() {
 																	<form>
 																		<label for="sel1" class="form-label">Branch </label>
 																		<select class="form-select form-control" name='strBranchID' onChange={handleOnInputChange} aria-label="Default select example">
-																		{BranchList.map((res) => (
+																			{BranchList.map((res) => (
 																				<option key={res.BranchID} value={res.BranchID}>
 																					{res.BranchName}
 																				</option>
@@ -1063,7 +1142,7 @@ export default function Header() {
 																						}),
 																					}}
 																				/> */}
-																				<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strDepartmentValue'])} onClick={() => HandleOnClickComman(1)}/>
+																				<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strDepartmentValue'])} onClick={() => HandleOnClickComman(1)} />
 																			</div>
 																			{/* </div> */}
 																		</form>
@@ -1236,7 +1315,7 @@ export default function Header() {
 																				<label for="sel1" class="form-label">Sale Party </label>
 																			</div>
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} placeholder={'Select...'}  class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSalesAccountValue'])} onClick={() => { HandleOnClickComman(14) }} />
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} placeholder={'Select...'} class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSalesAccountValue'])} onClick={() => { HandleOnClickComman(14) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1279,7 +1358,7 @@ export default function Header() {
 																			</div>
 
 
-																			<input type='text'  placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strDesignValue'])} onClick={() => { HandleOnClickComman(7) }} />
+																			<input type='text' placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strDesignValue'])} onClick={() => { HandleOnClickComman(7) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1652,7 +1731,7 @@ export default function Header() {
 								<li class="geex-content__header__quickaction__item">
 									<a href="#" class="geex-content__header__quickaction__link" onClick={handleFullScreen}>
 										{/* <i class="fas fa-expand-alt"></i> */}
-										<img src={expand} />
+										{fullscreen === false ? <img src={expand} /> : <i class="fa-solid fa-compress" style={{ color: "#0d4876" }}></i>}
 									</a>
 								</li>
 								<li class="geex-content__header__quickaction__item">

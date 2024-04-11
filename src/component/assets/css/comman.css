@@ -85,6 +85,18 @@ select {
 
 }
 
+#scrollbar1 {
+  /* border-radius: 10px; */
+  /* padding: 20px; */
+  /* height: 60vh; */
+  height: fit-content;
+  max-height: 60vh;
+  /* height: 400px; */
+  overflow-y: auto;
+  /* box-shadow: 20px 20px 50px rgb(204, 204, 204); */
+
+}
+
 .style-2::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -258,4 +270,102 @@ li.geex-content__header__quickaction__item:nth-child(1) a {
 .commonmodal-input {
   border: 1px solid #cccccc;
   height: 45px;
+}
+
+#columnChooser {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  width: max-content;
+  overflow: auto;
+  z-index: 10;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 20px 20px 50px grey;
+  margin-left: 173px;
+}
+#columnChooser .column {
+  font-size: 17px;
+
+}
+
+.date-arrow-left {
+
+ color: #cfdbe3;
+  font-size: 45px;
+  cursor: pointer;
+}
+
+.date-arrow-right {
+
+  color: #cfdbe3;
+  font-size: 45px;
+  cursor: pointer;
+}
+
+.date-arrow-right:hover{
+  color: #ffffff;
+}
+
+.date-arrow-left:hover{
+  color: #fffdfc;
+}
+
+.table-header {
+  position: sticky;
+   top: 0; 
+   background:rgb(206, 206, 206);
+   color:black;
+   border:rgb(0, 0, 0) 1px solid;
+}
+
+.column-btn{
+  background-color: #0d4876;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  /* margin: 10px; */
+  margin-top: 10px;
+  width: 100%;
+}
+
+.column-btn:hover {
+  background-color: #4378a0;
+}
+
+thead::before {
+  top: 0;
+  border-top: 3px solid blue;
+}
+thead::after {
+  color: #0d4876;
+  bottom: 0;
+  border-bottom: 3px solid blue;
+}
+
+
+/* #scrollbar1 th#columnth::after{
+  border-collapse: separate;
+  border-spacing: 0;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+#scrollbar1 th#columnth::before{
+  border-collapse: separate; 
+  border-spacing: 0;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+} */
+
+
+#scrollbar1 th:first-child{
+  border-left: 2px solid;
+}
+
+.Table-Label{
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
 }

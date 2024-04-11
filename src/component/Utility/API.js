@@ -29,6 +29,8 @@ const API = {
     GetStyle: Filter + "GetStyle",
     GetSalesParty: Filter + "GetSalesParty",
     GetPurchaseParty: Filter + "GetPurchaseParty",
+    GetFilterGridByID:Filter + "GetFilterGridByID",
+    FilterGridAddEdit: Filter + "FilterGridAddEdit",
     GetSalesCard: Card + "GetSalesCard",
     GetStockCard: Card + "GetStockCard",
     GetHourlySales: Chart + "GetHourlySales",

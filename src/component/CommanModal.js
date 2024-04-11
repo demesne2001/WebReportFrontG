@@ -300,6 +300,7 @@ function Commonmodel(props) {
                                                         (
                                                             <tr>
                                                                 <td>
+                                                                    {console.log(multicheck.includes(ele[props.modelprops.id]))}
                                                                     <Form.Check
                                                                         ref={(element) => { ref.current[i] = element }}
                                                                         type='checkbox'
@@ -369,7 +370,54 @@ function Commonmodel(props) {
 
                                 <Modal.Body className='modal-body' modal-dialog-scrollable style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>
                                     <Form className='comman-modal-form'>
+                                        {searchProcess === true ? <><InputGroup >
+                                            <Form.Control
+                                                placeholder='Search here...'
+                                                style={{ border: '1px solid' }}
+                                                aria-label="Search"
+                                                name='Search'
+                                                aria-describedby="basic-addon1"
+                                                onChange={handleSearch}
+                                            >
+                                            </Form.Control>
+                                            <InputGroup.Text id="basic-addon1">
+                                                <i class="fa fa-spinner fa-spin" style={{ fontSize: 20, color: '#0d4876' }}></i>
+                                            </InputGroup.Text>
+                                        </InputGroup><br></br></> : <><InputGroup >
+                                            <Form.Control
+                                                placeholder='Search here...'
+                                                style={{ border: '1px solid' }}
+                                                aria-label="Search"
+                                                name='Search'
+                                                aria-describedby="basic-addon1"
+                                                onChange={handleSearch}
+                                            />
+                                            <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
+                                        </InputGroup><br></br></>}
+                                        {/* <InputGroup >
+                                            <Form.Control
+                                                placeholder='Search here...'
+                                                style={{ border: '1px solid' }}
+                                                aria-label="Search"
+                                                name='Search'
+                                                aria-describedby="basic-addon1"
+                                                onChange={handleSearch}
+                                            />
+                                            <InputGroup.Text id="basic-addon1"><img height={20} src={search_icon} style={{cursor:'pointer'}} onClick={handleSearchClick}/></InputGroup.Text>
+                                        </InputGroup><br></br> */}
 
+                                        {multicheck.length !== 0 ?
+                                            <div className='selected-item style-3'>
+
+                                                {finalAllitem.map((ele) => {
+                                                    if (multicheck.indexOf(ele[props.modelprops.id]) !== -1) {
+                                                        return <span>
+                                                            <label className='selected-label'>{ele[props.modelprops.name]}<button onClick={() => cancelbutton(ele[props.modelprops.id], ele[props.modelprops.name])} className='cancel-button'>X</button></label>
+                                                        </span>
+                                                    }
+
+                                                })}
+                                            </div> : null}
                                         <div className="mb-3">
                                             <div className='selected-item'>
                                                 No Data Found
