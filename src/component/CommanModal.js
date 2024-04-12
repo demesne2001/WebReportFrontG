@@ -13,7 +13,7 @@ import { Table } from 'react-bootstrap';
 function Commonmodel(props) {
     const ref = useRef([]);
     const contextSetparam = useContext(CreatContext)
-
+    const [loader, setloader] = useState(true);
     const [finalitem, setfinalitem] = useState([]);
     const [finalAllitem, setfinalAllitem] = useState([]);
     const [scrollTop, setScrollTop] = useState(0);
@@ -27,7 +27,7 @@ function Commonmodel(props) {
     let updatedList = [...props.prdemo];
     let updatelistName = [...props.prdemoName]
     useEffect(() => {
-        console.log(props);
+        // console.log(props);
         setPage(2)
         setmulticheck(updatedList)
         setmulticheckName(updatelistName);
@@ -74,10 +74,10 @@ function Commonmodel(props) {
     function handleCheck(e) {
         let value
         let finalcheck = e.target.checked;
-        console.log('val', props.modelprops['labelname'].indexOf('State'))
+        // console.log('val', props.modelprops['labelname'].indexOf('State'))
         if (props.modelprops['labelname'].indexOf('State') > 0 || props.modelprops['labelname'].indexOf('City') > 0) {
             value = e.target.value.toString()
-            console.log(value, 'value')
+            // console.log(value, 'value')
         }
         else {
             value = parseInt(e.target.value)
@@ -87,7 +87,7 @@ function Commonmodel(props) {
 
         if (finalcheck) {
             setmulticheck([...multicheck, value])
-            console.log(name);
+            // console.log(name);
             setmulticheckName([...multicheckName, name])
         }
         else {
@@ -102,7 +102,7 @@ function Commonmodel(props) {
                 })
             })
         }
-        console.log('multicheck', multicheck)
+        // console.log('multicheck', multicheck)
     }
 
 
@@ -110,8 +110,8 @@ function Commonmodel(props) {
     const handlesavefilter = () => {
         var stringConvert = multicheck.toString()
         var stringNameConvert = multicheckName.toString()
-        console.log(props.modelprops['LabelValue'], stringNameConvert);
-        console.log(props.modelprops['labelname'], stringConvert);
+        // console.log(props.modelprops['LabelValue'], stringNameConvert);
+        // console.log(props.modelprops['labelname'], stringConvert);
         // props.setvalues({ ...props.valuesform, [props.modelprops.labelname]: stringConvert })
         contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert, [props.modelprops['LabelValue']]: stringNameConvert })
 
@@ -120,7 +120,7 @@ function Commonmodel(props) {
         } else {
             contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert, [props.modelprops['LabelValue']]: stringNameConvert })
         }
-        console.log(contextSetparam.TempCommanFilter);
+        // console.log(contextSetparam.TempCommanFilter);
         // contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: stringNameConvert })
         contextSetparam.setchildFilterShow(false)
 
@@ -140,7 +140,7 @@ function Commonmodel(props) {
         // contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: "" })
     }
     const handleScroll = (event) => {
-        console.log(finalitem.length)
+        // console.log(finalitem.length)
         if (finalitem.length > 9) {
             const { scrollTop, scrollHeight, clientHeight } = event.target;
             const scrollRatio = scrollTop / (scrollHeight - clientHeight);
@@ -169,15 +169,16 @@ function Commonmodel(props) {
 
     const fetchItemdata = () => {
         var input = { ...search, ['PageSize']: 10 }
-        console.log('input', input)
+        // console.log('input', input)
         if (props.modelprops['labelname'].indexOf('SubCategory') > 0) {
             var subinput = { ...input, ['SubCategoryNo']: props.modelprops.FilterIndex }
             if (props.modelprops.api !== undefined) {
                 // console.log("search", search)
                 axios.post(props.modelprops.api, subinput)
                     .then((response) => {
-                        console.log(response);
+                        // console.log(response);
                         setfinalitem(response.data.lstResult)
+                        setloader(false);
                     })
                     .catch(error => console.error(error))
             }
@@ -186,7 +187,7 @@ function Commonmodel(props) {
                 // console.log("search", search)
                 axios.post(props.modelprops.api, input)
                     .then((response) => {
-                        console.log(response);
+                        // console.log(response);
                         setfinalitem(response.data.lstResult)
                     })
                     .catch(error => console.error(error))
@@ -286,7 +287,7 @@ function Commonmodel(props) {
 
 
                                         <div id="scrollbar" className='style-2' onScroll={handleScroll}>
-
+                                            
                                             {props.modelprops.id === 'AccountID' ?
 
                                                 <Table striped bordered hover  >
@@ -300,7 +301,7 @@ function Commonmodel(props) {
                                                         (
                                                             <tr>
                                                                 <td>
-                                                                    {console.log(multicheck.includes(ele[props.modelprops.id]))}
+                                                                    {/* {console.log(multicheck.includes(ele[props.modelprops.id]))} */}
                                                                     <Form.Check
                                                                         ref={(element) => { ref.current[i] = element }}
                                                                         type='checkbox'

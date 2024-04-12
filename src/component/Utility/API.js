@@ -43,7 +43,9 @@ const API = {
     GetMrpWiseRPT: Chart + "GetMrpWiseRPT",
     GetProfiteCard: Card + "GetProfiteCard",
     GetCommonParam : Common + "ParmCaption",
-    GetSubCategory : Common + "GetSubCategory"
+    GetSubCategory : Common + "GetSubCategory",
+    uploadImage : Common + "uploadImage",
+    GetPDFUsingImage : Common + "GetPDFUsingImage",
     // GetStockToSalesAPI: Baseurl+"StockToSales/GetStockToSales",
     // DepartmentListAPI : Baseurl
 }

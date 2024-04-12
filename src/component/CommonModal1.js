@@ -12,7 +12,7 @@ import API from './Utility/API';
 import post from './Utility/APIHandle';
 
 function Commonmodel(props) {
-
+    const [loader, setloader] = useState(true);
     const ref = useRef([]);
     const ref1 = useRef([]);
     const refCallback = useRef([]);
@@ -32,7 +32,7 @@ function Commonmodel(props) {
     let updatedList = [...props.prdemo];
     let updatelistName = [...props.prdemoName]
     useEffect(() => {
-        console.log(props);
+        // console.log(props);
         fetchItemdata()
         fetchAllData()
         setPage(2)
@@ -43,7 +43,7 @@ function Commonmodel(props) {
     }, [props.modelprops])
 
     useEffect(() => {
-        console.log(finalitem.length, multicheck.length);
+        // console.log(finalitem.length, multicheck.length);
         if (multicheck.length === finalitem.length) {
             ref1.current.checked = true
         } else {
@@ -53,7 +53,7 @@ function Commonmodel(props) {
 
     useEffect(() => {
         if (ref1.current !== null) {
-            console.log("hi", updatedList.length, finalAllitem.length);
+            // console.log("hi", updatedList.length, finalAllitem.length);
             if (updatedList.length === finalAllitem.length) {
                 ref1.current.checked = true
             } else {
@@ -113,25 +113,33 @@ function Commonmodel(props) {
         contextSetparam.setchildFilterShow("");
     }
 
+    function handleKeyPress(event) {
+        // console.log(event.key,"event")
+        if (event.key === 'Enter') {
+            document.getElementById('')
+        }
+    }
+    document.addEventListener('keydown', handleKeyPress);
+
     function AddDefaultColumn() {
         post({ "ID": props.modelprops.grid }, API.GetFilterGridByID, {}, "post").then((res) => {
-            console.log(res.data.lstResult, "first");
+            // console.log(res.data.lstResult, "first");
             if (res.data.lstResult.length === 0) {
                 if (props.modelprops['labelname'].indexOf('SubCategory') < 0) {
                     post({ "FilterGridID": 0, "FilterGrid": header[2], "FilterID": props.modelprops.grid }, API.FilterGridAddEdit, {}, "post").then((res1) => {
-                        console.log(res1);
+                        // console.log(res1);
                         // setColumn([props.modelprops.name]);
                     })
                 } else {
                     post({ "FilterGridID": 0, "FilterGrid": props.modelprops.name, "FilterID": props.modelprops.grid }, API.FilterGridAddEdit, {}, "post").then((res1) => {
-                        console.log(res1);
+                        // console.log(res1);
                         // setColumn([props.modelprops.name]);
                     })
                 }
             } else {
                 setFilterGridId(res.data.lstResult[0]['FilterGridID']);
                 let arr = res.data.lstResult[0]['FilterGrid'].split(',');
-                console.log(arr,"arrrr");
+                // console.log(arr, "arrrr");
                 setColumn(arr);
             }
         })
@@ -140,10 +148,10 @@ function Commonmodel(props) {
     function handleCheck(e) {
         let value
         let finalcheck = e.target.checked;
-        console.log('val', props.modelprops['labelname'].indexOf('State'))
+        // console.log('val', props.modelprops['labelname'].indexOf('State'))
         if (props.modelprops['labelname'].indexOf('State') > 0 || props.modelprops['labelname'].indexOf('City') > 0) {
             value = e.target.value.toString()
-            console.log(value, 'value')
+            // console.log(value, 'value')
         }
         else {
             value = parseInt(e.target.value)
@@ -153,7 +161,7 @@ function Commonmodel(props) {
 
         if (finalcheck) {
             setmulticheck([...multicheck, value])
-            console.log(name);
+            // console.log(name);
             setmulticheckName([...multicheckName, name])
         }
         else {
@@ -176,8 +184,8 @@ function Commonmodel(props) {
     const handlesavefilter = () => {
         var stringConvert = multicheck.toString()
         var stringNameConvert = multicheckName.toString()
-        console.log(props.modelprops['LabelValue'], stringNameConvert);
-        console.log(props.modelprops['labelname'], stringConvert);
+        // console.log(props.modelprops['LabelValue'], stringNameConvert);
+        // console.log(props.modelprops['labelname'], stringConvert);
         // props.setvalues({ ...props.valuesform, [props.modelprops.labelname]: stringConvert })
         contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert, [props.modelprops['LabelValue']]: stringNameConvert })
 
@@ -186,7 +194,7 @@ function Commonmodel(props) {
         } else {
             contextSetparam.SetTempCommanFilter({ ...contextSetparam.TempCommanFilter, [props.modelprops['labelname']]: stringConvert, [props.modelprops['LabelValue']]: stringNameConvert })
         }
-        console.log(contextSetparam.TempCommanFilter);
+        // console.log(contextSetparam.TempCommanFilter);
         // contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: stringNameConvert })
         contextSetparam.setchildFilterShow("")
 
@@ -206,13 +214,14 @@ function Commonmodel(props) {
         // contextSetparam.SetTempCommanNameFilter({ ...contextSetparam.TempCommanNameFilter, [props.modelprops['labelname']]: "" })
     }
     const handleScroll = (event) => {
-        console.log(finalitem.length)
+        // console.log(finalitem.length)
         if (finalitem.length > 9) {
             const { scrollTop, scrollHeight, clientHeight } = event.target;
             const scrollRatio = scrollTop / (scrollHeight - clientHeight);
             setScrollTop(scrollRatio);
-            if (scrollRatio === 1) {
-                console.log(multicheck.length, finalAllitem.length);
+            // console.log(scrollRatio);
+            if (scrollRatio > 0.99) {
+                // console.log(multicheck.length, finalAllitem.length);
                 if (ref1.current !== null) {
                     if (multicheck.length === finalAllitem.length) {
                         ref1.current.checked = true
@@ -221,8 +230,8 @@ function Commonmodel(props) {
                     }
                 }
                 setPage(page + 1);
-                console.log(page);
-                var input = { ...search, ['PageNo']: page, ['PageSize']: 15 }
+                // console.log(page);
+                var input = { ...search, ['PageNo']: page, ['PageSize']: 60 }
                 if (props.modelprops['labelname'].indexOf('SubCategory') > 0) {
                     var subinput = { ...input, ['SubCategoryNo']: props.modelprops.FilterIndex }
                     axios.post(props.modelprops.api, subinput)
@@ -243,16 +252,17 @@ function Commonmodel(props) {
     }
 
     const fetchItemdata = () => {
-        var input = { ...search, ['PageSize']: 15 }
-        console.log('input', input)
+        var input = { ...search, ['PageSize']: 60 }
+        // console.log('input', input)
         if (props.modelprops['labelname'].indexOf('SubCategory') > 0) {
             var subinput = { ...input, ['SubCategoryNo']: props.modelprops.FilterIndex }
             if (props.modelprops.api !== undefined) {
                 // console.log("search", search)
                 axios.post(props.modelprops.api, subinput)
                     .then((response) => {
-                        console.log(response);
+                        // console.log(response);
                         setfinalitem(response.data.lstResult)
+                        setloader(false)
                         if (response.data.lstResult.length < 15) {
                             document.getElementById("scrollbar1").style.overflowY = "none";
                         }
@@ -264,12 +274,14 @@ function Commonmodel(props) {
                 // console.log("search", search)
                 axios.post(props.modelprops.api, input)
                     .then((response) => {
-                        console.log(response);
+                        // console.log(response);
+                        setloader(false)
                         setfinalitem(response.data.lstResult)
                         if (response.data.lstResult.length < 15) {
 
                             document.getElementById("scrollbar1").style.overflowY = "none";
                         }
+                        
                     })
                     .catch(error => console.error(error))
             }
@@ -340,9 +352,9 @@ function Commonmodel(props) {
                 str = str + ',' + column[i];
             }
         }
-        console.log(str, "str");
-        post({ "FilterGridID": filterGridId, "FilterGrid": str, "FilterID": props.modelprops.grid }, API.FilterGridAddEdit, {}, "post").then((res)=>{
-            console.log(res);
+        // console.log(str, "str");
+        post({ "FilterGridID": filterGridId, "FilterGrid": str, "FilterID": props.modelprops.grid }, API.FilterGridAddEdit, {}, "post").then((res) => {
+            // console.log(res);
         })
         document.getElementById("columnChooser").style.display = 'none';
     }
@@ -357,7 +369,7 @@ function Commonmodel(props) {
             let tempvalue = [];
             let tempName = [];
             for (let i = 0; i < finalitem.length; i++) {
-                console.log(finalitem[i][props.modelprops.name]);
+                // console.log(finalitem[i][props.modelprops.name]);
                 tempvalue.push(finalitem[i][props.modelprops.id])
                 tempName.push(finalitem[i][props.modelprops.name])
             }
@@ -391,12 +403,13 @@ function Commonmodel(props) {
                                     </Modal.Header>
 
                                     <Modal.Body className='modal-body' modal-dialog-scrollable style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>
-                                        <Form className='comman-modal-form'>
+                                     
                                             {searchProcess === true ? <><InputGroup >
                                                 <Form.Control
                                                     placeholder='Search here...'
                                                     style={{ border: '1px solid' }}
                                                     aria-label="Search"
+                                                    value={searchValue}
                                                     name='Search'
                                                     aria-describedby="basic-addon1"
                                                     onChange={handleSearch}
@@ -411,6 +424,8 @@ function Commonmodel(props) {
                                                     style={{ border: '1px solid' }}
                                                     aria-label="Search"
                                                     name='Search'
+                                                    id='searchbar'
+                                                    value={searchValue}
                                                     aria-describedby="basic-addon1"
                                                     onChange={handleSearch}
                                                 />
@@ -472,6 +487,9 @@ function Commonmodel(props) {
                                                         <button type='button' onClick={hadnleOnGridSave} className='column-btn'>Save</button>
                                                     </div> : null}
                                                 <div>
+                                                    {loader === true ? <div class="spinner-grow text-primary" style={{marginLeft:'45%'}} role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>:
                                                     <Table striped bordered hover>
                                                         <thead className='table-header'
                                                         >
@@ -507,7 +525,7 @@ function Commonmodel(props) {
                                                                         />
                                                                     </td>
                                                                     {column.map((ele1) => {
-                                                                        { console.log(ele1); }
+                                                                        // { console.log(ele1); }
                                                                         return <td ><label className='Table-Label' for={ele[header[3]]}>{ele
                                                                         [ele1]}</label></td>
                                                                     }
@@ -518,11 +536,11 @@ function Commonmodel(props) {
                                                             )
                                                             )}
                                                         </tbody>
-                                                    </Table>
+                                                    </Table>}
                                                 </div>
 
                                             </div>
-                                        </Form>
+                                     
                                     </Modal.Body>
                                     <Modal.Footer>
                                         <button class="btn showpreview-button" onClick={() => handlesavefilter()}>save Filter</button>
@@ -546,15 +564,17 @@ function Commonmodel(props) {
                                     </Modal.Header>
 
                                     <Modal.Body className='modal-body' modal-dialog-scrollable style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>
-                                        <Form className='comman-modal-form'>
+                                       
                                             {searchProcess === true ? <><InputGroup >
                                                 <Form.Control
                                                     placeholder='Search here...'
                                                     style={{ border: '1px solid' }}
                                                     aria-label="Search"
                                                     name='Search'
+                                                    value={searchValue}
                                                     aria-describedby="basic-addon1"
                                                     onChange={handleSearch}
+                                                    id='searchbar'
                                                 >
                                                 </Form.Control>
                                                 <InputGroup.Text id="basic-addon1">
@@ -564,12 +584,13 @@ function Commonmodel(props) {
                                                 <Form.Control
                                                     placeholder='Search here...'
                                                     style={{ border: '1px solid' }}
+                                                    value={searchValue}
                                                     aria-label="Search"
                                                     name='Search'
                                                     aria-describedby="basic-addon1"
                                                     onChange={handleSearch}
                                                 />
-                                                {console.log('column', column)}
+                                                {/* {console.log('column', column)} */}
                                                 <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
                                             </InputGroup><br></br></>}
                                             {/* <InputGroup >
@@ -617,7 +638,7 @@ function Commonmodel(props) {
                                                                     />
                                                                 })
                                                             } */}
-                                                             <Form.Check
+                                                            <Form.Check
                                                                 inline
                                                                 value={props.modelprops.id}
                                                                 name={props.modelprops.id}
@@ -641,6 +662,9 @@ function Commonmodel(props) {
                                                         <button type='button' className='column-btn' onClick={hadnleOnGridSave}>Save</button>
                                                     </div> : null}
                                                 <div>
+                                                {loader === true ? <div class="spinner-grow text-primary" style={{marginLeft:'45%'}} role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>:
                                                     <Table striped bordered hover>
                                                         <thead className='table-header'
                                                         >
@@ -676,7 +700,7 @@ function Commonmodel(props) {
                                                                         />
                                                                     </td>
                                                                     {column.map((ele1) => {
-                                                                        { console.log(ele1); }
+                                                                      
                                                                         return <td ><label className='Table-Label' for={ele[props.modelprops.id]}>{ele
                                                                         [ele1]}</label></td>
                                                                     }
@@ -687,11 +711,11 @@ function Commonmodel(props) {
                                                             )
                                                             )}
                                                         </tbody>
-                                                    </Table>
+                                                    </Table>}
                                                 </div>
 
                                             </div>
-                                        </Form>
+                                       
                                     </Modal.Body>
                                     <Modal.Footer>
                                         <button class="btn showpreview-button" onClick={() => handlesavefilter()}>save Filter</button>
@@ -718,15 +742,17 @@ function Commonmodel(props) {
                                 </Modal.Header>
 
                                 <Modal.Body className='modal-body' modal-dialog-scrollable style={{ padding: 0, paddingRight: 30, paddingLeft: 30 }}>
-                                    <Form className='comman-modal-form'>
+                              
                                         {searchProcess === true ? <><InputGroup >
                                             <Form.Control
                                                 placeholder='Search here...'
                                                 style={{ border: '1px solid' }}
                                                 aria-label="Search"
                                                 name='Search'
+                                                value={searchValue}
                                                 aria-describedby="basic-addon1"
                                                 onChange={handleSearch}
+                                                id='searchbar'
                                             >
                                             </Form.Control>
                                             <InputGroup.Text id="basic-addon1">
@@ -738,6 +764,7 @@ function Commonmodel(props) {
                                                 style={{ border: '1px solid' }}
                                                 aria-label="Search"
                                                 name='Search'
+                                                value={searchValue}
                                                 aria-describedby="basic-addon1"
                                                 onChange={handleSearch}
                                             />
@@ -770,11 +797,14 @@ function Commonmodel(props) {
 
 
                                         <div className="mb-3">
+                                        {loader === true ? <div class="spinner-grow text-primary" style={{marginLeft:'45%'}} role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>:
                                             <div className='selected-item'>
                                                 No Data Found
-                                            </div>
+                                            </div>}
                                         </div>
-                                    </Form>
+                               
                                 </Modal.Body>
 
                                 <Modal.Footer>

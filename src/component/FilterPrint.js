@@ -4,9 +4,10 @@ import { Table } from 'react-bootstrap';
 
 export default function FilterPrint() {
     const filter = useContext(CreatContext);
-    console.log(filter.CommanNameFilter)
+    // console.log(filter.CommanNameFilter)
   return (
     <div>
+      <br></br>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -56,6 +57,7 @@ export default function FilterPrint() {
         {filter.CommanNameFilter['strSubCategory3ID'] !== ''?<h3>strSubCategory3ID : {filter.CommanNameFilter['strSubCategory3ID']}</h3>: null}
         {filter.CommanNameFilter['ExtraVar'] !== ''?<h3>ExtraVar : {filter.CommanNameFilter['ExtraVar']}</h3>: null}
         {filter.CommanNameFilter['strLotNo'] !== ''?<h3>strLotNo : {filter.CommanNameFilter['strLotNo']}</h3>: null} */}
+         <br></br>
     </div>
   )
 }

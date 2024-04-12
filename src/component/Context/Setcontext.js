@@ -95,7 +95,8 @@ export default function Setcontext(props) {
       "strSubCategory7Value": "",
       "strSubCategory8Value": "",
       "strSubCategory9Value": "",
-      "strSubCategory10Value": ""
+      "strSubCategory10Value": "",
+      "strDayBookValue": "",
 
     }
     

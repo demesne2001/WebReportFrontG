@@ -365,7 +365,7 @@ export default function ChildHeader(props) {
                 </>
             )
         } else {
-            console.log("false condition");
+            // console.log("false condition");
             return (
                 <>
 
@@ -394,7 +394,7 @@ export default function ChildHeader(props) {
                                             //     return <div className='inner-data-Div'><input type='checkbox' className='check' id={i[props.input1['id']]} onChange={onCheckBoxchange} value={i[props.input1['id']]} defaultChecked={false} /> <label for={i[props.input1['id']]}>{i[props.input1['name']]}</label><hr></hr></div>
                                             // }
                                             if (default_CheckBox(i[props.input1['id']], i[props.input1['name']]) === true) {
-                                                console.log(true, i[props.input1['id']], i[props.input1['name']])
+                                                // console.log(true, i[props.input1['id']], i[props.input1['name']])
                                                 return <div className='inner-data-Div'><Form.Check
                                                     inline
                                                     label={i[props.input1['name']]}
@@ -405,7 +405,7 @@ export default function ChildHeader(props) {
                                                     id={i[props.input1['id']]}
                                                 /> <hr></hr></div>
                                             } else {
-                                                console.log(false, i[props.input1['id']], i[props.input1['name']])
+                                                // console.log(false, i[props.input1['id']], i[props.input1['name']])
                                                 return <div className='inner-data-Div'><Form.Check
                                                     inline
                                                     label={i[props.input1['name']]}

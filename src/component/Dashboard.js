@@ -26,8 +26,14 @@ import CreatContext from './Context/CreateContext'
 import MrpWiseRpt from './MrpWiseRpt'
 import FilterPrint from './FilterPrint'
 import html2pdf from "html2pdf.js";
+import download from 'downloadjs';
+import * as htmlToImage from 'html-to-image';
+import axios from 'axios';
+import API from './Utility/API'
+import post from './Utility/APIHandle'
 
 export default function Dashboard() {
+    const [count, setCount] = useState(0);
     let res = null
 
     const con = useContext(CreatContext);
@@ -42,35 +48,74 @@ export default function Dashboard() {
     // }, [res])
     async function downloadPdfDocument() {
         
+        // document.getElementById('pdf-div').style.display = "block";
+        // const input = document.getElementById('rootElementId');
+        // console.log('input', input)
+        // // html2canvas(input)
+        // //     .then((canvas) => {
+        // //         const imgData = canvas.toDataURL('image/png');
+        // //         const pdf = new jsPDF("p", "cm", "a0",);
+        // //         pdf.addImage(imgData, 'png', 20, 10);
+        // //         pdf.save("download");
+        // //     })
+        // const options = {
+        //     margin: 2.80,
+        //     filename: "Dashboard.pdf",
+        //     image: { type: "jpeg", quality: 1 },
+        //     html2canvas: { scale: 2 },
+        //     jsPDF: { orientation: "p", unit: "in", format: "a1" },
+        // };
+
+        // await html2pdf().from(input).set(options).save();
+
+        // document.getElementById('pdf-div').style.display = "none";
+
+
+
+        // //   if (res) {
+        // //       document.getElementById('pdf-div').style.display = "none";
+        // //   } else {
+        // //     document.getElementById('pdf-div').style.display = "none";
+        // //   }
+        var nameArray = []
         document.getElementById('pdf-div').style.display = "block";
-        const input = document.getElementById('rootElementId');
-        console.log('input', input)
-        // html2canvas(input)
-        //     .then((canvas) => {
-        //         const imgData = canvas.toDataURL('image/png');
-        //         const pdf = new jsPDF("p", "cm", "a0",);
-        //         pdf.addImage(imgData, 'png', 20, 10);
-        //         pdf.save("download");
-        //     })
-        const options = {
-            margin: 2.80,
-            filename: "Dashboard.pdf",
-            image: { type: "jpeg", quality: 1 },
-            html2canvas: { scale: 2 },
-            jsPDF: { orientation: "p", unit: "in", format: "a1" },
-        };
+        await htmlToImage.toPng(document.getElementById('rootElementId'))
+            .then(function (dataUrl) {
+                setCount(count + 1)
+                var name = count.toString() + "Dashboard";
+                // console.log('dataUrl', dataUrl)
+                // download(dataUrl, "file1.png")
+                post({ "Base64": dataUrl, "Extension": "png", "LoginID": name }, "http://192.168.1.208:7000/Comman/uploadImage", {}, "post").then((res) => {
+                    nameArray.push(res.data.filename);
+                })
+            });
+        await htmlToImage.toPng(document.getElementById('pdf-div'))
+            .then(function (dataUrl) {
+                var name = count.toString() + "filter";
+                // download(dataUrl, "file2.png")
+                // console.log('dataUrl1', dataUrl)
+                post({ "Base64": dataUrl, "Extension": "png", "LoginID": name }, "http://192.168.1.208:7000/Comman/uploadImage", {}, "post").then((res) => {
+                    // console.log(res.data.filename);
+                    nameArray.push(res.data.filename);
+                    // console.log(count.toString() + "filter.png", count.toString() + "Dashboard.png");
+                    post({ "ImageLst": [count.toString() + "filter.png", count.toString() + "Dashboard.png"], "FileName": count.toString() + "aa" }, API.GetPDFUsingImage, {}, "post").then((res) => {
+                        // download("http://192.168.1.208:7000/PDF/5aa.pdf", "dash", "pdf")
+                        // console.log(res);
+                        const pdfUrl = "http://192.168.1.208:7000/PDF/" + count.toString() + "aa.pdf";
+                        axios.get(pdfUrl, {
+                            responseType: 'blob',
+                          })
+                          .then((res) => {
+                            download(res.data, "abhay.pdf")
+                          })
 
-        await html2pdf().from(input).set(options).save();
+                    });
+                })
+            });
 
-        document.getElementById('pdf-div').style.display = "none";
-
-
-
-        //   if (res) {
-        //       document.getElementById('pdf-div').style.display = "none";
-        //   } else {
-        //     document.getElementById('pdf-div').style.display = "none";
-        //   }
+        setTimeout(() => {
+            document.getElementById('pdf-div').style.display = "none";
+        }, 100);
     }
 
     return (
@@ -84,7 +129,6 @@ export default function Dashboard() {
                     <div class="geex-content">
                         <Header />
                         <div id='rootElementId'>
-                        <div id='pdf-div'><FilterPrint /></div>
                             <div class="geex-content__wrapper">
                                 <div class="geex-content__section-wrapper">
                                     <div class="top-main-section mb-20">
@@ -123,6 +167,7 @@ export default function Dashboard() {
                             <br></br>
                            
                         </div>
+                        <div id='pdf-div'><FilterPrint /></div>
                     </div>
 
                 </main>

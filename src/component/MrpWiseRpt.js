@@ -15,7 +15,7 @@ export default function MrpWiseRpt() {
 
 	useEffect(() => {
 		if (inputdata) {
-			console.log('MrpWiseRpt')
+			// console.log('MrpWiseRpt')
 			// setapiInputdata(inputdata);
 			fetchData();
 		}

@@ -341,8 +341,8 @@ export default function Header() {
 
 
 	useEffect(() => {
-		console.log("useEffet2");
-		console.log("hii", FilterContext.TempCommanFilter);
+		// console.log("useEffet2");
+		// console.log("hii", FilterContext.TempCommanFilter);
 		setFilterTempData(FilterContext.CommanFilter)
 		GetCompanyData()
 		GetBranchData()
@@ -379,12 +379,12 @@ export default function Header() {
 	}, [FilterContext.TempCommanFilter])
 	useEffect(() => {
 		var Findex = FilterContext.TempCommanFilter.FilterIndex
-		console.log("useEffet1");
+		// console.log("useEffet1");
 
 		if (Findex !== "undefined" && Findex !== 0) {
 			if (Findex >= 1 && Findex < 9) {
 				for (let index = Findex + 1; index < 10; index++) {
-					console.log(index, 'indexno')
+					// console.log(index, 'indexno')
 					if (FilterContext.TempCommanFilter[dependentfilter[index][0]].length > 0) {
 						FetchDataDependentAPI(FilterInput, index)
 					}
@@ -401,7 +401,7 @@ export default function Header() {
 	}, [FilterContext.TempCommanFilter.FilterIndex])
 
 	useEffect(() => {
-		console.log("useEffet3");
+		// console.log("useEffet3");
 
 		for (let index = 1; index <= dependentfilter.length; index++) {
 			FetchDataDependentAPI(FilterInput, index)
@@ -410,24 +410,24 @@ export default function Header() {
 	}, [FilterContext.TempCommanFilter.strBranchID, FilterContext.TempCommanFilter.CompanyID])
 
 	function FetchDataDependentAPI(input, FilterIndex) {
-		console.log("FetchDataDependentAPI", FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]]);
+		// console.log("FetchDataDependentAPI", FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]]);
 		post(input, dependentfilter[FilterIndex][1], [], 'post').then((res) => {
-			console.log("response", res);
-			console.log("index", FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]])
+			// console.log("response", res);
+			// console.log("index", FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]])
 			var TempDataID = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][0]].split(',')
 			var TempDataValue = FilterContext.TempCommanFilter[dependentfilter[FilterIndex][4]].split(',')
-			console.log("hii", res.data.lstResult);
+			// console.log("hii", res.data.lstResult);
 			var resultID = res.data.lstResult.map(Item => Item[dependentfilter[FilterIndex][2]].toString())
 			// var resultValue=res.lstResult.map(Item=>Item[dependentfilter[FilterIndex][4]])
-			console.log('TempDatabefore', TempDataID)
-			console.log('resultID', resultID)
-			console.log("FilterContext.TempCommanFilter before", FilterContext.TempCommanFilter);
+			// console.log('TempDatabefore', TempDataID)
+			// console.log('resultID', resultID)
+			// console.log("FilterContext.TempCommanFilter before", FilterContext.TempCommanFilter);
 			var temarrayID = []
 			var temparryValue = []
 			for (let index = 0; index < TempDataID.length; index++) {
-				console.log('delete before log', resultID.indexOf(TempDataID[index]), TempDataID[index])
+				// console.log('delete before log', resultID.indexOf(TempDataID[index]), TempDataID[index])
 				if (resultID.indexOf(TempDataID[index]) >= 0) {
-					console.log('delete index', TempDataID[index])
+					// console.log('delete index', TempDataID[index])
 					// TempDataID.splice(TempDataID.indexOf(TempDataID[index]),1)
 					// TempDataValue.splice(TempDataValue.indexOf(TempDataValue[index]),1)
 					// delete TempDataID[index]
@@ -438,11 +438,11 @@ export default function Header() {
 			}
 
 
-			console.log('TempData After', temarrayID)
+			// console.log('TempData After', temarrayID)
 
 
 			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [dependentfilter[FilterIndex][0]]: temarrayID.toString(), [dependentfilter[FilterIndex][4]]: temparryValue.toString(), ['FilterIndex']: 0 })
-			console.log("FilterContext.TempCommanFilter After ", FilterContext.TempCommanFilter);
+			// console.log("FilterContext.TempCommanFilter After ", FilterContext.TempCommanFilter);
 
 		})
 	}
@@ -451,9 +451,9 @@ export default function Header() {
 		await axios.post("http://192.168.1.208:7000/Comman/ParmCaption").then((response) => {
 			// console.log("response", response);
 			SetCommonParam(response.data.lstresult)
-			console.log("caption", dateFormat(response.data.FromDate,"yyyy-dd-MM"));
-			setfromdate(response.data.FromDate)
-			settodate(response.data.ToDate)
+			// console.log("caption", dateFormat(response.data.FromDate,"yyyy-dd-MM"));
+			setfromdate(dateFormat(response.data.FromDate,"yyyy-dd-MM"))
+			settodate(dateFormat(response.data.ToDate,"yyyy-dd-MM"))
 			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['ToDate']:dateFormat(response.data.ToDate,"yyyy-dd-MM"), ['FromDate']:dateFormat(response.data.FromDate,"yyyy-dd-MM")})
 		})
 	}
@@ -567,19 +567,19 @@ export default function Header() {
 	function HandleOnClickComman(IndexNo) {
 		let myvalue = FilterContext.TempCommanFilter[dependentfilter[IndexNo][0]]
 		let myvalueName = FilterContext.TempCommanFilter[dependentfilter[IndexNo][4]]
-		console.log("myval", FilterContext.TempCommanFilter);
+		// console.log("myval", FilterContext.TempCommanFilter);
 		let demoo = []
 		let demooName = []
 		demoo.push(myvalue.split(','))
 		demooName.push(myvalueName.split(','))
-		console.log("DEMOOOOO", dependentfilter[IndexNo][0]);
+		// console.log("DEMOOOOO", dependentfilter[IndexNo][0]);
 		let newarr = []
 		let newarrName = []
 
 		if (dependentfilter[IndexNo][0] !== 'strState' && dependentfilter[IndexNo][0] !== 'strCity') {
 			for (let index = 0; index < demoo[0].length; index++) {
 				if (demoo[0].indexOf("") === -1) {
-					console.log((demoo[0][index]));
+					// console.log((demoo[0][index]));
 					newarr.push(parseInt(demoo[0][index]))
 					newarrName.push((demooName[0][index]))
 				}
@@ -587,12 +587,12 @@ export default function Header() {
 		} else {
 			for (let index = 0; index < demoo[0].length; index++) {
 				if (myvalueName[0] === ',') {
-					console.log((demoo[0][index]));
+					// console.log((demoo[0][index]));
 					newarr.push((demoo[0][index]))
 					newarrName.push((demooName[0][index]))
 				} else {
 					if (demoo[0].indexOf("") === -1) {
-						console.log((demoo[0][index]));
+						// console.log((demoo[0][index]));
 						newarr.push((demoo[0][index]))
 						newarrName.push((demooName[0][index]))
 					}
@@ -601,7 +601,7 @@ export default function Header() {
 		}
 		setdemo(newarr)
 		setdemoName(newarrName)
-		console.log(demoo, "demo");
+		// console.log(demoo, "demo");
 		setprops1({ 'api': dependentfilter[IndexNo][1], 'labelname': dependentfilter[IndexNo][0], 'id': dependentfilter[IndexNo][2], 'name': dependentfilter[IndexNo][3], 'LabelValue': dependentfilter[IndexNo][4], 'FilterIndex': IndexNo, 'grid': dependentfilter[IndexNo][5]})
 		FilterContext.setchildFilterShow(true);
 	}
@@ -629,7 +629,7 @@ export default function Header() {
 			setdemo(newarr)
 			setdemoName(newarrName)
 		}
-		console.log(demoName);
+		// console.log(demoName);
 		setprops1({ 'api': API.GetSubCategory, 'labelname': 'strSubCategory' + IndexNo.toString() + 'ID', 'id': 'SubCategory' + IndexNo.toString() + 'ID', 'name': 'SubCategory' + IndexNo.toString() + 'Name', 'LabelValue': 'strSubCategory' + IndexNo.toString() + 'Value', 'FilterIndex': IndexNo, 'grid':IndexNo + 15 })
 		FilterContext.setchildFilterShow(true);
 	}
@@ -692,7 +692,7 @@ export default function Header() {
 	}
 	function handleReset() {
 		try {
-			FilterContext.SetTempCommanFilter(comman)
+			FilterContext.SetTempCommanFilter({...comman, ['FromDate']:fromdate,['ToDate']:todate })
 			// document.querySelector('input').value = ''
 			// FilterContext.SetTempCommanNameFilter = comman
 			// FilterContext.SetCommanFilter(comman)
@@ -761,8 +761,8 @@ export default function Header() {
 		setDefaultDayBook(e)
 		// console.log(e);
 
-		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strDayBookID']: e.value.toString() })
-		FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strDayBookID']: e.label.toString() })
+		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strDayBookID']: e.value.toString(), ['strDayBookValue']: e.label.toString()})
+		// FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strDayBookID']: e.label.toString() })
 	}
 
 	// function handleSelectState(e) {
@@ -880,7 +880,7 @@ export default function Header() {
 
 			const date = new Date(FilterContext.TempCommanFilter[str]);
 			var month = date.getMonth() + 1
-			console.log(date.getFullYear());
+			// console.log(date.getFullYear());
 			if (date.getDate() === 1) {
 				if (month === 1) {
 					ans = (date.getFullYear() - 1).toString() + "-12" + "-31"
@@ -892,14 +892,14 @@ export default function Header() {
 			}
 
 			var listarr = ans.split("-")
-			console.log(listarr);
+			// console.log(listarr);
 			if (listarr[1].length < 2) {
 				listarr[1] = "0" + listarr[1]
 			}
 			if (listarr[2].length < 2) {
 				listarr[2] = "0" + listarr[2]
 			}
-			console.log(listarr);
+			// console.log(listarr);
 			ans = listarr[0] + "-" + listarr[1] + "-" + listarr[2];
 			// document.getElementById("FromDate").value = ans;
 			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [str]: ans })
@@ -912,7 +912,7 @@ export default function Header() {
 
 			const date = new Date(FilterContext.TempCommanFilter[str]);
 			var month = date.getMonth() + 1
-			console.log(date.getFullYear());
+			// console.log(date.getFullYear());
 			if (date.getDate() === new Date(date.getFullYear(), month, 0).getDate()) {
 				if (month === 12) {
 					ans = (date.getFullYear() + 1).toString() + "-01" + "-01"
@@ -924,14 +924,14 @@ export default function Header() {
 			}
 
 			var listarr = ans.split("-")
-			console.log(listarr);
+			// console.log(listarr);
 			if (listarr[1].length < 2) {
 				listarr[1] = "0" + listarr[1]
 			}
 			if (listarr[2].length < 2) {
 				listarr[2] = "0" + listarr[2]
 			}
-			console.log(listarr);
+			// console.log(listarr);
 			ans = listarr[0] + "-" + listarr[1] + "-" + listarr[2];
 			// document.getElementById("FromDate").value = ans;
 			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [str]: ans })

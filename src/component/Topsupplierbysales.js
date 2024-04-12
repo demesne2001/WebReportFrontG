@@ -132,8 +132,6 @@ export default function Topsupplierbysales() {
 				show: true
 			},
 			labels: {
-				
-				
 				formatter: function (val) {
 
 					if (val.length > 7) {
