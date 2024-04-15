@@ -106,7 +106,7 @@ export default function Dashboard() {
                             responseType: 'blob',
                           })
                           .then((res) => {
-                            download(res.data, "abhay.pdf")
+                            download(res.data, "GSoftDashboard.pdf")
                           })
 
                     });
