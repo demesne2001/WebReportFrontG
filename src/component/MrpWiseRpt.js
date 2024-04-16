@@ -289,7 +289,12 @@ export default function MrpWiseRpt() {
 						fontSize: '13.5px'
 					},
 					formatter: function (val) {
-						return val.toFixed(0);
+						if (val !== null) {
+							return val.toFixed(0);
+						} else{
+							return val
+						}
+						
 					},
 				},
 				title: {
@@ -323,6 +328,30 @@ export default function MrpWiseRpt() {
 				yaxis:
 					[
 						{
+							seriesName: 'Amount',
+							stepSize: 40000,
+							opposite: false,
+							axisTicks: {
+								show: true,
+							},
+							axisTicks: {
+								show: true,
+							},
+							axisBorder: {
+								show: true,
+								color: '#008FFB'
+							},
+							title: {
+								text: "Amount",
+								style: {
+									color: '#008FFB',
+								}
+							},
+							tooltip: {
+								enabled: true
+							},
+							min: Math.min(...Amount2),
+							max: Math.max(...Amount2),
 							labels: {
 								show: true,
 								formatter: function (value) {

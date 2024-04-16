@@ -14,7 +14,7 @@ export default function StockAging() {
 	let slab = 0
 	useEffect(() => {
 		if (inputdata) {
-			
+
 			// setapiInputdata(inputdata);
 			fetchData();
 			// console.log("slabe", slab);
@@ -276,6 +276,30 @@ export default function StockAging() {
 				yaxis:
 					[
 						{
+							seriesName: 'Amount',
+							stepSize: 40000,
+							opposite: false,
+							axisTicks: {
+								show: true,
+							},
+							axisTicks: {
+								show: true,
+							},
+							axisBorder: {
+								show: true,
+								color: '#008FFB'
+							},
+							title: {
+								text: "Amount",
+								style: {
+									color: '#008FFB',
+								}
+							},
+							tooltip: {
+								enabled: true
+							},
+							min: Math.min(...Amount2),
+							max: Math.max(...Amount2),
 							labels: {
 								show: true,
 								formatter: function (value) {
@@ -302,7 +326,7 @@ export default function StockAging() {
 									colors: '#00E396',
 								},
 								formatter: function (val) {
-									
+
 									return ((((val / 1000).toFixed(1)).toString()) + "K")
 								},
 							},

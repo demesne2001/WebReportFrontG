@@ -6,11 +6,14 @@ import post from './Utility/APIHandle';
 import menu from './assets/font/svg/menuButton.svg'
 import './assets/css/comman.css'
 import time from './assets/font/svg/time.svg'
+import repeat from './assets/img/icon/flip.png';
+import Table from 'react-bootstrap/Table';
 
 export default function Hourlysales() {
 	const filter = useContext(CreatContext);
 	const [Name, setName] = useState([]);
 	const [Amount, setAmount] = useState([]);
+	const [Tabledata, setTabledata] = useState([]);
 	// const [inputdata, setInputdata] = useState(filter.CommanFilter);
 	let inputdata = filter.CommanFilter;
 
@@ -24,6 +27,7 @@ export default function Hourlysales() {
 	function fetchData() {
 		console.log("input", inputdata);
 		post(inputdata, API.GetHourlySales, defaulres, 'post').then((response) => {
+			setTabledata(response.data.lstResult)
 			let total = [];
 			let name = [];
 			for (let index = 0; index < response.data.lstResult.length; index++) {
@@ -35,54 +39,54 @@ export default function Hourlysales() {
 		})
 	}
 	function format(val) {
-        if (filter.Thousand === 'k') {
-            return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }) + "K");
-        } else if (filter.Thousand === 'l') {
-            return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }) + "L");
-        } else if (filter.Thousand === 'm') {
-            return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }) + "M");
-        } else if (filter.Thousand === 'c') {
-            return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }) + "CR");
-        } else if (filter.Thousand === 'b') {
-            return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }) + "B");
-        } else {
-            return (Number(parseFloat(Math.floor(val))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }));
-        }
-    }
+		if (filter.Thousand === 'k') {
+			return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "K");
+		} else if (filter.Thousand === 'l') {
+			return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "L");
+		} else if (filter.Thousand === 'm') {
+			return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "M");
+		} else if (filter.Thousand === 'c') {
+			return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "CR");
+		} else if (filter.Thousand === 'b') {
+			return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "B");
+		} else {
+			return (Number(parseFloat(Math.floor(val))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}));
+		}
+	}
 	function format_responsive(val) {
 		if (filter.Thousand === 'k') {
-            return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }) + "K");
-        } else if (filter.Thousand === 'l') {
-            return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }) + "L");
-        } else if (filter.Thousand === 'm') {
-            return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }) + "M");
-        } else if (filter.Thousand === 'c') {
-            return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }) + "CR");
-        } else if (filter.Thousand === 'b') {
-            return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
-                minimumFractionDigits: 0
-            }) + "B");
-        } else {
+			return (Number(parseFloat(((((val / 1000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "K");
+		} else if (filter.Thousand === 'l') {
+			return (Number(parseFloat(((((val / 100000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "L");
+		} else if (filter.Thousand === 'm') {
+			return (Number(parseFloat(((((val / 1000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "M");
+		} else if (filter.Thousand === 'c') {
+			return (Number(parseFloat(((((val / 10000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "CR");
+		} else if (filter.Thousand === 'b') {
+			return (Number(parseFloat(((((val / 1000000000).toFixed(1)).toString())))).toLocaleString('en', {
+				minimumFractionDigits: 0
+			}) + "B");
+		} else {
 			const arr = Amount.map(Number)
 			// console.log(Math.max(...arr));
 			if (Math.max(...arr) < 1000000) {
@@ -154,8 +158,8 @@ export default function Hourlysales() {
 			title: {
 				text: ''
 			},
-			style:{
-				fontSize:'15px'
+			style: {
+				fontSize: '15px'
 			}
 		},
 		yaxis: {
@@ -167,8 +171,8 @@ export default function Hourlysales() {
 					let value = format(val)
 					return value
 				},
-				style:{
-					fontSize:'13.5px'
+				style: {
+					fontSize: '13.5px'
 				}
 			},
 			min: Math.min(...Amount),
@@ -236,6 +240,16 @@ export default function Hourlysales() {
 
 	// 	}
 	// }
+	function flip() {
+		if (document.getElementsByClassName("flip-card-inner")[0].style.transform === "rotateY(360deg)" || document.getElementsByClassName("flip-card-inner")[0].style.transform === "") {
+			console.log(document.getElementsByClassName("flip-card-inner")[0].style.transform);
+			document.getElementsByClassName("flip-card-inner")[0].style.transform = "rotateY(180deg)"
+		} else {
+			console.log(document.getElementsByClassName("flip-card-inner")[0].style.transform);
+			document.getElementsByClassName("flip-card-inner")[0].style.transform = "rotateY(360deg)"
+		}
+
+	}
 
 	return (
 		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -251,13 +265,13 @@ export default function Hourlysales() {
 
 					</div>
 					{/* <div style={{ float: 'left' }}>
-						<img style={{ marginTop: 20, marginRight: 20 }} height={20} src={menu} onClick={handledropdownMenu} className='dropbtn2' />
-						<div id="myDropdown2" class="dropdown-content2">
-							<a>Hourly</a><hr />
-							<a>Weekly</a><hr />
-							<a>15 Days</a>
-						</div>
-					</div> */}
+		<img style={{ marginTop: 20, marginRight: 20 }} height={20} src={menu} onClick={handledropdownMenu} className='dropbtn2' />
+		<div id="myDropdown2" class="dropdown-content2">
+			<a>Hourly</a><hr />
+			<a>Weekly</a><hr />
+			<a>15 Days</a>
+		</div>
+	</div> */}
 
 				</div>
 				<div class="geex-content__section__content">
@@ -273,6 +287,90 @@ export default function Hourlysales() {
 					{/* <img src="assets/img//Graph/Hourlysales.png" class="graph-img img-fluid" /> */}
 				</div >
 			</div >
+			{/* <div class="flip-card">
+
+				<div class="flip-card-inner" id='done'>
+					<div class="flip-card-front">
+						<div class="geex-content__section geex-content__visitor-count card ">
+
+							<div class="geex-content__section__header card-header">
+
+								<div style={{ display: 'flex' }} class="geex-content__section__header__title-part ">
+
+									<h4 class="geex-content__section__header__title ">
+										<i class="fas fa-clock  title-icon"></i>Hourly sales
+									</h4>
+
+								</div>
+								<div style={{ padding: 0, margin: 0 }} align='left'>
+									<button onClick={flip} style={{ border: 'none', background: 'none' }}><img src={repeat} className='flip' width="50" /></button>
+								</div>
+
+							</div>
+							<div class="geex-content__section__content">
+								<div class="toolbar">
+									<button id='hourly' className='chart-btn' onClick={() => handlechartButton("H")}>Hourly</button>
+									<button id='weekly' className='chart-btn' onClick={() => handlechartButton("L7")}>7 D</button>
+									<button id='days' className='chart-btn' onClick={() => handlechartButton("L14")}>15 D</button>
+								</div>
+
+
+								
+								<ReactApexChart options={options} series={series} type="line" height={320} />
+							
+							</div >
+
+						</div >
+					</div>
+					<div class="flip-card-back">
+						<div class="geex-content__section geex-content__visitor-count card ">
+
+							<div class="geex-content__section__header card-header">
+
+								<div class="geex-content__section__header__title-part ">
+
+									<h4 class="geex-content__section__header__title ">
+										<i class="fas fa-clock  title-icon"></i>Hourly sales
+									</h4>
+
+								</div>
+								<div style={{ padding: 0, margin: 0 }} align='left'>
+									<button onClick={flip} style={{ border: 'none', background: 'none' }}><img src={repeat} className='flip' width="50" /></button>
+								</div>
+
+							</div>
+							<div class="geex-content__section__content">
+								<div style={{ height: 348, overflow: 'auto' }}>
+									<Table striped bordered hover >
+										<thead className='table-header'>
+											<th>
+												TimeCaption
+											</th>
+											<th>
+												Amount
+											</th>
+										</thead>
+										<tbody>
+											{console.log(Tabledata)}
+											{
+												Tabledata.map((ele) => {
+													return <tr>
+														<td>{ele.TimeCaption}</td>
+														<td>{ele.Amount}</td>
+													</tr>
+												})
+											}
+										</tbody>
+									</Table>
+								</div>
+
+								
+							</div >
+
+						</div >
+					</div>
+				</div>
+			</div> */}
 		</div >
 	)
 }

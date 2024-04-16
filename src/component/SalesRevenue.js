@@ -372,6 +372,37 @@ export default function SalesRevenue() {
         yaxis:
           [
             {
+              seriesName: 'Amount',
+        stepSize: 40000,
+        opposite: false,
+        axisTicks: {
+          show: true,
+        },
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: '#008FFB',
+        },
+        style: {
+          colors: '#008FFB',
+        },
+        formatter: function (val) {
+          let value = format(val)
+          return value
+        },
+        title: {
+          text: "Amount",
+          style: {
+            color: '#008FFB',
+          }
+        },
+        tooltip: {
+          enabled: true
+        },
+        min: 0,
+        max: Math.max(...Amount1),
               labels: {
                 show: true,
                 formatter: function (value) {

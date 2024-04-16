@@ -76,13 +76,13 @@ export default function SalesRevenueCard() {
 							<img src={trend} />
 						</div>
 						<p class="card-top-main-title">Sales Revenue</p>
-						<p class="card-top-main-amount">₹{format(SalesAmount) === NaN? <img src={loader}/> : format(SalesAmount)}</p>
+						<p class="card-top-main-amount">₹ {format(SalesAmount) === NaN? <img src={loader}/> : format(SalesAmount)}</p>
 					</div>
 					<div class="line middle-color-cardline"></div>
 					<div class="right-part">
 						<p>No.of bill : <span class="right-part-numericdata">{NoOfBill}</span></p>
 						<p>Qty : <span class="right-part-numericdata">{SalesQty}</span></p>
-						<p>Avg.bill value : <span class="right-part-numericdata">₹{format(AvgSale)}</span>
+						<p>Avg.bill value : <span class="right-part-numericdata">₹ {format(AvgSale)}</span>
 						</p>
 					</div>
 				</div>

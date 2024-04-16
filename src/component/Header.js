@@ -131,21 +131,21 @@ export default function Header() {
 	const handleShow = () => setshow(true);
 	const FilterContext = useContext(CreateContext);
 	const dependentfilter = {
-		1: ["strDepartmentID", API.GetDepartment, "DepartmentID", "DepartmentName", "strDepartmentValue",1],
-		2: ["strItemGroupID", API.GetItemGroup, "ItemGroupID", "ItemGroupName", "strItemGroupValue",5],
-		3: ["strProductID", API.GetProduct, "ProductID", "ProductName", "strProductValue",9],
-		4: ["strBrandID", API.GetBrand, "BrandID", "BrandName", "strBrandValue",13],
-		5: ["strStyleID", API.GetStyle, "StyleID", "StyleName", "strStyleValue",2],
-		6: ["strItemID", API.GetItemName, "ItemID", "ItemName", "strItemValue",6],
-		7: ["strDesignID", API.GetDesign, "DesignID", "DesignNo", "strDesignValue",10],
-		8: ["strLotNo", API.GetLotNo, "LotNo", "LotNo", "strLotNo",14],
-		9: ["strColorID", API.GetColor, "ColorID", "ColorName", "strColorValue",3],
-		10: ["strState", API.GetState, "statename", "statename", "strState",7],
-		11: ["strCity", API.GetCity, "Cityname", "Cityname", "strCity",11],
-		12: ["strRegionID", API.GetRegion, "RegionID", "RegionName", "strRegionValue",15],
-		13: ["strPurchaseAccountID", API.GetPurchaseParty, "AccountID", "AccountName", "strPurchaseAccountValue",4],
-		14: ["strSalesAccountID", API.GetSalesParty, "AccountID", "AccountName", "strSalesAccountValue",8],
-		15: ["strSalesmanID", API.GetSalesman, "SalesmanID", "SalesmanName", "strSalesmanValue",12],
+		1: ["strDepartmentID", API.GetDepartment, "DepartmentID", "DepartmentName", "strDepartmentValue", 1],
+		2: ["strItemGroupID", API.GetItemGroup, "ItemGroupID", "ItemGroupName", "strItemGroupValue", 5],
+		3: ["strProductID", API.GetProduct, "ProductID", "ProductName", "strProductValue", 9],
+		4: ["strBrandID", API.GetBrand, "BrandID", "BrandName", "strBrandValue", 13],
+		5: ["strStyleID", API.GetStyle, "StyleID", "StyleName", "strStyleValue", 2],
+		6: ["strItemID", API.GetItemName, "ItemID", "ItemName", "strItemValue", 6],
+		7: ["strDesignID", API.GetDesign, "DesignID", "DesignNo", "strDesignValue", 10],
+		8: ["strLotNo", API.GetLotNo, "LotNo", "LotNo", "strLotNo", 14],
+		9: ["strColorID", API.GetColor, "ColorID", "ColorName", "strColorValue", 3],
+		10: ["strState", API.GetState, "statename", "statename", "strState", 7],
+		11: ["strCity", API.GetCity, "Cityname", "Cityname", "strCity", 11],
+		12: ["strRegionID", API.GetRegion, "RegionID", "RegionName", "strRegionValue", 15],
+		13: ["strPurchaseAccountID", API.GetPurchaseParty, "AccountID", "AccountName", "strPurchaseAccountValue", 4],
+		14: ["strSalesAccountID", API.GetSalesParty, "AccountID", "AccountName", "strSalesAccountValue", 8],
+		15: ["strSalesmanID", API.GetSalesman, "SalesmanID", "SalesmanName", "strSalesmanValue", 12],
 	}
 	// const [FilterData, SetFilterData] = useState({
 	// 	"ChartValueOption": "",
@@ -328,7 +328,7 @@ export default function Header() {
 	const [demo, setdemo] = useState([])
 	const [demoName, setdemoName] = useState([])
 	const ChartValueOption = [
-		{ value: 'AMTWITHTAX', label: 'AMTWITHTAX' }, { value: 'TAXABLEAMT', label: 'TAXABLEAMT' }]
+		{ value: 'AMTWITHTAX', label: 'Amount With Tax' }, { value: 'TAXABLEAMT', label: 'Tax Able Amount' }]
 	const [defaultChartValueOption, setDefaultChartValueOption] = useState(ChartValueOption[0]);
 	/* Filter Comman State*/
 	const [CommonParam, SetCommonParam] = useState([]);
@@ -338,6 +338,7 @@ export default function Header() {
 	// const [ComList, setComList] = useState([])
 	// const [ComList, setComList] = useState([])
 	let Companylst = []
+	let widthOfScreen = window.innerWidth
 
 
 	useEffect(() => {
@@ -366,6 +367,7 @@ export default function Header() {
 		// fetchData(API.GetSubCategory, 'SubCategory9Name', 'SubCategory9ID', setSubCatogory9, 9)
 		// fetchData(API.GetSubCategory, 'SubCategory10Name', 'SubCategory10ID', setSubCatogory10, 10)
 		fetchData(API.GetDayBook, 'DayBookName', 'DayBookID', setDayBook)
+		
 		// fetchCityName()
 		// fetchStateName()
 		// fetchRegionName()
@@ -374,6 +376,8 @@ export default function Header() {
 		handleThousand()
 
 	}, [])
+	
+	
 	useEffect(() => {
 		FilterContext.SetCommanChildFilter(FilterInput)
 	}, [FilterContext.TempCommanFilter])
@@ -452,9 +456,10 @@ export default function Header() {
 			// console.log("response", response);
 			SetCommonParam(response.data.lstresult)
 			// console.log("caption", dateFormat(response.data.FromDate,"yyyy-dd-MM"));
-			setfromdate(dateFormat(response.data.FromDate,"yyyy-dd-MM"))
-			settodate(dateFormat(response.data.ToDate,"yyyy-dd-MM"))
-			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['ToDate']:dateFormat(response.data.ToDate,"yyyy-dd-MM"), ['FromDate']:dateFormat(response.data.FromDate,"yyyy-dd-MM")})
+			setfromdate(dateFormat(response.data.FromDate, "yyyy-dd-MM"))
+			settodate(dateFormat(response.data.ToDate, "yyyy-dd-MM"))
+			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['ToDate']: dateFormat(response.data.ToDate, "yyyy-dd-MM"), ['FromDate']: dateFormat(response.data.FromDate, "yyyy-dd-MM") })
+			FilterContext.SetCommanFilter({ ...FilterContext.CommanFilter, ['ToDate']: dateFormat(response.data.ToDate, "yyyy-dd-MM"), ['FromDate']: dateFormat(response.data.FromDate, "yyyy-dd-MM") })
 		})
 	}
 	async function GetCompanyData() {
@@ -602,7 +607,7 @@ export default function Header() {
 		setdemo(newarr)
 		setdemoName(newarrName)
 		// console.log(demoo, "demo");
-		setprops1({ 'api': dependentfilter[IndexNo][1], 'labelname': dependentfilter[IndexNo][0], 'id': dependentfilter[IndexNo][2], 'name': dependentfilter[IndexNo][3], 'LabelValue': dependentfilter[IndexNo][4], 'FilterIndex': IndexNo, 'grid': dependentfilter[IndexNo][5]})
+		setprops1({ 'api': dependentfilter[IndexNo][1], 'labelname': dependentfilter[IndexNo][0], 'id': dependentfilter[IndexNo][2], 'name': dependentfilter[IndexNo][3], 'LabelValue': dependentfilter[IndexNo][4], 'FilterIndex': IndexNo, 'grid': dependentfilter[IndexNo][5] })
 		FilterContext.setchildFilterShow(true);
 	}
 
@@ -630,7 +635,7 @@ export default function Header() {
 			setdemoName(newarrName)
 		}
 		// console.log(demoName);
-		setprops1({ 'api': API.GetSubCategory, 'labelname': 'strSubCategory' + IndexNo.toString() + 'ID', 'id': 'SubCategory' + IndexNo.toString() + 'ID', 'name': 'SubCategory' + IndexNo.toString() + 'Name', 'LabelValue': 'strSubCategory' + IndexNo.toString() + 'Value', 'FilterIndex': IndexNo, 'grid':IndexNo + 15 })
+		setprops1({ 'api': API.GetSubCategory, 'labelname': 'strSubCategory' + IndexNo.toString() + 'ID', 'id': 'SubCategory' + IndexNo.toString() + 'ID', 'name': 'SubCategory' + IndexNo.toString() + 'Name', 'LabelValue': 'strSubCategory' + IndexNo.toString() + 'Value', 'FilterIndex': IndexNo, 'grid': IndexNo + 15 })
 		FilterContext.setchildFilterShow(true);
 	}
 
@@ -692,7 +697,7 @@ export default function Header() {
 	}
 	function handleReset() {
 		try {
-			FilterContext.SetTempCommanFilter({...comman, ['FromDate']:fromdate,['ToDate']:todate })
+			FilterContext.SetTempCommanFilter({ ...comman, ['FromDate']: fromdate, ['ToDate']: todate })
 			// document.querySelector('input').value = ''
 			// FilterContext.SetTempCommanNameFilter = comman
 			// FilterContext.SetCommanFilter(comman)
@@ -761,7 +766,7 @@ export default function Header() {
 		setDefaultDayBook(e)
 		// console.log(e);
 
-		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strDayBookID']: e.value.toString(), ['strDayBookValue']: e.label.toString()})
+		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strDayBookID']: e.value.toString(), ['strDayBookValue']: e.label.toString() })
 		// FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strDayBookID']: e.label.toString() })
 	}
 
@@ -943,7 +948,9 @@ export default function Header() {
 				<div class="geex-content__header">
 					<div class="geex-content__header__content">
 						<div class="geex-content__header__customizer">
-
+							{/* <button class="geex-btn geex-btn__toggle-sidebar" id='toggle-button' >
+								<img src={menu} class="menu-icon"/>
+							</button> */}
 							<h2 class="geex-content__header__title"> Dashboard</h2>
 						</div>
 

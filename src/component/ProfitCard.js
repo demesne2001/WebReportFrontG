@@ -79,7 +79,7 @@ export default function ProfitCard() {
 							<img src={deal} />
 						</div>
 						<p class="card-top-main-title">Profit % : <span class="card-top-main-amount1">{ProfitPrc}%</span></p>
-						<p class="card-top-main-title">Profit Amt : <span class="card-top-main-amount1">₹{format(ProfitAmount)}</span></p>
+						<p class="card-top-main-title">Profit Amt : <span class="card-top-main-amount1">₹ {format(ProfitAmount)}</span></p>
 						{/* <p>ProfitPrc : <span class="right-part-numericdata">{ProfitPrc}%</span></p> */}
 					</div>
 					<div class="line middle-color-cardline"></div>
@@ -93,7 +93,7 @@ export default function ProfitCard() {
 						</div>
 						<div>
 							<p class="card-top-main-title">Payable : <span
-								class="card-top-main-amount1">₹{format(Payable)}</span> </p>
+								class="card-top-main-amount1">₹ {format(Payable)}</span> </p>
 						</div>
 						{/* <p>Receivable : <span class="right-part-numericdata">{Receivable}</span></p>
                         <p>Payable : <span class="right-part-numericdata">{Payable}</span></p> */}

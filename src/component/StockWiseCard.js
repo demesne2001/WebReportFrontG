@@ -95,7 +95,7 @@ export default function StockWiseCard() {
                         </div>
                         <div>
                             <p class="card-top-main-title">Stock Amt : <span
-                                class="card-top-main-amount1">₹{format(StockAmt)}</span> </p>
+                                class="card-top-main-amount1">₹ {format(StockAmt)}</span> </p>
                         </div>
 
 
@@ -111,7 +111,7 @@ export default function StockWiseCard() {
                         </div>
                         <div>
                             <p class="card-top-main-title">Pur. Amt : <span
-                                class="card-top-main-amount1">₹{format(PurcAmt)}</span> </p>
+                                class="card-top-main-amount1">₹ {format(PurcAmt)}</span> </p>
                         </div>
                     </div>
                 </div>

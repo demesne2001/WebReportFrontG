@@ -42,6 +42,7 @@ const API = {
     GetSalesAging: Chart + "GetSalesAging",
     GetMrpWiseRPT: Chart + "GetMrpWiseRPT",
     GetProfiteCard: Card + "GetProfiteCard",
+    PDF: Baseurl + 'PDF/',
     GetCommonParam : Common + "ParmCaption",
     GetSubCategory : Common + "GetSubCategory",
     uploadImage : Common + "uploadImage",

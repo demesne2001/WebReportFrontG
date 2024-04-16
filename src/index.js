@@ -7,14 +7,14 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import 'primereact/resources/primereact.css';
 import { PrimeReactProvider } from 'primereact/api';
 import 'primeicons/primeicons.css';
-import 'primeflex/primeflex.css';  
+import 'primeflex/primeflex.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
   <PrimeReactProvider>
     <App />
-    </PrimeReactProvider>
+  </PrimeReactProvider>
   // </React.StrictMode>
 );
 

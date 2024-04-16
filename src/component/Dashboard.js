@@ -85,23 +85,24 @@ export default function Dashboard() {
                 var name = count.toString() + "Dashboard";
                 // console.log('dataUrl', dataUrl)
                 // download(dataUrl, "file1.png")
-                post({ "Base64": dataUrl, "Extension": "png", "LoginID": name }, "http://192.168.1.208:7000/Comman/uploadImage", {}, "post").then((res) => {
+                post({ "Base64": dataUrl, "Extension": "png", "LoginID": name }, API.uploadImage, {}, "post").then((res) => {
                     nameArray.push(res.data.filename);
                 })
             });
+            
         await htmlToImage.toPng(document.getElementById('pdf-div'))
             .then(function (dataUrl) {
                 var name = count.toString() + "filter";
                 // download(dataUrl, "file2.png")
                 // console.log('dataUrl1', dataUrl)
-                post({ "Base64": dataUrl, "Extension": "png", "LoginID": name }, "http://192.168.1.208:7000/Comman/uploadImage", {}, "post").then((res) => {
+                post({ "Base64": dataUrl, "Extension": "png", "LoginID": name }, API.uploadImage, {}, "post").then((res) => {
                     // console.log(res.data.filename);
                     nameArray.push(res.data.filename);
                     // console.log(count.toString() + "filter.png", count.toString() + "Dashboard.png");
                     post({ "ImageLst": [count.toString() + "filter.png", count.toString() + "Dashboard.png"], "FileName": count.toString() + "aa" }, API.GetPDFUsingImage, {}, "post").then((res) => {
                         // download("http://192.168.1.208:7000/PDF/5aa.pdf", "dash", "pdf")
                         // console.log(res);
-                        const pdfUrl = "http://192.168.1.208:7000/PDF/" + count.toString() + "aa.pdf";
+                        const pdfUrl = API.PDF + count.toString() + "aa.pdf";
                         axios.get(pdfUrl, {
                             responseType: 'blob',
                           })
@@ -128,7 +129,7 @@ export default function Dashboard() {
                     <Navigation />
                     <div class="geex-content">
                         <Header />
-                        <div id='rootElementId'>
+                        <div  id='rootElementId'>
                             <div class="geex-content__wrapper">
                                 <div class="geex-content__section-wrapper">
                                     <div class="top-main-section mb-20">

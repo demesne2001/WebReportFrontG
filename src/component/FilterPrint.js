@@ -6,9 +6,8 @@ export default function FilterPrint() {
     const filter = useContext(CreatContext);
     // console.log(filter.CommanNameFilter)
   return (
-    <div>
-      <br></br>
-        <Table striped bordered hover>
+    <div style={{padding:50}}>
+        <Table striped bordered hover >
           <thead>
             <tr>
               <th>Filter Name</th>
@@ -44,20 +43,6 @@ export default function FilterPrint() {
 
           </tbody>
         </Table>
-        {/* {filter.CommanNameFilter['strDepartmentID'] !== ''?<h3>Department Id : {filter.CommanNameFilter['strDepartmentID']}</h3>: null}
-        {filter.CommanNameFilter['strBrandID'] !== ''?<h3>Brand Id : {filter.CommanNameFilter['strBrandID']}</h3>: null}
-        {filter.CommanNameFilter['strProductID'] !== ''?<h3>Product Id : {filter.CommanNameFilter['strProductID']}</h3>: null}
-        {filter.CommanNameFilter['strItemGroupID'] !== ''?<h3>Item Group Id : {filter.CommanNameFilter['strItemGroupID']}</h3>: null}
-        {filter.CommanNameFilter['strItemID'] !== ''?<h3>Item Id : {filter.CommanNameFilter['strItemID']}</h3>: null} */}
-        {/* {filter.CommanNameFilter['strColorID'] !== ''?<h3>Color Id : {filter.CommanNameFilter['strColorID']}</h3>: null} */}
-        {/* {filter.CommanNameFilter['strSalesmanID'] !== ''?<h3>Salesman Id : {filter.CommanNameFilter['strSalesmanID']}</h3>: null} */}
-        {/* {filter.CommanNameFilter['strDesignID'] !== ''?<h3>Design Id : {filter.CommanNameFilter['strDesignID']}</h3>: null} */}
-        {/* {filter.CommanNameFilter['strSubCategory1ID'] !== ''?<h3>strSubCategory1ID : {filter.CommanNameFilter['strSubCategory1ID']}</h3>: null}
-        {filter.CommanNameFilter['strSubCategory2ID'] !== ''?<h3>strSubCategory2ID : {filter.CommanNameFilter['strSubCategory2ID']}</h3>: null}
-        {filter.CommanNameFilter['strSubCategory3ID'] !== ''?<h3>strSubCategory3ID : {filter.CommanNameFilter['strSubCategory3ID']}</h3>: null}
-        {filter.CommanNameFilter['ExtraVar'] !== ''?<h3>ExtraVar : {filter.CommanNameFilter['ExtraVar']}</h3>: null}
-        {filter.CommanNameFilter['strLotNo'] !== ''?<h3>strLotNo : {filter.CommanNameFilter['strLotNo']}</h3>: null} */}
-         <br></br>
     </div>
   )
 }
