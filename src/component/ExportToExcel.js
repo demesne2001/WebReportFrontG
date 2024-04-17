@@ -16,11 +16,14 @@ const ExportToExcel = ({ tableTitles }) => {
   let flag1 = con.flagExcel;
 
   useEffect(() => {
-    setTimeout(() => {
-      if (flag1 !== 0) {
-        exportToExcel()
-      }
-    }, 3000);
+
+
+    if (flag1 !== 0) {
+      // setTimeout(() => {
+      //   exporttoimage()
+      // }, 3000);
+      exportToExcel()
+    }
 
   }, [flag1])
 
@@ -248,7 +251,8 @@ const ExportToExcel = ({ tableTitles }) => {
     var node = document.getElementById('rootElementId');
     htmlToImage.toPng(node)
       .then(function (dataUrl) {
-			document.getElementById("excel-download").style.pointerEvents = "";
+			document.getElementById("excel-icon").style.color = "#0d4876";
+  		document.getElementById("excel-download").style.pointerEvents = "";
         var img = new Image();
         img.src = dataUrl;
         // console.log(dataUrl, " new dataurllllll")
@@ -264,6 +268,21 @@ const ExportToExcel = ({ tableTitles }) => {
 
 
   const exportToExcel = async () => {
+    var node = document.getElementById('rootElementId');
+    htmlToImage.toPng(node)
+      .then(function (dataUrl) {
+        document.getElementById("excel-download").style.pointerEvents = "";
+        // var img = new Image();
+        // img.src = dataUrl;
+        // console.log(dataUrl, " new dataurllllll")
+        // console.log(img, " new image")
+        console.log(input16, " new input16")
+        getData16(dataUrl)
+        getData17(dataUrl)
+      })
+      .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+      });
 
     const workbook = new ExcelJS.Workbook();
 
@@ -391,14 +410,14 @@ const ExportToExcel = ({ tableTitles }) => {
 
     console.log(obj1, "object1")
     for (let i = 0; i < obj1.length; i++) {
-      ws1.getRow(obj1[i] - 1).font = { bold: true, size: 20, underline: true, name: 'Calibri',  color: { argb: '0d4876' } };
-      ws1.getRow(obj1[i]).font = { bold: true, size: 13 ,  color: { argb: 'D20103' } }
+      ws1.getRow(obj1[i] - 1).font = { bold: true, size: 20, underline: true, name: 'Calibri', color: { argb: '0d4876' } };
+      ws1.getRow(obj1[i]).font = { bold: true, size: 13, color: { argb: 'D20103' } }
     }
 
     for (let i = 0; i < 1000; i++) {                               // FONT LEFT
       ws1.getRow(i).alignment = { horizontal: "left" }
     }
-    ws1.getRow(1).font = { bold: true, size: 15,  color: { argb: 'D20103' }}
+    ws1.getRow(1).font = { bold: true, size: 15, color: { argb: 'D20103' } }
 
 
 

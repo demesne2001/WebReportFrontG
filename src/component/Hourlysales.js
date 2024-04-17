@@ -22,7 +22,8 @@ export default function Hourlysales() {
 			// console.log('Hourlysales')
 			fetchData();
 			document.getElementById("excel-download").style.pointerEvents = "none";
-			
+			document.getElementById("excel-icon").style.color = "#7ca6c7";
+
 		}
 	}, [inputdata]);
 	let defaulres = {}
