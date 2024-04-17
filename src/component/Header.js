@@ -1763,7 +1763,7 @@ export default function Header() {
 									</a>
 								</li>
 								<li class="geex-content__header__quickaction__item">
-								<a href="#" class="geex-content__header__quickaction__link" onClick={handleExcel}>
+								<a href="#" id='excel-download' class="geex-content__header__quickaction__link" onClick={handleExcel} >
 									<i class="fas fa-file-excel" style={{color:'#0d4876'}}></i>
 								</a>
 							</li>

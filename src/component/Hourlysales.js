@@ -21,6 +21,8 @@ export default function Hourlysales() {
 		if (inputdata) {
 			// console.log('Hourlysales')
 			fetchData();
+			document.getElementById("excel-download").style.pointerEvents = "none";
+			
 		}
 	}, [inputdata]);
 	let defaulres = {}
@@ -261,7 +263,7 @@ export default function Hourlysales() {
 							<i class="fas fa-clock  title-icon"></i>Hourly sales
 						</h4>
 					</div>
-			
+
 
 				</div>
 				<div class="geex-content__section__content">

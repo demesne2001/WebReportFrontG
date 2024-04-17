@@ -248,6 +248,7 @@ const ExportToExcel = ({ tableTitles }) => {
     var node = document.getElementById('rootElementId');
     htmlToImage.toPng(node)
       .then(function (dataUrl) {
+			document.getElementById("excel-download").style.pointerEvents = "";
         var img = new Image();
         img.src = dataUrl;
         // console.log(dataUrl, " new dataurllllll")
@@ -391,13 +392,13 @@ const ExportToExcel = ({ tableTitles }) => {
     console.log(obj1, "object1")
     for (let i = 0; i < obj1.length; i++) {
       ws1.getRow(obj1[i] - 1).font = { bold: true, size: 20, underline: true, name: 'Calibri',  color: { argb: '0d4876' } };
-      ws1.getRow(obj1[i]).font = { bold: true, size: 13 }
+      ws1.getRow(obj1[i]).font = { bold: true, size: 13 ,  color: { argb: 'D20103' } }
     }
 
     for (let i = 0; i < 1000; i++) {                               // FONT LEFT
       ws1.getRow(i).alignment = { horizontal: "left" }
     }
-    ws1.getRow(1).font = { bold: true, size: 15 }
+    ws1.getRow(1).font = { bold: true, size: 15,  color: { argb: 'D20103' }}
 
 
 
