@@ -3,12 +3,15 @@ import ReactApexChart from 'react-apexcharts'
 import CreatContext from './Context/CreateContext';
 import API from './Utility/API';
 import post from './Utility/APIHandle';
+import repeat from './assets/img/icon/flip.png';
+import Table from 'react-bootstrap/Table';
 
 export default function SalesRevenue() {
   const filter = useContext(CreatContext);
   const [Name1, setName1] = useState([]);
   const [Amount1, setAmount1] = useState([]);
   const [Amount2, setAmount2] = useState([]);
+  const [Tabledata, setTabledata] = useState([]);
   let inputdata = filter.CommanFilter;
 
   useEffect(() => {
@@ -24,6 +27,7 @@ export default function SalesRevenue() {
       let total = [];
       let total1 = [];
       let name = [];
+      setTabledata(response.data.lstResult)
       // console.log(response.data.lstResult['0']['sales']);
       for (let index = 0; index < response.data.lstResult.length; index++) {
         total.push(response.data.lstResult[index].TotalAmt);
@@ -270,9 +274,9 @@ export default function SalesRevenue() {
     xaxis: {
       categories: Name1,
       labels: {
-        style:{
-					fontSize:'12px'
-				}
+        style: {
+          fontSize: '12px'
+        }
       },
     },
     yaxis: [
@@ -292,8 +296,8 @@ export default function SalesRevenue() {
         },
         labels: {
           formatter: (value) => { return format(value) },
-          style:{
-            fontSize:'13.5px'
+          style: {
+            fontSize: '13.5px'
           }
         },
         style: {
@@ -328,7 +332,7 @@ export default function SalesRevenue() {
         labels: {
           style: {
             colors: '#00E396',
-              fontSize:'13.5px'
+            fontSize: '13.5px'
           }
         },
         title: {
@@ -373,36 +377,36 @@ export default function SalesRevenue() {
           [
             {
               seriesName: 'Amount',
-        stepSize: 40000,
-        opposite: false,
-        axisTicks: {
-          show: true,
-        },
-        axisTicks: {
-          show: true,
-        },
-        axisBorder: {
-          show: true,
-          color: '#008FFB',
-        },
-        style: {
-          colors: '#008FFB',
-        },
-        formatter: function (val) {
-          let value = format(val)
-          return value
-        },
-        title: {
-          text: "Amount",
-          style: {
-            color: '#008FFB',
-          }
-        },
-        tooltip: {
-          enabled: true
-        },
-        min: 0,
-        max: Math.max(...Amount1),
+              stepSize: 40000,
+              opposite: false,
+              axisTicks: {
+                show: true,
+              },
+              axisTicks: {
+                show: true,
+              },
+              axisBorder: {
+                show: true,
+                color: '#008FFB',
+              },
+              style: {
+                colors: '#008FFB',
+              },
+              formatter: function (val) {
+                let value = format(val)
+                return value
+              },
+              title: {
+                text: "Amount",
+                style: {
+                  color: '#008FFB',
+                }
+              },
+              tooltip: {
+                enabled: true
+              },
+              min: 0,
+              max: Math.max(...Amount1),
               labels: {
                 show: true,
                 formatter: function (value) {
@@ -458,6 +462,14 @@ export default function SalesRevenue() {
       }
     }]
   }
+  function flip() {
+    if (document.getElementsByClassName('innercontainer')[1].style.transform === "rotateY(360deg)" || document.getElementsByClassName('innercontainer')[1].style.transform === "") {
+      document.getElementsByClassName('innercontainer')[1].style.transform = "rotateY(180deg)"
+    } else {
+      document.getElementsByClassName('innercontainer')[1].style.transform = "rotateY(360deg)"
+    }
+  }
+
 
   return (
     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -466,6 +478,7 @@ export default function SalesRevenue() {
           <div class="geex-content__section__header__title-part">
             <h4 class="geex-content__section__header__title"><i class="fas fa-chart-area title-icon"></i>Sales Revenue</h4>
           </div>
+          
         </div>
         <div class="geex-content__section__content">
           <ReactApexChart options={options} series={series} type="line" height={350} />
@@ -473,6 +486,70 @@ export default function SalesRevenue() {
           {/* <img src="assets/img//Graph/SalesRevenue.png" class="graph-img img-fluid" /> */}
         </div>
       </div>
+      {/* <div class="container">
+        <div class="innercontainer">
+          <div class="front face">
+            <div class="geex-content__section geex-content__visitor-count card">
+              <div class="geex-content__section__header  card-header">
+                <div class="geex-content__section__header__title-part">
+                  <h4 class="geex-content__section__header__title"><i class="fas fa-chart-area title-icon"></i>Sales Revenue</h4>
+                </div>
+                <div style={{ padding: 0, margin: 0 }} align='left'>
+                  <button onClick={flip} style={{ border: 'none', background: 'none' }}><img src={repeat} className='flip' width="50" /></button>
+                </div>
+              </div>
+              <div class="geex-content__section__content">
+                <ReactApexChart options={options} series={series} type="line" height={350} />
+              </div>
+            </div>
+          </div>
+          <div class="back face">
+            <div class="geex-content__section geex-content__visitor-count card ">
+
+              <div class="geex-content__section__header card-header">
+
+                <div class="geex-content__section__header__title-part ">
+
+                  <h4 class="geex-content__section__header__title"><i class="fas fa-chart-area title-icon"></i>Sales Revenue</h4>
+                </div>
+                <div style={{ padding: 0, margin: 0 }} align='left'>
+                  <button onClick={flip} style={{ border: 'none', background: 'none' }}><img src={repeat} className='flip' width="50" /></button>
+                </div>
+              </div>
+              <div class="geex-content__section__content">
+                <div style={{ height: 348, overflow: 'auto' }}>
+                  <Table striped bordered hover >
+                    <thead className='table-header'>
+                      <th>
+                        MONTH
+                      </th>
+                      <th>
+                        QTY
+                      </th>
+                      <th>
+                        AMOUNT
+                      </th>
+                    </thead>
+                    <tbody>
+                      {console.log(Tabledata)}
+                      {
+                        Tabledata.map((ele) => {
+                          return <tr>
+                            <td>{ele.Month}</td>
+                            <td>{ele.TotalQTY}</td>
+                            <td>{ele.TotalAmt}</td>
+                          </tr>
+                        })
+                      }
+                    </tbody>
+                  </Table>
+                </div>
+              </div >
+            </div>
+          </div>
+        </div>
+      </div> */}
     </div>
+
   )
 }

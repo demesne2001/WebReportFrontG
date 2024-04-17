@@ -5,16 +5,20 @@ import customer from './assets/font/svg/customer.svg'
 import ready from './assets/font/svg/ready-stock.svg'
 import enterpreneur from './assets/font/svg/enterpreneur.svg'
 import income from './assets/font/svg/income.svg'
+import cancel from './assets/font/svg/cancel.svg'
 
 export default function navigation() {
+	function handleclose() {
+		document.getElementsByClassName('geex-sidebar')[0].style.display = "none";
+	}
 	return (
 		<div class="geex-sidebar">
-				<a href="#" class="geex-sidebar__close">
-					<img src="assets/font/svg/cancel.svg"/>
+				<a href="#" class="geex-sidebar__close" onClick={handleclose}>
+					<img src={cancel}/>
 				</a>
 				<div class="geex-sidebar__wrapper">
 					<div class="geex-sidebar__header">
-						<a href="index.html" class="geex-sidebar__logo">
+						<a href="#" class="geex-sidebar__logo">
 							<img class="logo-lite" src={logo} alt="logo" />
 
 						</a>

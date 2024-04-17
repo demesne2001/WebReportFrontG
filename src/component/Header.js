@@ -376,6 +376,15 @@ export default function Header() {
 		handleThousand()
 
 	}, [])
+
+	useEffect(() => {
+	  if (widthOfScreen < 1200) {
+		document.getElementById('toggle-button').style.display = "block"
+	  } else {
+		document.getElementById('toggle-button').style.display = "none"
+	  }
+	}, [widthOfScreen])
+	
 	
 	
 	useEffect(() => {
@@ -857,6 +866,9 @@ export default function Header() {
 	function handleDownload() {
 		FilterContext.setflag(FilterContext.flag + 1);
 	}
+	function handleExcel() {
+		FilterContext.setflagExcel(FilterContext.flagExcel + 1);
+	}
 
 	function handleFullScreen() {
 		if (fullscreen === true) {
@@ -942,15 +954,19 @@ export default function Header() {
 			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, [str]: ans })
 		}
 	}
+
+	function handlenavigation() {
+		document.getElementsByClassName('geex-sidebar')[0].style.display = "block";
+	}
 	return (
 		<>
 			{FilterContext.childFilterShow === true ? <Commonmodel modelprops={props1} prdemo={demo} prdemoName={demoName} /> :
 				<div class="geex-content__header">
 					<div class="geex-content__header__content">
 						<div class="geex-content__header__customizer">
-							{/* <button class="geex-btn geex-btn__toggle-sidebar" id='toggle-button' >
+							<button class="geex-btn geex-btn__toggle-sidebar" onClick={handlenavigation} id='toggle-button' >
 								<img src={menu} class="menu-icon"/>
-							</button> */}
+							</button>
 							<h2 class="geex-content__header__title"> Dashboard</h2>
 						</div>
 
@@ -1730,11 +1746,11 @@ export default function Header() {
 										</Modal.Footer>
 									</Modal>
 								</li>
-								<li class="geex-content__header__quickaction__item">
+								{/* <li class="geex-content__header__quickaction__item">
 									<a href="#" class="geex-content__header__quickaction__link">
 										<img src={refresh} />
 									</a>
-								</li>
+								</li> */}
 								<li class="geex-content__header__quickaction__item">
 									<a href="#" class="geex-content__header__quickaction__link" onClick={handleFullScreen}>
 										{/* <i class="fas fa-expand-alt"></i> */}
@@ -1746,6 +1762,11 @@ export default function Header() {
 										<img src={pdf} />
 									</a>
 								</li>
+								<li class="geex-content__header__quickaction__item">
+								<a href="#" class="geex-content__header__quickaction__link" onClick={handleExcel}>
+									<i class="fas fa-file-excel" style={{color:'#0d4876'}}></i>
+								</a>
+							</li>
 							</ul>
 						</div>
 					</div>

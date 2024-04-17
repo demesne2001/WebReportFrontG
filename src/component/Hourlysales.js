@@ -241,15 +241,13 @@ export default function Hourlysales() {
 	// 	}
 	// }
 	function flip() {
-		if (document.getElementsByClassName("flip-card-inner")[0].style.transform === "rotateY(360deg)" || document.getElementsByClassName("flip-card-inner")[0].style.transform === "") {
-			console.log(document.getElementsByClassName("flip-card-inner")[0].style.transform);
-			document.getElementsByClassName("flip-card-inner")[0].style.transform = "rotateY(180deg)"
+		if (document.getElementsByClassName('innercontainer')[0].style.transform === "rotateY(360deg)" || document.getElementsByClassName('innercontainer')[0].style.transform === "") {
+			document.getElementsByClassName('innercontainer')[0].style.transform = "rotateY(180deg)"
 		} else {
-			console.log(document.getElementsByClassName("flip-card-inner")[0].style.transform);
-			document.getElementsByClassName("flip-card-inner")[0].style.transform = "rotateY(360deg)"
+			document.getElementsByClassName('innercontainer')[0].style.transform = "rotateY(360deg)"
 		}
-
 	}
+
 
 	return (
 		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -262,16 +260,8 @@ export default function Hourlysales() {
 						<h4 class="geex-content__section__header__title ">
 							<i class="fas fa-clock  title-icon"></i>Hourly sales
 						</h4>
-
 					</div>
-					{/* <div style={{ float: 'left' }}>
-		<img style={{ marginTop: 20, marginRight: 20 }} height={20} src={menu} onClick={handledropdownMenu} className='dropbtn2' />
-		<div id="myDropdown2" class="dropdown-content2">
-			<a>Hourly</a><hr />
-			<a>Weekly</a><hr />
-			<a>15 Days</a>
-		</div>
-	</div> */}
+			
 
 				</div>
 				<div class="geex-content__section__content">
@@ -280,27 +270,21 @@ export default function Hourlysales() {
 						<button id='weekly' className='chart-btn' onClick={() => handlechartButton("L7")}>7 D</button>
 						<button id='days' className='chart-btn' onClick={() => handlechartButton("L14")}>15 D</button>
 					</div>
-
-					{/* <div id="column-chart"> */}
 					<ReactApexChart options={options} series={series} type="line" height={320} />
-					{/* </div>  */}
-					{/* <img src="assets/img//Graph/Hourlysales.png" class="graph-img img-fluid" /> */}
 				</div >
 			</div >
-			{/* <div class="flip-card">
-
-				<div class="flip-card-inner" id='done'>
-					<div class="flip-card-front">
+			{/* <div class="container">
+				<div class="innercontainer">
+					<div class="front face">
 						<div class="geex-content__section geex-content__visitor-count card ">
 
 							<div class="geex-content__section__header card-header">
 
-								<div style={{ display: 'flex' }} class="geex-content__section__header__title-part ">
+								<div class="geex-content__section__header__title-part ">
 
 									<h4 class="geex-content__section__header__title ">
 										<i class="fas fa-clock  title-icon"></i>Hourly sales
 									</h4>
-
 								</div>
 								<div style={{ padding: 0, margin: 0 }} align='left'>
 									<button onClick={flip} style={{ border: 'none', background: 'none' }}><img src={repeat} className='flip' width="50" /></button>
@@ -313,16 +297,11 @@ export default function Hourlysales() {
 									<button id='weekly' className='chart-btn' onClick={() => handlechartButton("L7")}>7 D</button>
 									<button id='days' className='chart-btn' onClick={() => handlechartButton("L14")}>15 D</button>
 								</div>
-
-
-								
 								<ReactApexChart options={options} series={series} type="line" height={320} />
-							
 							</div >
-
 						</div >
 					</div>
-					<div class="flip-card-back">
+					<div class="back face">
 						<div class="geex-content__section geex-content__visitor-count card ">
 
 							<div class="geex-content__section__header card-header">
@@ -332,12 +311,10 @@ export default function Hourlysales() {
 									<h4 class="geex-content__section__header__title ">
 										<i class="fas fa-clock  title-icon"></i>Hourly sales
 									</h4>
-
 								</div>
 								<div style={{ padding: 0, margin: 0 }} align='left'>
 									<button onClick={flip} style={{ border: 'none', background: 'none' }}><img src={repeat} className='flip' width="50" /></button>
 								</div>
-
 							</div>
 							<div class="geex-content__section__content">
 								<div style={{ height: 348, overflow: 'auto' }}>
@@ -363,14 +340,12 @@ export default function Hourlysales() {
 										</tbody>
 									</Table>
 								</div>
-
-								
 							</div >
-
-						</div >
+						</div>
 					</div>
 				</div>
-			</div> */}
+			
+			</div > */}
 		</div >
 	)
 }

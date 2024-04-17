@@ -31,8 +31,24 @@ import * as htmlToImage from 'html-to-image';
 import axios from 'axios';
 import API from './Utility/API'
 import post from './Utility/APIHandle'
+import ExportToExcel from './ExportToExcel'
 
 export default function Dashboard() {
+    const [data1, setdata1] = useState([])
+    const [data2, setdata2] = useState([])
+    const [data3, setdata3] = useState([])
+    const [data4, setdata4] = useState([])
+    const [data5, setdata5] = useState([])
+    const [data6, setdata6] = useState([])
+    const [data7, setdata7] = useState([])
+    const [data8, setdata8] = useState([])
+    const [data9, setdata9] = useState([])
+    const [data10, setdata10] = useState([])
+    const [data16, setdata16] = useState(51)
+
+    const fileName = "ExcelFile";
+    const apiData = [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10]
+
     const [count, setCount] = useState(0);
     let res = null
 
@@ -47,7 +63,7 @@ export default function Dashboard() {
     //     document.getElementById('pdf-div').style.display = "none";
     // }, [res])
     async function downloadPdfDocument() {
-        
+
         // document.getElementById('pdf-div').style.display = "block";
         // const input = document.getElementById('rootElementId');
         // console.log('input', input)
@@ -89,7 +105,7 @@ export default function Dashboard() {
                     nameArray.push(res.data.filename);
                 })
             });
-            
+
         await htmlToImage.toPng(document.getElementById('pdf-div'))
             .then(function (dataUrl) {
                 var name = count.toString() + "filter";
@@ -105,10 +121,10 @@ export default function Dashboard() {
                         const pdfUrl = API.PDF + count.toString() + "aa.pdf";
                         axios.get(pdfUrl, {
                             responseType: 'blob',
-                          })
-                          .then((res) => {
-                            download(res.data, "GSoftDashboard.pdf")
-                          })
+                        })
+                            .then((res) => {
+                                download(res.data, "GSoftDashboard.pdf")
+                            })
 
                     });
                 })
@@ -125,11 +141,12 @@ export default function Dashboard() {
                     Export to PDF
                 </button> */}
             <body class="geex-dashboard" >
+                <ExportToExcel apiData={apiData} fileName={fileName} tableTitles={['GetHourlySales', 'GetSalesRevenue', 'TopSellingProduct', 'TopSupplierBySales', 'Top SalesmanBySales', 'MrpWiseReport', 'SalesAging', 'SalesRevenueCard', 'GetStockCard', 'GetProfitCard']} />
                 <main class="geex-main-content">
                     <Navigation />
                     <div class="geex-content">
                         <Header />
-                        <div  id='rootElementId'>
+                        <div id='rootElementId'>
                             <div class="geex-content__wrapper">
                                 <div class="geex-content__section-wrapper">
                                     <div class="top-main-section mb-20">
@@ -161,18 +178,18 @@ export default function Dashboard() {
                                         <Topsupplierbysales />
                                         <TopSalesmanBySales />
                                         <MrpWiseRpt />
-                                        <StockAging   />
+                                        <StockAging />
                                     </div>
                                 </div>
                             </div>
                             <br></br>
-                           
+
                         </div>
                         <div id='pdf-div'><FilterPrint /></div>
                     </div>
 
                 </main>
-                
+
             </body>
         </>
 

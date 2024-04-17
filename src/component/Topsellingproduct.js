@@ -150,10 +150,46 @@ export default function Topsellingproduct() {
 				}
 			}
 		},
+		{
+			breakpoint: 1471,
+			options: {
+				dataLabels: {
+					enabled: false
+				  },
+				chart: {
+					width: 480
+				},
+				legend: {
+					position: 'bottom',
+					
+					// fontSize: '14px',
+					// fontFamily: 'Helvetica, Arial',
+					// fontWeight: 400,
+				}
+			}
+		},
+		{
+			breakpoint: 1379,
+			options: {
+				dataLabels: {
+					enabled: false
+				  },
+				chart: {
+					width: 400
+				},
+				legend: {
+					position: 'bottom',
+					
+					// fontSize: '14px',
+					// fontFamily: 'Helvetica, Arial',
+					// fontWeight: 400,
+				}
+			}
+		},
 		]
 	}
 	return (
-		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12" id='topsell'>
 			<div class="geex-content__section geex-content__chat-summary card">
 				<div class="geex-content__section__header  card-header">
 					<div class="geex-content__section__header__title-part">

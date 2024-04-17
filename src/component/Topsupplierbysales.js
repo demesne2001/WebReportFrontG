@@ -116,7 +116,11 @@ export default function Topsupplierbysales() {
 			labels: {
 				style: {
 					fontSize: '13.5px'
+				},
+				formatter: function (val) {
+					return format(val)
 				}
+
 			},
 		},
 		grid: {
@@ -124,6 +128,7 @@ export default function Topsupplierbysales() {
 				lines: {
 					show: true
 				},
+
 			}
 		},
 		yaxis: {
@@ -143,7 +148,7 @@ export default function Topsupplierbysales() {
 			}
 		},
 		responsive: [{
-			breakpoint: 595,
+			breakpoint: 1310,
 			options: {
 				tooltip: {
 					x: {
