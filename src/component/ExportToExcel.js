@@ -86,7 +86,7 @@ const ExportToExcel = ({ tableTitles }) => {
 
 
   useEffect(() => {
-    console.log("first useEffect")
+    // console.log("first useEffect")
     getData();
     getData2();
     getData3();
@@ -97,12 +97,12 @@ const ExportToExcel = ({ tableTitles }) => {
     getData8();
     getData9();
     getData10();
-    console.log(list11, "list11")
+    // console.log(list11, "list11")
   }, [inputdata])
 
   useEffect(() => {
     setTimeout(() => {
-      console.log("second UseEffect")
+      // console.log("second UseEffect")
       exporttoimage()
     }, 3000);
   }, [inputdata])
@@ -233,17 +233,17 @@ const ExportToExcel = ({ tableTitles }) => {
     axios.post('http://192.168.1.208:7000/Comman/uploadImage', { Base64: img, Extension: "png", LoginID: data16.toString() })
       .then((response) => {
         setdata16(data16 + 1);
-        console.log(' new respomnse', response.data)
+        // console.log(' new respomnse', response.data)
       })
   }
 
   function getData17(img) {
-    console.log(data16.toString() + ".png", "tttttttttttt")
+    // console.log(data16.toString() + ".png", "tttttttttttt")
     // console.log(img, "delete image")
     setinput17({ FileName: data16.toString() + ".png" })
     axios.post('http://192.168.1.208:7000/Comman/DeleteFile', { FileName: data16.toString() + ".png" })
       .then((response) => {
-        console.log(response.data, "delete response")
+        // console.log(response.data, "delete response")
       })
   }
 
@@ -257,7 +257,7 @@ const ExportToExcel = ({ tableTitles }) => {
         img.src = dataUrl;
         // console.log(dataUrl, " new dataurllllll")
         // console.log(img, " new image")
-        console.log(input16, " new input16")
+        // console.log(input16, " new input16")
         getData16(dataUrl)
         getData17(dataUrl)
       })
@@ -276,7 +276,7 @@ const ExportToExcel = ({ tableTitles }) => {
         // img.src = dataUrl;
         // console.log(dataUrl, " new dataurllllll")
         // console.log(img, " new image")
-        console.log(input16, " new input16")
+        // console.log(input16, " new input16")
         getData16(dataUrl)
         getData17(dataUrl)
       })
@@ -301,26 +301,26 @@ const ExportToExcel = ({ tableTitles }) => {
       const header2 = ['FilterName', 'Filtervalue']
 
       const header = list11.map((item) => Object.keys(item)).flat();
-      console.log(header2, 'header');
+      // console.log(header2, 'header');
       ws1.addRow(header2);
       if (header.length === 0 || header.length === 'undefined') {
         header = Object.keys(list11[1])
       }
-      console.log([header], "header2")
+      // console.log([header], "header2")
 
       list11.forEach(item => {
         const value = Object.values(item);
-        console.log(value, 'before value')
+        // console.log(value, 'before value')
         if (value[1] !== '') {
           ws1.addRow(value)
           flag111.push(value)
-          console.log(flag111.length, "new array value")
+          // console.log(flag111.length, "new array value")
           count++
-          console.log(count, 'count')
+          // console.log(count, 'count')
         }
         obj1 = [count + 3]
         setobj([count + 3])
-        console.log(count, 'count')
+        // console.log(count, 'count')
       })
     }
     // console.log(flag111.length, "flag111")
@@ -363,7 +363,7 @@ const ExportToExcel = ({ tableTitles }) => {
 
 
     for (var i = 0; i < array.length; i++) {
-      console.log("inside for loop")
+      // console.log("inside for loop")
       if (i === 0) {
         if (array[i]['length'] !== 0) {
           obj1.push((flag111.length + 3) + array[i]['length'] + 4)
@@ -408,7 +408,7 @@ const ExportToExcel = ({ tableTitles }) => {
     //   }
 
 
-    console.log(obj1, "object1")
+    // console.log(obj1, "object1")
     for (let i = 0; i < obj1.length; i++) {
       ws1.getRow(obj1[i] - 1).font = { bold: true, size: 20, underline: true, name: 'Calibri', color: { argb: '0d4876' } };
       ws1.getRow(obj1[i]).font = { bold: true, size: 13, color: { argb: 'D20103' } }
@@ -451,12 +451,26 @@ const ExportToExcel = ({ tableTitles }) => {
       base64: base64Image,
       extension: 'png',
     });
-
-    ws2.addImage(imageId, {
-      tl: { col: 1, row: 1 },
-      ext: { width: 1500, height: 2000 },
-    });
-
+    if (window.innerWidth <= 768) {
+      ws2.addImage(imageId, {
+        tl: { col: 1, row: 1 },
+        ext: { width: 250, height: 2000 },
+      });
+  
+    }else if (window.innerWidth <= 1000) {
+      ws2.addImage(imageId, {
+        tl: { col: 1, row: 1 },
+        ext: { width: 800, height: 2000 },
+      });
+  
+    } else {
+      ws2.addImage(imageId, {
+        tl: { col: 1, row: 1 },
+        ext: { width: 1500, height: 2000 },
+      });
+  
+    }
+    
     const buffer = await workbook.xlsx.writeBuffer();
     const blob = new Blob([buffer]);
     saveAs(blob, `${fileName}.xlsx`);

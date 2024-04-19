@@ -278,10 +278,10 @@ function Commonmodel(props) {
                         setloader(false)
                         setfinalitem(response.data.lstResult)
                         if (response.data.lstResult.length < 15) {
-
-                            document.getElementById("scrollbar1").style.overflowY = "none";
+                            if (document.getElementById("scrollbar1") !== null) {
+                                document.getElementById("scrollbar1").style.overflowY = "none";
+                            }
                         }
-                        
                     })
                     .catch(error => console.error(error))
             }

@@ -467,8 +467,9 @@ export default function Header() {
 			// console.log("caption", dateFormat(response.data.FromDate,"yyyy-dd-MM"));
 			setfromdate(dateFormat(response.data.FromDate, "yyyy-dd-MM"))
 			settodate(dateFormat(response.data.ToDate, "yyyy-dd-MM"))
-			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['ToDate']: dateFormat(response.data.ToDate, "yyyy-dd-MM"), ['FromDate']: dateFormat(response.data.FromDate, "yyyy-dd-MM") })
-			FilterContext.SetCommanFilter({ ...FilterContext.CommanFilter, ['ToDate']: dateFormat(response.data.ToDate, "yyyy-dd-MM"), ['FromDate']: dateFormat(response.data.FromDate, "yyyy-dd-MM") })
+			console.log(dateFormat("08-04-2024", "yyyy-dd-MM"));
+			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['ToDate']: dateFormat(response.data.ToDate, "yyyy-dd-MM"), ['FromDate']: dateFormat(response.data.FromDate, "-dd-MM")})
+			FilterContext.SetCommanFilter({ ...FilterContext.CommanFilter, ['ToDate']: dateFormat(response.data.ToDate, "yyyy-dd-MM"), ['FromDate']: dateFormat(response.data.FromDate, "yyyy-dd-MM")})
 		})
 	}
 	async function GetCompanyData() {
@@ -839,28 +840,20 @@ export default function Header() {
 		}
 	}
 	function dateFormat(input_D, format_D) {
-		// input date parsed
-		const date = new Date(input_D);
+		// console.log(typeof(input_D), "hii");
 
-		//extracting parts of date string
-		const day = date.getDate();
-		const month = date.getMonth() + 1;
-		const year = date.getFullYear();
-
-		//to replace month
-		format_D = format_D.replace("MM", month.toString().padStart(2, "0"));
-
-		//to replace year
-		if (format_D.indexOf("yyyy") > -1) {
-			format_D = format_D.replace("yyyy", year.toString());
-		} else if (format_D.indexOf("yy") > -1) {
-			format_D = format_D.replace("yy", year.toString().substr(2, 2));
+		if (input_D !== "undefined" && input_D !== undefined) {
+			var arr = input_D.split("-");
+			var output = ""
+			for (let index = arr.length - 1; index >= 0; index--) {
+				if (index !== 0) {
+					output = output + arr[index] + "-"
+				} else {
+					output = output + arr[index]
+				}
+			}
+			return output;
 		}
-
-		//to replace day
-		format_D = format_D.replace("dd", day.toString().padStart(2, "0"));
-
-		return format_D;
 	}
 
 	function handleDownload() {

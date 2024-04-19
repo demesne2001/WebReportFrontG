@@ -147,7 +147,7 @@ export default function Dashboard() {
                     <div class="geex-content">
                         <Header />
                         <div id='rootElementId'>
-                            <div class="geex-content__wrapper">
+                            <div class="geex-content__wrapper" >
                                 <div class="geex-content__section-wrapper">
                                     <div class="top-main-section mb-20">
                                         <div class="row">
