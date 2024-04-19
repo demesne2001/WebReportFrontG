@@ -6,5 +6,5 @@ COPY . /WebReportGsoft
 COPY package.json .
 RUN npm install
 COPY . .
-EXPOSE 7579
+EXPOSE 3078
 CMD [ "npm","start" ]

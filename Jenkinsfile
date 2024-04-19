@@ -31,7 +31,7 @@ pipeline {
         stage('Docker Run') {
             steps {
                 script{
-                    bat 'docker run -p 7579:7579 -d --name gsoftfront gsoftfront'
+                    bat 'docker run -p 3078:3078 -d --name gsoftfront gsoftfront'
                 }
                 echo 'Docker Running'
             }
