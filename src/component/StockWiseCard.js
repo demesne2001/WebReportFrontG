@@ -15,7 +15,7 @@ export default function StockWiseCard() {
 
     useEffect(() => {
         if (inputdata) {
-            console.log('StockWiseCard')
+            // console.log('StockWiseCard')
             fetchData();
         }
     }, [inputdata]);

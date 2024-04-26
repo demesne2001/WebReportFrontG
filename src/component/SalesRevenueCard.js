@@ -14,7 +14,7 @@ export default function SalesRevenueCard() {
 
 	useEffect(() => {
 		if (inputdata) {
-			console.log('SalesRevenueCard')
+			// console.log('SalesRevenueCard')
 			fetchData();
 		}
 	}, [inputdata]);

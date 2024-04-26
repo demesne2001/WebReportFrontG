@@ -335,9 +335,9 @@ a.geex-content__header__quickaction__link img {
 }
 
 @media (min-width: 768px) and (max-width: 970px) {
-  img {
+  /* img { // Bug in header Burger icon
     max-width: 90% !important;
-  }
+  } */
   .geex-content__header__customizer {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -395,7 +395,7 @@ a.geex-content__header__quickaction__link img {
     align-items: center;
     padding: 10px 10px !important;
     color: var(--body-color);
-    background-color: #c10202;
+    background-color: #cfdbe3;
     border: none;
     border-radius: 10px !important;
     -webkit-transition: all 0.3s ease;
@@ -534,7 +534,7 @@ button.btn.showpreview-button {
   font-size: 15px;
 }
 button.btn.close-button {
-  background-color: #c10202;
+  background-color: #093354;
   color: aliceblue;
   width: 91px;
   border-radius: 10px;
@@ -623,6 +623,7 @@ select.col.form-select {
 span.right-part-numericdata {
   font-weight: 795;
 }
+
 @media screen and (min-width: 971px) {
   .geex-content__header__title {
     font-size: 30px;
@@ -734,7 +735,7 @@ span.right-part-numericdata {
     align-items: center;
     padding: 5px 5px !important;
     color: var(--body-color);
-    background-color: #c10202;
+    background-color: #0d4876;
     border: none;
     border-radius: 6px !important;
     -webkit-transition: all 0.3s ease;
@@ -847,7 +848,7 @@ span.right-part-numericdata {
     align-items: center;
     padding: 5px 5px !important;
     color: var(--body-color);
-    background-color: #c10202;
+    background-color: #0d4876;
     border: none;
     border-radius: 6px !important;
     -webkit-transition: all 0.3s ease;
@@ -957,7 +958,7 @@ span.right-part-numericdata {
     align-items: center;
     padding: 5px 5px !important;
     color: var(--body-color);
-    background-color: #c10202;
+    background-color: #cfdbe3;
     border: none;
     border-radius: 6px !important;
     -webkit-transition: all 0.3s ease;
@@ -1069,7 +1070,7 @@ span.right-part-numericdata {
     align-items: center;
     padding: 5px 5px !important;
     color: var(--body-color);
-    background-color: #c10202;
+    background-color: #0d4876;
     border: none;
     border-radius: 6px !important;
     -webkit-transition: all 0.3s ease;
@@ -1079,7 +1080,7 @@ span.right-part-numericdata {
     gap: 15px;
   }
 }
-@media (max-width: 425px) {
+@media (max-width: 430px) {
   .geex-main-content {
     padding: 10px 10px !important;
   }
@@ -1118,7 +1119,7 @@ span.right-part-numericdata {
     justify-content: center;
   }
   .geex-content__header__quickaction {
-    gap: 20px;
+    gap: 15px;
     width: 100%;
     justify-content: center !important;
   }
@@ -1137,4 +1138,13 @@ span.right-part-numericdata {
 /* mycss */
 .geex-content__section__header__title{
   font-weight: 700;
+}
+
+@media only screen and (max-width: 840px) {
+  #fullScreen{
+    display: none;
+  }
+  .h5.span{
+    display: inline-block;
+  }
 }

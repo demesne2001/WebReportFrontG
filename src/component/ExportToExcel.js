@@ -220,7 +220,7 @@ const ExportToExcel = ({ tableTitles }) => {
         // console.log('data10', response.data.lstResult.length)
 
         array1.sort((a, b) => a.index - b.index);
-        console.log(array1, 'sorted array')
+        // console.log(array1, 'sorted array')
 
       })
   }

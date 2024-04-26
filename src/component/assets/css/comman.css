@@ -353,10 +353,10 @@ thead::after {
   width: 100%;
   cursor: pointer;
 }
-
+/* 
 #toggle-button {
   display: none;
-}
+} */
 
 @media only screen and (max-width: 1200px) {
   #toggle-button {
@@ -442,11 +442,7 @@ thead::after {
 .face.front {
   color: #fff;
 }
-/* 
-.geex-btn.geex-btn__toggle-sidebar{
-  background: #0d4876;
-  color: white;
-} */
+
 @media only screen and (max-width: 1200px) {
   .geex-sidebar {
     z-index: 20000 !important;

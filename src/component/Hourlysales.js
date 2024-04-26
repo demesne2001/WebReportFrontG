@@ -14,8 +14,14 @@ export default function Hourlysales() {
 	const [Name, setName] = useState([]);
 	const [Amount, setAmount] = useState([]);
 	const [Tabledata, setTabledata] = useState([]);
+
+
 	// const [inputdata, setInputdata] = useState(filter.CommanFilter);
 	let inputdata = filter.CommanFilter;
+	let tempfilter = filter.TempCommanFilter
+
+	let setInputdata = filter.SetCommanFilter
+	let setTempFilter = filter.SetTempCommanFilter
 
 	useEffect(() => {
 		if (inputdata) {
@@ -26,6 +32,7 @@ export default function Hourlysales() {
 
 		}
 	}, [inputdata]);
+
 	let defaulres = {}
 	function fetchData() {
 		console.log("input", inputdata);
@@ -117,7 +124,6 @@ export default function Hourlysales() {
 		data: Amount
 	}]
 	options = {
-
 		chart: {
 			height: 350,
 			type: 'line',
@@ -144,7 +150,7 @@ export default function Hourlysales() {
 		},
 		title: {
 			text: '',
-			align: 'left'
+			align: 'left',
 		},
 		grid: {
 			borderColor: '#e7e7e7',
@@ -203,8 +209,15 @@ export default function Hourlysales() {
 			}
 		}]
 	}
+
 	function handlechartButton(e) {
-		inputdata = { ...inputdata, ['ExtraVar']: e }
+
+
+		// inputdata = { ...inputdata, ['ExtraVar']: e }
+		// tempfilter = { ...tempfilter, ['ExtraVar']: e }
+		setInputdata({ ...inputdata, ['ExtraVar']: e })
+		setTempFilter({...tempfilter, ['ExtraVar']: e})
+		// setInputdata({ ...inputdata, ['ExtraVar']: e })
 		fetchData()
 		// console.log(inputdata)
 		// console.log("hourly", inputdata)

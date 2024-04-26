@@ -36,7 +36,6 @@ export default function Topsellingproduct() {
 		labels: Name,
 		dataLabels: {
 			enabled: true,
-			
 		  },
 		  plotOptions: {
 			pie: {
@@ -58,7 +57,6 @@ export default function Topsellingproduct() {
 			}
 		},
 		chart: {
-	
 			type: 'donut',
 		},
 		colors: ['#008ffb', '#84caff', '#feb019', '#ffdb95', '#00e396', '#78ffd1', '#ff4560', '#ffa5b2', '#775dd0', '#a394d9'],
@@ -103,9 +101,13 @@ export default function Topsellingproduct() {
 			// fontFamily: 'Helvetica, Arial',
 			// fontWeight: 400,
 		},
-		responsive: [{
+		responsive: [
+			{
 			breakpoint: 595,
 			options: {
+				tooltip: {
+					enabled: false,
+				},
 				dataLabels: {
 					enabled: false
 				  },

@@ -206,7 +206,7 @@ html[data-nav="top"] .geex-sidebar {
 
 @media only screen and (max-width: 1199px) {
   html[data-nav="top"] .geex-header {
-    display: none;
+    display: block;
   }
   html[data-nav="top"] .geex-content__header .geex-content__header__customizer {
     display: -webkit-box;
@@ -954,9 +954,9 @@ a:hover {
   color: var(--primary-color);
 }
 
-img {
+/* img { // Bug in header Burger icon in iphone 13 pro
   max-width: 95%;
-}
+} */
 
 .bold {
   font-weight: 700;
@@ -1786,7 +1786,7 @@ blockquote span:before {
   align-items: center;
   padding: 10px 10px;
   color: var(--body-color);
-  background-color: #c10202;
+  background-color: #0d4876;
   border: none;
   border-radius: 12px;
   -webkit-transition: all 0.3s ease;
@@ -1796,7 +1796,7 @@ blockquote span:before {
 .geex-btn.active,
 .geex-btn:hover {
   color: var(--white-color);
-  background-color: #c10202;
+  background-color: #0d4876;
 }
 
 @media only screen and (max-width: 1440px) {

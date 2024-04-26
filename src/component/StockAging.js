@@ -258,7 +258,8 @@ export default function StockAging() {
 				stops: [50, 0, 100]
 			},
 		},
-		responsive: [{
+		responsive: [
+		  {
 			breakpoint: 595,
 			options: {
 				tooltip: {
@@ -307,8 +308,6 @@ export default function StockAging() {
 									return format_responsive(value);
 								},
 							}
-
-
 						},
 						{
 							seriesName: 'Qty',
@@ -353,7 +352,18 @@ export default function StockAging() {
 				// 	}
 				// }
 			}
-		}]
+		}, {
+			breakpoint: 395,
+			options:{
+			  xaxis: {
+				labels: {
+				  style: {
+					fontSize: '10px'
+				  }
+				},
+			  },
+			}
+		  },]
 	}
 	// console.log(options.yaxis[1])
 	return (

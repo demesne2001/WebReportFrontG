@@ -16,7 +16,7 @@ export default function SalesRevenue() {
 
   useEffect(() => {
     if (inputdata) {
-      console.log('SalesRevenue')
+      // console.log('SalesRevenue')
       // setapiInputdata(inputdata);
       fetchData();
     }
@@ -357,9 +357,10 @@ export default function SalesRevenue() {
       horizontalAlign: 'center',
       offsetX: 40
     },
-    responsive: [{
-      breakpoint: 595,
-      options: {
+    responsive: [
+      {
+      breakpoint: 850,
+      options:{
         tooltip: {
           title: {
             formatter: function (val) {
@@ -372,6 +373,13 @@ export default function SalesRevenue() {
             },
 
           }
+        },
+        xaxis: {
+          labels: {
+            style: {
+              fontSize: '10px'
+            }
+          },
         },
         yaxis:
           [
@@ -447,20 +455,124 @@ export default function SalesRevenue() {
               },
               min: 0,
               setpsize: makeSlabe()
+            },
+          ]}
+    }
+      ,{
+      breakpoint: 595,
+      options: {
+        tooltip: {
+          title: {
+            formatter: function (val) {
+              return val
             }
+          },
+          y: {
+            formatter: function (val) {
+              return val;
+            },
 
+          }
+        },
+        xaxis: {
+          labels: {
+            style: {
+              fontSize: '12px'
+            }
+          },
+        },
+        yaxis:
+          [
+            {
+              seriesName: 'Amount',
+              stepSize: 40000,
+              opposite: false,
+              axisTicks: {
+                show: true,
+              },
+              axisTicks: {
+                show: true,
+              },
+              axisBorder: {
+                show: true,
+                color: '#008FFB',
+              },
+              style: {
+                colors: '#008FFB',
+              },
+              formatter: function (val) {
+                let value = format(val)
+                return value
+              },
+              title: {
+                text: "Amount",
+                style: {
+                  color: '#008FFB',
+                }
+              },
+              tooltip: {
+                enabled: true
+              },
+              min: 0,
+              max: Math.max(...Amount1),
+              labels: {
+                show: true,
+                formatter: function (value) {
+                  // console.log(value);
+                  return format_responsive(value);
+                },
+
+              }
+            },
+            {
+              seriesName: 'Qty',
+              opposite: true,
+              axisTicks: {
+                show: true,
+              },
+              axisBorder: {
+                show: true,
+                color: '#00E396',
+              },
+              labels: {
+                style: {
+                  colors: '#00E396',
+                }
+              },
+              labels: {
+                show: true,
+                formatter: function (val) {
+
+                  return ((((val / 1000).toFixed(1)).toString()) + "K")
+                },
+
+              },
+              title: {
+                text: "Qty",
+                style: {
+                  color: '#00E396',
+                }
+              },
+              min: 0,
+              setpsize: makeSlabe()
+            },
           ]
         ,
-        // xaxis: {
-        // 	labels: {
-        // 		show: true,
-        // 		formatter: function(value) { 
-        // 			console.log(value);
-        // 			return ((((value / 1000).toFixed(1)).toString()) + "K"); },
-        // 	}
-        // }
       }
-    }]
+    },
+    {
+      breakpoint: 395,
+      options:{
+        xaxis: {
+          labels: {
+            style: {
+              fontSize: '6px'
+            }
+          },
+        },
+      }
+    }
+  ]
   }
   function flip() {
     if (document.getElementsByClassName('innercontainer')[1].style.transform === "rotateY(360deg)" || document.getElementsByClassName('innercontainer')[1].style.transform === "") {

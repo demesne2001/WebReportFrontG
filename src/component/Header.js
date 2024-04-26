@@ -35,6 +35,8 @@ import Commonmodel from './CommonModal1';
 
 export default function Header() {
 
+	const FilterContext = useContext(CreateContext);
+
 	const [fullscreen, setFullScreen] = useState(false);
 	const DepartmentRef = useRef();
 	const ItemGrRef = useRef();
@@ -90,7 +92,7 @@ export default function Header() {
 		"strSubCategory9ID": "",
 		"strSubCategory10ID": "",
 		"strDayBookID": "",
-		"ExtraVar": "H",
+		"ExtraVar": "",
 		"strLotNo": "",
 		"strCity": "",
 		"strState": "",
@@ -129,7 +131,6 @@ export default function Header() {
 		setshow(false);
 	}
 	const handleShow = () => setshow(true);
-	const FilterContext = useContext(CreateContext);
 	const dependentfilter = {
 		1: ["strDepartmentID", API.GetDepartment, "DepartmentID", "DepartmentName", "strDepartmentValue", 1],
 		2: ["strItemGroupID", API.GetItemGroup, "ItemGroupID", "ItemGroupName", "strItemGroupValue", 5],
@@ -329,7 +330,7 @@ export default function Header() {
 	const [demoName, setdemoName] = useState([])
 	const ChartValueOption = [
 		{ value: 'AMTWITHTAX', label: 'Amount With Tax' }, { value: 'TAXABLEAMT', label: 'Tax Able Amount' }]
-	const [defaultChartValueOption, setDefaultChartValueOption] = useState(ChartValueOption[0]);
+	const [defaultChartValueOption, setDefaultChartValueOption] = useState({value :'AMTWITHTAX', label : 'Amount With Tax'});
 	/* Filter Comman State*/
 	const [CommonParam, SetCommonParam] = useState([]);
 	const [ComList, setComList] = useState([])
@@ -337,6 +338,8 @@ export default function Header() {
 	const [props1, setprops1] = useState({});
 	// const [ComList, setComList] = useState([])
 	// const [ComList, setComList] = useState([])
+
+	let CommonFilterData = FilterContext.CommanFilter
 	let Companylst = []
 	let widthOfScreen = window.innerWidth
 
@@ -367,7 +370,7 @@ export default function Header() {
 		// fetchData(API.GetSubCategory, 'SubCategory9Name', 'SubCategory9ID', setSubCatogory9, 9)
 		// fetchData(API.GetSubCategory, 'SubCategory10Name', 'SubCategory10ID', setSubCatogory10, 10)
 		fetchData(API.GetDayBook, 'DayBookName', 'DayBookID', setDayBook)
-		
+
 		// fetchCityName()
 		// fetchStateName()
 		// fetchRegionName()
@@ -384,9 +387,9 @@ export default function Header() {
 		document.getElementById('toggle-button').style.display = "none"
 	  }
 	}, [widthOfScreen])
-	
-	
-	
+
+
+
 	useEffect(() => {
 		FilterContext.SetCommanChildFilter(FilterInput)
 	}, [FilterContext.TempCommanFilter])
@@ -707,13 +710,15 @@ export default function Header() {
 	}
 	function handleReset() {
 		try {
-			FilterContext.SetTempCommanFilter({ ...comman, ['FromDate']: fromdate, ['ToDate']: todate })
+			// console.log('Reset H Value',CommonFilterData['ExtraVar'])
+			FilterContext.SetTempCommanFilter({ ...comman, ['FromDate']: fromdate, ['ToDate']: todate , ['ExtraVar'] : CommonFilterData['ExtraVar']})
 			// document.querySelector('input').value = ''
 			// FilterContext.SetTempCommanNameFilter = comman
 			// FilterContext.SetCommanFilter(comman)
 			FilterData = FilterContext.TempCommanFilter
 			// FilterNameData = FilterContext.TempCommanFilter
 			ChartRef.current.clearValue();
+
 			// styleRef.current.clearValue();
 			// stateRef.current.clearValue();
 			// cityRef.current.clearValue();
@@ -773,10 +778,12 @@ export default function Header() {
 	// 	FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, [key]: inputstringName })
 	// }
 	function handleSelectDayBook(e) {
+		if (e !== null) {
 		setDefaultDayBook(e)
+		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strDayBookID']: e.value.toString(), ['strDayBookValue']: e.label.toString() })
+		}
 		// console.log(e);
 
-		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strDayBookID']: e.value.toString(), ['strDayBookValue']: e.label.toString() })
 		// FilterContext.SetTempCommanNameFilter({ ...FilterContext.TempCommanNameFilter, ['strDayBookID']: e.label.toString() })
 	}
 
@@ -866,7 +873,8 @@ export default function Header() {
 	function handleFullScreen() {
 		if (fullscreen === true) {
 			setFullScreen(false);
-			document.exitFullscreen()
+			let pro = document.exitFullscreen()
+			console.log(Object.values(pro));
 		} else {
 			setFullScreen(true);
 			var ele = document.documentElement
@@ -969,10 +977,10 @@ export default function Header() {
 						<div class="geex-content__header__action__wrap geex-content__header__action__align ">
 							<ul class="geex-content__header__quickaction date_aligne">
 								<li class="from-date-to-date-header__quickaction">
-									<h5>From date :<span> {FilterContext.CommanFilter['FromDate'] === '' ? fromdate : dateFormat(FilterContext.CommanFilter['FromDate'], "dd-MM-yyyy")} </span> </h5>
+									<h5>From date :<span style={{display:'inline-block'}}> {FilterContext.CommanFilter['FromDate'] === '' ? fromdate : dateFormat(FilterContext.CommanFilter['FromDate'], "dd-MM-yyyy")} </span> </h5>
 								</li>
 								<li>
-									<h5>To date :<span> {FilterContext.CommanFilter['ToDate'] === '' ? todate : dateFormat(FilterContext.CommanFilter['ToDate'], "dd-MM-yyyy")}</span> </h5>
+									<h5>To date :<span style={{display:'inline-block'}}> {FilterContext.CommanFilter['ToDate'] === '' ? todate : dateFormat(FilterContext.CommanFilter['ToDate'], "dd-MM-yyyy")}</span> </h5>
 								</li>
 							</ul>
 							<ul class="geex-content__header__quickaction">
@@ -1092,7 +1100,7 @@ export default function Header() {
 																		<label for="sel1" class="form-label">Chart Shown As </label>
 																		<Select
 																			ref={ChartRef}
-																			closeMenuOnSelect={false}
+																			closeMenuOnSelect={true}
 																			components={animatedComponents}
 																			defaultValue={defaultChartValueOption}
 																			options={ChartValueOption}
@@ -1114,7 +1122,7 @@ export default function Header() {
 																		<label for="sel1" class="form-label">DayBook </label>
 																		<Select
 																			ref={DaybookRef}
-																			closeMenuOnSelect={false}
+																			closeMenuOnSelect={true}
 																			components={animatedComponents}
 																			defaultValue={defaultDayBook}
 																			options={DayBook}
@@ -1231,7 +1239,7 @@ export default function Header() {
 																				<label for="sel1" class="form-label">Purchase Party </label>
 																			</div>
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} placeholder='Select...' class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strPurchaseAccountValue'])} onClick={() => { HandleOnClickComman(13) }} />
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }}  class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strPurchaseAccountValue'])} onClick={() => { HandleOnClickComman(13) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1331,7 +1339,7 @@ export default function Header() {
 																				<label for="sel1" class="form-label">Sale Party </label>
 																			</div>
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} placeholder={'Select...'} class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSalesAccountValue'])} onClick={() => { HandleOnClickComman(14) }} />
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }}  class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSalesAccountValue'])} onClick={() => { HandleOnClickComman(14) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1744,19 +1752,19 @@ export default function Header() {
 										<img src={refresh} />
 									</a>
 								</li> */}
-								<li class="geex-content__header__quickaction__item">
-									<a href="#" class="geex-content__header__quickaction__link" onClick={handleFullScreen}>
+								<li id='fullScreen' class="geex-content__header__quickaction__item">
+									<a class="geex-content__header__quickaction__link" onClick={handleFullScreen}>
 										{/* <i class="fas fa-expand-alt"></i> */}
 										{fullscreen === false ? <img src={expand} /> : <i class="fa-solid fa-compress" style={{ color: "#0d4876" }}></i>}
 									</a>
 								</li>
 								<li class="geex-content__header__quickaction__item">
-									<a href="#" class="geex-content__header__quickaction__link" onClick={handleDownload}>
+									<a class="geex-content__header__quickaction__link" onClick={handleDownload}>
 										<img src={pdf} />
 									</a>
 								</li>
 								<li class="geex-content__header__quickaction__item">
-								<a href="#" id='excel-download' class="geex-content__header__quickaction__link" onClick={handleExcel} >
+								<a id='excel-download' class="geex-content__header__quickaction__link" onClick={handleExcel} >
 									<i id='excel-icon' class="fas fa-file-excel" style={{color:'#0d4876'}}></i>
 								</a>
 							</li>

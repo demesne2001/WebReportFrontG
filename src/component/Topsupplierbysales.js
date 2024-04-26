@@ -148,6 +148,18 @@ export default function Topsupplierbysales() {
 			}
 		},
 		responsive: [{
+			breakpoint: 395,
+			options: {
+				xaxis: {
+					labels: {
+						style: {
+							fontSize: '9px'
+						}
+					},
+				},
+			}
+		}
+			, {
 			breakpoint: 1310,
 			options: {
 				tooltip: {

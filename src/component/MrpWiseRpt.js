@@ -291,10 +291,10 @@ export default function MrpWiseRpt() {
 					formatter: function (val) {
 						if (val !== null) {
 							return val.toFixed(0);
-						} else{
+						} else {
 							return val
 						}
-						
+
 					},
 				},
 				title: {
@@ -308,7 +308,8 @@ export default function MrpWiseRpt() {
 				stepSize: makeSlabe()
 			}
 		],
-		responsive: [{
+		responsive: [
+			{
 			breakpoint: 595,
 			options: {
 
@@ -412,7 +413,19 @@ export default function MrpWiseRpt() {
 				// 	}
 				// }
 			}
-		}],
+		},
+		{
+			breakpoint: 395,
+			options:{
+			  xaxis: {
+				labels: {
+				  style: {
+					fontSize: '8px'
+				  }
+				},
+			  },
+			}
+		  },],
 		tooltip: {
 			fixed: {
 				enabled: true,

@@ -13,12 +13,12 @@ export default function navigation() {
 	}
 	return (
 		<div class="geex-sidebar">
-				<a href="#" class="geex-sidebar__close" onClick={handleclose}>
+				<a class="geex-sidebar__close" onClick={handleclose}>
 					<img src={cancel}/>
 				</a>
 				<div class="geex-sidebar__wrapper">
 					<div class="geex-sidebar__header">
-						<a href="#" class="geex-sidebar__logo">
+						<a class="geex-sidebar__logo">
 							<img class="logo-lite" src={logo} alt="logo" />
 
 						</a>
@@ -26,7 +26,7 @@ export default function navigation() {
 					<nav class="geex-sidebar__menu-wrapper">
 						<ul class="geex-sidebar__menu">
 							<li class="geex-sidebar__menu__item has-children">
-								<a href="#" class="geex-sidebar__menu__link">
+								<a class="geex-sidebar__menu__link">
 
 									<div>
 										<img src={increase} class="sidebar-icon"/>
@@ -36,7 +36,7 @@ export default function navigation() {
 							</li>
 
 							<li class="geex-sidebar__menu__item has-children">
-								<a href="#" class="geex-sidebar__menu__link">
+								<a class="geex-sidebar__menu__link">
 									<div>
 										<img src={customer} class="sidebar-icon"/>
 									</div>
@@ -45,7 +45,7 @@ export default function navigation() {
 							</li>
 
 							<li class="geex-sidebar__menu__item has-children">
-								<a href="#" class="geex-sidebar__menu__link">
+								<a class="geex-sidebar__menu__link">
 									<div>
 										<img src={ready} class="sidebar-icon"/>
 									</div>
@@ -54,7 +54,7 @@ export default function navigation() {
 							</li>
 
 							<li class="geex-sidebar__menu__item has-children">
-								<a href="#" class="geex-sidebar__menu__link">
+								<a class="geex-sidebar__menu__link">
 									<div>
 										<img src={enterpreneur} class="sidebar-icon"/>
 									</div>
@@ -63,7 +63,7 @@ export default function navigation() {
 							</li>
 
 							<li class="geex-sidebar__menu__item has-children">
-								<a href="#" class="geex-sidebar__menu__link">
+								<a class="geex-sidebar__menu__link">
 									<div>
 										<img src={income} class="sidebar-icon"/>
 									</div>
