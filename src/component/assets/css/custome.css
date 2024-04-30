@@ -1,4 +1,9 @@
 /* my css */
+
+.geex-content__header__customizer .geex-btn__toggle-sidebar {
+  display: none;
+}
+
 .sidebar-icon {
   height: 35px;
   width: 35px;
@@ -1095,9 +1100,7 @@ span.right-part-numericdata {
     background: #0d487630;
     border-radius: 10px;
   }
-  .geex-btn.geex-btn__toggle-sidebar {
-    background: #0d4876;
-  }
+
   .geex-btn.geex-btn__toggle-sidebar .menu-icon {
     -webkit-filter: brightness(0) invert(1);
     filter: brightness(0) invert(1);

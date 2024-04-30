@@ -10,6 +10,7 @@ import CreatContext from './Context/CreateContext';
 
 const ExportToExcel = ({ tableTitles }) => {
 
+
   const con = useContext(CreatContext);
   let inputdata = con.CommanFilter;
 
@@ -451,6 +452,7 @@ const ExportToExcel = ({ tableTitles }) => {
       base64: base64Image,
       extension: 'png',
     });
+
     if (window.innerWidth <= 768) {
       ws2.addImage(imageId, {
         tl: { col: 1, row: 1 },
@@ -474,7 +476,11 @@ const ExportToExcel = ({ tableTitles }) => {
     const buffer = await workbook.xlsx.writeBuffer();
     const blob = new Blob([buffer]);
     saveAs(blob, `${fileName}.xlsx`);
+
     obj1 = []
+
+    document.getElementById("excel-icon").style.color = "#0d4876";
+  	document.getElementById("excel-download").style.pointerEvents = "";
   };
 
   return (

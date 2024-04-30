@@ -75,7 +75,7 @@ export default function Topsellingproduct() {
 				show: false
 			},
 			y:{
-				formatter:function(val){ 
+				formatter:function(val){
 					return  (Number(parseFloat(val)).toLocaleString('en', {
 						minimumFractionDigits: 0
 					  }))
@@ -103,7 +103,41 @@ export default function Topsellingproduct() {
 		},
 		responsive: [
 			{
-			breakpoint: 595,
+				breakpoint: 1471,
+				options: {
+					dataLabels: {
+						enabled: false
+					  },
+					// chart: {
+					// 	width: 480
+					// },
+					legend: {
+						position: 'bottom',
+						// fontSize: '14px',
+						// fontFamily: 'Helvetica, Arial',
+						// fontWeight: 400,
+					}
+				}
+			},
+			{
+				breakpoint: 1379,
+				options: {
+					dataLabels: {
+						enabled: false
+					  },
+					// chart: {
+					// 	width: 400
+					// },
+					legend: {
+						position: 'bottom',
+						// fontSize: '14px',
+						// fontFamily: 'Helvetica, Arial',
+						// fontWeight: 400,
+					}
+				}
+			},
+			{
+			breakpoint: 600,
 			options: {
 				tooltip: {
 					enabled: false,
@@ -126,12 +160,11 @@ export default function Topsellingproduct() {
 						}
 					}
 				},
-				chart: {
-					width: 500
-				},
+				// chart: {
+				// 	width: 500
+				// },
 				legend: {
 					position: 'bottom',
-					
 					fontSize: '7px',
 					// fontFamily: 'Helvetica, Arial',
 					// fontWeight: 400,
@@ -140,48 +173,11 @@ export default function Topsellingproduct() {
 		},{
 			breakpoint: 542,
 			options: {
-				chart: {
-					width: 350
-				},
+				// chart: {
+				// 	width: 350
+				// },
 				legend: {
 					position: 'bottom',
-					
-					// fontSize: '14px',
-					// fontFamily: 'Helvetica, Arial',
-					// fontWeight: 400,
-				}
-			}
-		},
-		{
-			breakpoint: 1471,
-			options: {
-				dataLabels: {
-					enabled: false
-				  },
-				chart: {
-					width: 480
-				},
-				legend: {
-					position: 'bottom',
-					
-					// fontSize: '14px',
-					// fontFamily: 'Helvetica, Arial',
-					// fontWeight: 400,
-				}
-			}
-		},
-		{
-			breakpoint: 1379,
-			options: {
-				dataLabels: {
-					enabled: false
-				  },
-				chart: {
-					width: 400
-				},
-				legend: {
-					position: 'bottom',
-					
 					// fontSize: '14px',
 					// fontFamily: 'Helvetica, Arial',
 					// fontWeight: 400,
@@ -199,7 +195,8 @@ export default function Topsellingproduct() {
 					</div>
 				</div>
 				<div class="geex-content__section__content">
-					<ReactApexChart options={options} series={series} type="donut" width={535}/>
+					{/* <ReactApexChart options={options} series={series} type="donut" width={535}/> */}
+					<ReactApexChart options={options} series={series} type="donut"  height={400} />
 					{/* <div id="pie-chart"></div>  */}
 					{/* <img src="assets/img//Graph/Topsellingproduct.png" class="graph-img img-fluid" /> */}
 				</div>

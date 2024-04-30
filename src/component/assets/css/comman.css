@@ -353,16 +353,13 @@ thead::after {
   width: 100%;
   cursor: pointer;
 }
-/* 
-#toggle-button {
-  display: none;
-} */
 
-@media only screen and (max-width: 1200px) {
+
+/* @media only screen and (max-width: 1200px) {
   #toggle-button {
     display: block;
   }
-}
+} */
 
 .flip-card-inner {
   /* position: relative; */

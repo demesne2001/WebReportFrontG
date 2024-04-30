@@ -23,10 +23,14 @@ export default function SalesRevenue() {
   }, [inputdata]);
   let defaulres = {}
   function fetchData() {
+    console.log('Sales Revenue Input data',inputdata)
     post(inputdata, API.GetSalesRevenue, defaulres, 'post').then((response) => {
       let total = [];
       let total1 = [];
       let name = [];
+
+      console.log('Sales Revenue Response data',response)
+
       setTabledata(response.data.lstResult)
       // console.log(response.data.lstResult['0']['sales']);
       for (let index = 0; index < response.data.lstResult.length; index++) {

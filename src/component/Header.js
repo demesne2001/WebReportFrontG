@@ -280,6 +280,7 @@ export default function Header() {
 	const [defaultItemGroup, setDefaultItemGroup] = useState([]);
 	const [DayBook, setDayBook] = useState([]);
 	const [defaultDayBook, setDefaultDayBook] = useState({ 'value': "", 'label': 'NONE' });
+	// const [defaultDayBook, setDefaultDayBook] = useState();
 	const [color, setColor] = useState([]);
 	const [defaultColor, setDefaultColor] = useState([]);
 	const [Brand, setBrand] = useState([]);
@@ -330,7 +331,7 @@ export default function Header() {
 	const [demoName, setdemoName] = useState([])
 	const ChartValueOption = [
 		{ value: 'AMTWITHTAX', label: 'Amount With Tax' }, { value: 'TAXABLEAMT', label: 'Tax Able Amount' }]
-	const [defaultChartValueOption, setDefaultChartValueOption] = useState({value :'AMTWITHTAX', label : 'Amount With Tax'});
+	const [defaultChartValueOption, setDefaultChartValueOption] = useState({ value: 'AMTWITHTAX', label: 'Amount With Tax' });
 	/* Filter Comman State*/
 	const [CommonParam, SetCommonParam] = useState([]);
 	const [ComList, setComList] = useState([])
@@ -381,11 +382,11 @@ export default function Header() {
 	}, [])
 
 	useEffect(() => {
-	  if (widthOfScreen < 1200) {
-		document.getElementById('toggle-button').style.display = "block"
-	  } else {
-		document.getElementById('toggle-button').style.display = "none"
-	  }
+		if (widthOfScreen < 1200) {
+			document.getElementById('toggle-button').style.display = "block"
+		} else {
+			document.getElementById('toggle-button').style.display = "none"
+		}
 	}, [widthOfScreen])
 
 
@@ -471,8 +472,8 @@ export default function Header() {
 			setfromdate(dateFormat(response.data.FromDate, "yyyy-dd-MM"))
 			settodate(dateFormat(response.data.ToDate, "yyyy-dd-MM"))
 			console.log(dateFormat("08-04-2024", "yyyy-dd-MM"));
-			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['ToDate']: dateFormat(response.data.ToDate, "yyyy-dd-MM"), ['FromDate']: dateFormat(response.data.FromDate, "-dd-MM")})
-			FilterContext.SetCommanFilter({ ...FilterContext.CommanFilter, ['ToDate']: dateFormat(response.data.ToDate, "yyyy-dd-MM"), ['FromDate']: dateFormat(response.data.FromDate, "yyyy-dd-MM")})
+			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['ToDate']: dateFormat(response.data.ToDate, "yyyy-dd-MM"), ['FromDate']: dateFormat(response.data.FromDate, "-dd-MM") })
+			FilterContext.SetCommanFilter({ ...FilterContext.CommanFilter, ['ToDate']: dateFormat(response.data.ToDate, "yyyy-dd-MM"), ['FromDate']: dateFormat(response.data.FromDate, "yyyy-dd-MM") })
 		})
 	}
 	async function GetCompanyData() {
@@ -711,12 +712,19 @@ export default function Header() {
 	function handleReset() {
 		try {
 			// console.log('Reset H Value',CommonFilterData['ExtraVar'])
-			FilterContext.SetTempCommanFilter({ ...comman, ['FromDate']: fromdate, ['ToDate']: todate , ['ExtraVar'] : CommonFilterData['ExtraVar']})
+			FilterContext.SetTempCommanFilter({
+				...comman, 
+				['FromDate']: fromdate, 
+				['ToDate']: todate, 
+				['ExtraVar']: CommonFilterData['ExtraVar'],
+				
+			})
 			// document.querySelector('input').value = ''
 			// FilterContext.SetTempCommanNameFilter = comman
 			// FilterContext.SetCommanFilter(comman)
 			FilterData = FilterContext.TempCommanFilter
 			// FilterNameData = FilterContext.TempCommanFilter
+			setDefaultChartValueOption({ value: 'AMTWITHTAX', label: 'Amount With Tax' })
 			ChartRef.current.clearValue();
 
 			// styleRef.current.clearValue();
@@ -741,6 +749,7 @@ export default function Header() {
 			// SubCategory8Ref.current.clearValue();
 			// SubCategory9Ref.current.clearValue();
 			// SubCategory10Ref.current.clearValue();
+			setDefaultDayBook({ 'value': "", 'label': 'NONE' })
 			DaybookRef.current.clearValue();
 			FilterContext.setThousand("");
 		} catch (error) {
@@ -779,8 +788,8 @@ export default function Header() {
 	// }
 	function handleSelectDayBook(e) {
 		if (e !== null) {
-		setDefaultDayBook(e)
-		FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strDayBookID']: e.value.toString(), ['strDayBookValue']: e.label.toString() })
+			setDefaultDayBook(e)
+			FilterContext.SetTempCommanFilter({ ...FilterContext.TempCommanFilter, ['strDayBookID']: e.value.toString(), ['strDayBookValue']: e.label.toString() })
 		}
 		// console.log(e);
 
@@ -866,7 +875,13 @@ export default function Header() {
 	function handleDownload() {
 		FilterContext.setflag(FilterContext.flag + 1);
 	}
+
 	function handleExcel() {
+		console.log('EXCEL DOWNLOAD BUTTON CLICKED')
+
+		document.getElementById("excel-download").style.pointerEvents = "none";
+		document.getElementById("excel-icon").style.color = "#7ca6c7";
+
 		FilterContext.setflagExcel(FilterContext.flagExcel + 1);
 	}
 
@@ -966,7 +981,7 @@ export default function Header() {
 					<div class="geex-content__header__content">
 						<div class="geex-content__header__customizer">
 							<button class="geex-btn geex-btn__toggle-sidebar" onClick={handlenavigation} id='toggle-button' >
-								<img src={menu} class="menu-icon"/>
+								<img src={menu} class="menu-icon" />
 							</button>
 							<h2 class="geex-content__header__title"> Dashboard</h2>
 						</div>
@@ -977,10 +992,10 @@ export default function Header() {
 						<div class="geex-content__header__action__wrap geex-content__header__action__align ">
 							<ul class="geex-content__header__quickaction date_aligne">
 								<li class="from-date-to-date-header__quickaction">
-									<h5>From date :<span style={{display:'inline-block'}}> {FilterContext.CommanFilter['FromDate'] === '' ? fromdate : dateFormat(FilterContext.CommanFilter['FromDate'], "dd-MM-yyyy")} </span> </h5>
+									<h5>From date :<span style={{ display: 'inline-block' }}> {FilterContext.CommanFilter['FromDate'] === '' ? fromdate : dateFormat(FilterContext.CommanFilter['FromDate'], "dd-MM-yyyy")} </span> </h5>
 								</li>
 								<li>
-									<h5>To date :<span style={{display:'inline-block'}}> {FilterContext.CommanFilter['ToDate'] === '' ? todate : dateFormat(FilterContext.CommanFilter['ToDate'], "dd-MM-yyyy")}</span> </h5>
+									<h5>To date :<span style={{ display: 'inline-block' }}> {FilterContext.CommanFilter['ToDate'] === '' ? todate : dateFormat(FilterContext.CommanFilter['ToDate'], "dd-MM-yyyy")}</span> </h5>
 								</li>
 							</ul>
 							<ul class="geex-content__header__quickaction">
@@ -1239,7 +1254,7 @@ export default function Header() {
 																				<label for="sel1" class="form-label">Purchase Party </label>
 																			</div>
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }}  class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strPurchaseAccountValue'])} onClick={() => { HandleOnClickComman(13) }} />
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strPurchaseAccountValue'])} onClick={() => { HandleOnClickComman(13) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1339,7 +1354,7 @@ export default function Header() {
 																				<label for="sel1" class="form-label">Sale Party </label>
 																			</div>
 
-																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }}  class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSalesAccountValue'])} onClick={() => { HandleOnClickComman(14) }} />
+																			<input type='text' placeholder='Select...' style={{ border: '1px solid #cccccc', height: '45px', }} class="col-12 form-inpur commonmodal-input" aria-label="Default select example" value={formatedValue(FilterContext.TempCommanFilter['strSalesAccountValue'])} onClick={() => { HandleOnClickComman(14) }} />
 																		</form>
 																	</div>
 																</div>
@@ -1764,10 +1779,10 @@ export default function Header() {
 									</a>
 								</li>
 								<li class="geex-content__header__quickaction__item">
-								<a id='excel-download' class="geex-content__header__quickaction__link" onClick={handleExcel} >
-									<i id='excel-icon' class="fas fa-file-excel" style={{color:'#0d4876'}}></i>
-								</a>
-							</li>
+									<a id='excel-download' class="geex-content__header__quickaction__link" onClick={handleExcel} >
+										<i id='excel-icon' class="fas fa-file-excel" style={{ color: '#0d4876' }}></i>
+									</a>
+								</li>
 							</ul>
 						</div>
 					</div>
